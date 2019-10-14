@@ -27,13 +27,11 @@ public class Player {
 		this.playerTerritories = playerTerritories;
 	}
 
-
-
-	public void addTerritory(Territory) {
+	public void addTerritory(Territory territory) {
 
 	}
 
-	public void deleteTerritory(Territory) {
+	public void deleteTerritory(Territory territory) {
 	
 	}
 	
@@ -43,4 +41,4 @@ public class Player {
 
 }
 
-}
+
