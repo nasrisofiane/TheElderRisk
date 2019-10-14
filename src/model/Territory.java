@@ -51,12 +51,13 @@ public class Territory {
 		
 	}
 	
-	public void startFight() { 
-		
-	}
-	
 	public void moveFortify() { //move pawn from a territory to another.
 		
 	}
+	
+	public void shifumi() {
+		
+	}
+
 	
 }
