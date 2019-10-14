@@ -12,7 +12,7 @@ public class Fight {
 		this.id = id;
 	}
 	
-	public void startFigh(int nbAtk , int nbDef) {
+	public void startFight(int nbAtk , int nbDef) {
 		
 	}
 	public void checkWinner(int atk , int defd) {
