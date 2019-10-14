@@ -1,4 +1,4 @@
-package sicknesstorm;
+package model;
 
 public class Game {
 
