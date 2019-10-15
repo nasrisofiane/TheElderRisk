@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class Fight {
 	private int id;
@@ -43,9 +45,23 @@ public class Fight {
 	public void checkWinner(int atk , int defd) {
 		
 	}
-	
-	public void dice(int nbDices) {
-		
-	}
+
+
+
+	/**
+	 * @param nb = nombredeDesLancé
+	 * @return
+	 */
+	public  ArrayList<Integer> dice(int nb) {
+		 int Min = 1;
+		 int Max = 6;
+		ArrayList<Integer> dice = new ArrayList();
+		for(int i=0;i<nb;i++) {
+		dice.add(Min + (int)(Math.random() * ((Max - Min) + 1)));	
+		Collections.sort(dice, Collections.reverseOrder());
+		}
+		System.out.println(dice);
+	return dice;
+}
 
 }
