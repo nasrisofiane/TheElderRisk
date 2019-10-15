@@ -28,7 +28,7 @@ public class Player {
 	}
 
 	public void addTerritory(Territory territory) {
-
+		playerTerritories.add(territory.getId());
 	}
 
 	public void deleteTerritory(Territory territory) {
