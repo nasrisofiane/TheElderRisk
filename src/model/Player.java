@@ -6,7 +6,7 @@ public class Player {
 
 	private int id;
 	private String name;
-	private ArrayList<Territory> playerTerritories = new ArrayList<Territory>();
+	private ArrayList<Integer> playerTerritories = new ArrayList<Integer>();
 
 	public int getId() {
 		return id;
@@ -21,19 +21,19 @@ public class Player {
 		this.name = name;
 	}
 	
-	public ArrayList<Territory> getPlayerTerritories() {
+	public ArrayList<Integer> getPlayerTerritories() {
 		return playerTerritories;
 	}
-	
-	public void setPlayerTerritories(ArrayList<Territory> playerTerritories) {
+	public void setPlayerTerritories(ArrayList<Integer> playerTerritories) {
 		this.playerTerritories = playerTerritories;
 	}
-	public void addTerritory(Territory territory) {
-		playerTerritories.add(territory);
+	
+	public void addTerritory(int territoryId) {
+		playerTerritories.add(territoryId);
 	}
 
-	public void deleteTerritory(Territory territory) {
-		playerTerritories.remove(territory.getId());
+	public void deleteTerritory(int territoryId) {
+		playerTerritories.remove(territoryId);
 	}
 	
 	
