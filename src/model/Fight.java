@@ -42,7 +42,7 @@ public class Fight {
 	 */
 	public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
 		if(nbAtk < this.nbPawnMaxAtk && nbDef <= this.nbPawnMaxDef) {
-			return this.checkWinner(this.dice(nbAtk), this.dice(nbDef))
+			return this.checkWinner(this.dice(nbAtk), this.dice(nbDef));
 		}
 		else {
 			return null;

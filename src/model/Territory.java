@@ -13,6 +13,8 @@ public class Territory {
 	public int getId() {
 		return id;
 	}
+
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -85,10 +87,19 @@ public class Territory {
 		
 	}
 	
-	public void moveFortify() { //move pawn from a territory to another.
+	public void moveFortify(Territory territory, Territory targetTerritory, int nbPawnDeplace ) { //move pawn from a territory to another.
 		
-	}
+		 
+		if(territoryAdjacent.contains(targetTerritory.id) && (territory.pawn > 1)) {
 	
+	
+		territory.setPawn(territory.getPawn()-nbPawnDeplace);
+		targetTerritory.setPawn(targetTerritory.getPawn()+ nbPawnDeplace);
+			
+			
+		
+		}
+	}
 	public boolean shifumi() {
 		int min=1;
 		int max=3;
