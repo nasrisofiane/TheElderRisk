@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Game {
 	private int id ; 
-	private ArrayList<Integer> player = new ArrayList();	
+	private ArrayList<Integer> playerList = new ArrayList();	
 	
 	public  void round() {
 		
 	}
-	public  void addPlayer() {
-		
+	public  void addPlayer(Player player) {
+		playerList.add(player.getId());
 	}
 	public  void deletePlayer() {
 		
