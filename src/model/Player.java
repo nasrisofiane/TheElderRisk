@@ -32,7 +32,7 @@ public class Player {
 	}
 
 	public void deleteTerritory(Territory territory) {
-	
+		playerTerritories.remove(territory.getId());
 	}
 	
 	
