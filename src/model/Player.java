@@ -34,11 +34,38 @@ public class Player {
 	public void deleteTerritory(Territory territory) {
 		playerTerritories.remove(territory.getId());
 	}
+
+	public boolean shifumi() {
+	int min=1;
+	int max=3;
+		
+	
+		
+		int attacker = min + (int)(Math.random() * ((max - min) + 1));
+		
+		int defender = min + (int)(Math.random() * ((max - min) + 1));
+		
+	
+		
+	if( attacker == 1) { 	System.out.println("pierre");}
+	
+	if( attacker == 2) { 	System.out.println("feuille");}
+	
+	if( attacker == 3) { 	System.out.println("ciseaux");}
 	
 	
 		
+	if( defender == 1) { 	System.out.println("pierre");}
+	
+	if( defender == 2) { 	System.out.println("feuille");}
+	
+	if( defender == 3) { 	System.out.println("ciseaux");}
+	
+		
+	if( attacker==1 &&defender==1) {System.out.println("Recommencer");
+	this.shifumi();
 	}
-
-
+	}
+}
 
 
