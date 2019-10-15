@@ -28,13 +28,14 @@ public class Player {
 	}
 
 	public void addTerritory(Territory territory) {
-
+		playerTerritories.add(territory.getId());
 	}
 
 	public void deleteTerritory(Territory territory) {
 	
 	}
 	
+<<<<<<< HEAD
 	public boolean shifumi() {
 	int min=1;
 	int max=3;
@@ -104,5 +105,8 @@ public class Player {
 	}
 
 
+=======
+}
+>>>>>>> a53fa5755367d97668b1bbf16bb97288dcdfe677
 
 
