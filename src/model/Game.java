@@ -17,9 +17,10 @@ public class Game {
 	public void addPlayer(Player player) {
 		playerList.add(player);
 	}
-	
-	public void deletePlayer() {
-		
+
+	public  void deletePlayer(Player player) {
+		playerList.remove(player);	
+
 	}
 	
 	/**
