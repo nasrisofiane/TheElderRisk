@@ -81,8 +81,9 @@ public class Territory {
 			}
 	}
 	
-	public void conquerTerritory(){ // take the control of a territory.
-		
+	public void conquerTerritory(Territory territory, int nbPawns){ // take the control of a territory.
+		territory.setPlayerId(this.playerId);
+		territory.setPawn(nbPawns);
 	}
 	
 	public void moveFortify() { //move pawn from a territory to another.
