@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class Fight {
 	private int id;
 	private int nbPawnMaxAtk;
@@ -46,6 +47,7 @@ public class Fight {
 	}
 
 
+
 	/**
 	 * @param nb = nombredeDesLancé
 	 * @return
@@ -60,9 +62,6 @@ public class Fight {
 		}
 		System.out.println(dice);
 	return dice;
-	}
-	
-	
-
+}
 
 }
