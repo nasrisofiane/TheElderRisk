@@ -43,7 +43,7 @@ public class Fight {
 	 */
 	/*public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
 		if(nbAtk < this.nbPawnMaxAtk && nbDef <= this.nbPawnMaxDef) {
-			return this.checkWinner(this.dice(nbAtk), this.dice(nbDef))
+			return this.checkWinner(this.dice(nbAtk), this.dice(nbDef));
 		}
 		else {
 			return null;
@@ -55,17 +55,16 @@ public class Fight {
 		 resultat.add(0);
 		 resultat.add(0);
 		 
-		System.out.println(atk);
-		System.out.println(defd);
-		
-		
-		int shorterArray;
-		if ( atk.size()>defd.size()) {
-	shorterArray=defd.size();}
-		
-		
+		 System.out.println(atk);
+		 System.out.println(defd);
+		 int shorterArray;
+		 if ( atk.size()>defd.size()) {
+			shorterArray=defd.size();
+		}
+	
 		else {
-	shorterArray=atk.size();}
+			shorterArray=atk.size();
+			}
 		
 		
 		 for (int i= 0 ; i<shorterArray;i++) {
