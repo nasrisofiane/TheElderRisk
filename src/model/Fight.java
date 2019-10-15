@@ -32,11 +32,11 @@ public class Fight {
 		this.id = id;
 	}
 	
-	/*public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
+	public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
 		if(nbAtk < this.nbPawnMaxAtk && nbDef <= this.nbPawnMaxDef) {
 			return this.checkWinner(this.dice(nbAtk), this.dice(nbDef))
-		}*/
-		/*else {
+		}
+		else {
 			return null;
 		}
 	}
@@ -44,12 +44,7 @@ public class Fight {
 	public void checkWinner(int atk , int defd) {
 		
 	}
-	
-	/*public void dice(int nbDices) {
-		
-		
-		
-	}*/
+
 
 	/**
 	 * @param nb = nombredeDesLancé
