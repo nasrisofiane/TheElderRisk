@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class Fight {
 	private int id;
@@ -31,6 +33,13 @@ public class Fight {
 		this.id = id;
 	}
 	
+	/**
+	 * 
+	 * @param nbAtk
+	 * @param nbDef
+	 * @return an ArrayList with the results of the dices, the first index is the number of dices won
+	 * by the attacker and the second index is for the defender.
+	 */
 	public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
 		if(nbAtk < this.nbPawnMaxAtk && nbDef <= this.nbPawnMaxDef) {
 			return this.checkWinner(this.dice(nbAtk), this.dice(nbDef))
@@ -43,9 +52,23 @@ public class Fight {
 	public void checkWinner(int atk , int defd) {
 		
 	}
-	
-	public void dice(int nbDices) {
-		
-	}
+
+
+
+	/**
+	 * @param nb = nombredeDesLancé
+	 * @return
+	 */
+	public  ArrayList<Integer> dice(int nb) {
+		 int Min = 1;
+		 int Max = 6;
+		ArrayList<Integer> dice = new ArrayList();
+		for(int i=0;i<nb;i++) {
+		dice.add(Min + (int)(Math.random() * ((Max - Min) + 1)));	
+		Collections.sort(dice, Collections.reverseOrder());
+		}
+		System.out.println(dice);
+	return dice;
+}
 
 }

@@ -1,5 +1,7 @@
 package model;
 
+
+
 public class ApplicationSicknesstorm {
 
 	public static void main(String[] args) {
