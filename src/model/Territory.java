@@ -6,14 +6,13 @@ public class Territory {
 	private int id;
 	private String name;
 	private int continentId;
-	private ArrayList<Territory> territoryAdjacent;
+	private ArrayList<Territory> territoryAdjacent = new ArrayList<Territory>();
 	private int pawn;
-	private int playerId;
+	private Player player;
 	
 	public int getId() {
 		return id;
 	}
-
 	
 	public void setId(int id) {
 		this.id = id;
@@ -42,11 +41,23 @@ public class Territory {
 	public void setPawn(int pawn) {
 		this.pawn = pawn;
 	}
-	public int getPlayerId() {
-		return playerId;
+	
+	
+	public Player getPlayer() {
+		return player;
 	}
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
+
+	public void setPlayer(Player player) {
+		this.player = player;
+		player.addTerritory(this.id);
+	}
+
+	public void addTerritoryAdjacent(Territory territory) {
+		this.territoryAdjacent.add(territory);
+	}
+
+	public void deleteTerritoryAdjacent(Territory territory) {
+		this.territoryAdjacent.remove(territory);
 	}
 	
 	/**
@@ -60,7 +71,13 @@ public class Territory {
 	 * if the attacker get all pawn from the attacked territory, call conquerTerritory(Territory, Nbpawns)
 	 */
 	public void attack(Territory territory, int nbAttack, int nbDefense) {
-		if(territoryAdjacent.contains(territory.id)) {
+		if(nbAttack >= 3) {//secure the number of dice thrown for the attacker
+			nbAttack = 1;
+		}
+		if(nbDefense > 2) { //secure the number of dice thrown for the defender
+			nbDefense = 1;
+		}
+		if(territoryAdjacent.contains(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
 			Fight fight = new Fight();
 			ArrayList<Integer> resultats = fight.startFight(nbAttack, nbDefense);
 			System.out.println("Territoire voisin");
@@ -73,61 +90,43 @@ public class Territory {
 			else {
 				territory.setPawn(territory.getPawn() - resultats.get(0));
 				this.pawn = this.pawn - resultats.get(1);
+				System.out.println(territory.getId()+" -> NB PIONS -> " + territory.getPawn());
 			}
 			if(territory.getPawn() <= 0) {
 				this.conquerTerritory(territory, resultats.get(0));
 			}
-		}
+		}//END OF : if the territory attacked is a neighbor of this territory so the fight can be executed
 		else {
 			System.out.println("Territoire non voisin");		
 			}
 	}
 	
 	public void conquerTerritory(Territory territory, int nbPawns){ // take the control of a territory.
-		territory.setPlayerId(this.playerId);
+		territory.setPlayer(this.player);
 		territory.setPawn(nbPawns);
 	}
 	
 	public void moveFortify(Territory territory, Territory targetTerritory, int nbPawnDeplace ) { //move pawn from a territory to another.
 		
-		 
 		if(territoryAdjacent.contains(targetTerritory.id) && (territory.pawn > 1)) {
-	
-	
-		territory.setPawn(territory.getPawn()-nbPawnDeplace);
-		targetTerritory.setPawn(targetTerritory.getPawn()+ nbPawnDeplace);
-			
-			
-		
+			territory.setPawn(territory.getPawn()-nbPawnDeplace);
+			targetTerritory.setPawn(targetTerritory.getPawn()+ nbPawnDeplace);
 		}
 	}
+	
 	public boolean shifumi() {
 		int min=1;
 		int max=3;
-			
+		int attacker = min + (int)(Math.random() * ((max - min) + 1));
+		int defender = min + (int)(Math.random() * ((max - min) + 1));
 		
-			
-			int attacker = min + (int)(Math.random() * ((max - min) + 1));
-			
-			int defender = min + (int)(Math.random() * ((max - min) + 1));
-			
-		
-			
 		if( attacker == 1) { 	System.out.println("pierre");}
-		
 		if( attacker == 2) { 	System.out.println("feuille");}
-		
 		if( attacker == 3) { 	System.out.println("ciseaux");}
-		
-		
-			
 		if( defender == 1) { 	System.out.println("pierre");}
-		
 		if( defender == 2) { 	System.out.println("feuille");}
-		
 		if( defender == 3) { 	System.out.println("ciseaux");}
 		
-			
 		if( attacker==1 &&defender==1) {System.out.println("Recommencer");
 		this.shifumi();
 		}
@@ -161,11 +160,6 @@ public class Territory {
 		this.shifumi();
 		}
 		
-		return false;	
-			
-			
-			
+		return false;
 		}
-
-	
 }
