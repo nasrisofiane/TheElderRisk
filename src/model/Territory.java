@@ -79,15 +79,17 @@ public class Territory {
 		}
 		if(territoryAdjacent.contains(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
 			Fight fight = new Fight();
-			ArrayList<Integer> resultats = fight.startFight(nbAttack, nbDefense);
+			ArrayList<Integer> resultats = new ArrayList<Integer>();
 			System.out.println("Territoire voisin");
 			if(territory.getPawn() == 1) {
 				if(this.shifumi() == true) {
+					resultats = fight.startFight(nbAttack, nbDefense);
 					territory.setPawn(territory.getPawn() - resultats.get(0));
 					this.pawn = this.pawn - resultats.get(1);
 				}
 			}
 			else {
+				resultats = fight.startFight(nbAttack, nbDefense);
 				territory.setPawn(territory.getPawn() - resultats.get(0));
 				this.pawn = this.pawn - resultats.get(1);
 				System.out.println(territory.getId()+" -> NB PIONS -> " + territory.getPawn());
@@ -128,38 +130,38 @@ public class Territory {
 		if( defender == 3) { 	System.out.println("ciseaux");}
 		
 		if( attacker==1 &&defender==1) {System.out.println("Recommencer");
-		this.shifumi();
+			return this.shifumi();
 		}
 		
 		if( attacker==1 &&defender==2) {System.out.println("la feuille gagne");
-		return false;
+			return false;
 		}
 		
 		if( attacker==1 &&defender==3) {System.out.println("la pierre gagne");
-		return true;
+			return true;
 		}
 		
 		if( attacker==2 &&defender==1) {System.out.println("la feuille gagne");
-		return true;
+			return true;
 		}
 		
 		if( attacker==2 &&defender==2) {System.out.println("Recommencer");
-		this.shifumi();
+			return this.shifumi();
 		}
 		
 		if( attacker==2 &&defender==3) {System.out.println("le ciseaux gagne");
-		return false;
+			return false;
 		}
 		if( attacker==3 &&defender==1) {System.out.println("la pierre gagne");
-		return false;
+			return false;
 		}
 		if(attacker==3 &&defender==2) {System.out.println("le ciseaux gagne");
-		return true;
+			return true;
 		}
 		if( attacker==3 &&defender==3) {System.out.println("Recommencer");
-		this.shifumi();
+			return this.shifumi();
 		}
 		
-		return false;
+			return false;
 		}
 }
