@@ -1,4 +1,4 @@
-package model;
+package com.adrar.sicknesstorm;
 
 import java.util.ArrayList;
 import java.util.Collection;

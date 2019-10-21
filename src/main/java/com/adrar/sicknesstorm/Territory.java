@@ -1,15 +1,70 @@
-package model;
+package com.adrar.sicknesstorm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@Entity
+@Table(name ="territories")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Territory {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String name;
-	private int continentId;
-	private ArrayList<Territory> territoryAdjacent = new ArrayList<Territory>();
-	private int pawn;
-	private Player player;
 	
+	private String name;
+	
+	private int continentId;
+	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(
+			name = "territories_adjacent", 
+			joinColumns = @JoinColumn(name = "territory_a"), 
+			inverseJoinColumns = @JoinColumn(name = "territory_b"))
+	private Set<Territory> territories;
+	
+	public Set<Territory> getTerritories() {
+		return territories;
+	}
+
+	public void setTerritories(Set<Territory> territories) {
+		this.territories = territories;
+	}
+	
+	@JsonIgnoreProperties("player")
+	@ManyToMany(mappedBy="territories")
+	private Set<Territory> territoryAdjacent;
+	
+	private int pawn;
+//	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "player_id")
+	private Player player;
+
 	public int getId() {
 		return id;
 	}
@@ -29,10 +84,10 @@ public class Territory {
 	public void setContinentId(int continentId) {
 		this.continentId = continentId;
 	}
-	public ArrayList<Territory> getTerritoryAdjacent() {
+	public Set<Territory> getTerritoryAdjacent() {
 		return territoryAdjacent;
 	}
-	public void setTerritoryAdjacent(ArrayList<Territory> territoryAdjacent) {
+	public void setTerritoryAdjacent(Set<Territory> territoryAdjacent) {
 		this.territoryAdjacent = territoryAdjacent;
 	}
 	public int getPawn() {
@@ -42,14 +97,12 @@ public class Territory {
 		this.pawn = pawn;
 	}
 	
-	
 	public Player getPlayer() {
 		return player;
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
-		player.addTerritory(this.id);
 	}
 
 	public void addTerritoryAdjacent(Territory territory) {
