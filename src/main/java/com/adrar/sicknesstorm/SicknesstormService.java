@@ -30,5 +30,7 @@ public class SicknesstormService{
 	public List<Territory> getTerritories(){
 		return territoryRepo.findAll();
 	}
-	
+	public  void addplayer(Player player) {
+		 playerRepo.save(player);
+	}
 }
