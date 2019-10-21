@@ -1,4 +1,4 @@
-package model;
+package com.adrar.sicknesstorm;
 
 public class Continent {
 private int id;
@@ -17,13 +17,5 @@ public String getName() {
 public void setName(String name) {
 	this.name = name;
 }
-
-
-
-
-
-
-
-
 
 }
