@@ -45,23 +45,30 @@ public class Territory {
 			name = "territories_adjacent", 
 			joinColumns = @JoinColumn(name = "territory_a"), 
 			inverseJoinColumns = @JoinColumn(name = "territory_b"))
-	private Set<Territory> territories;
+	private Set<Territory> territoriesA;
 	
-	public Set<Territory> getTerritories() {
-		return territories;
+	
+	public Set<Territory> getTerritoriesA() {
+		return territoriesA;
 	}
 
-	public void setTerritories(Set<Territory> territories) {
-		this.territories = territories;
+	public void setTerritoriesA(Set<Territory> territoriesA) {
+		this.territoriesA = territoriesA;
 	}
-	
-	@JsonIgnoreProperties("player")
-	@ManyToMany(mappedBy="territories")
+
+	@JsonIgnoreProperties("territoryAdjacent")
+	@ManyToMany
+	@JoinTable(
+			name = "territories_adjacent", 
+			joinColumns = @JoinColumn(name = "territory_b"), 
+			inverseJoinColumns = @JoinColumn(name = "territory_a"))
 	private Set<Territory> territoryAdjacent;
 	
 	private int pawn;
-//	
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@JsonIgnoreProperties("playerTerritories")
+	//@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "player_id")
 	private Player player;
 
@@ -84,12 +91,18 @@ public class Territory {
 	public void setContinentId(int continentId) {
 		this.continentId = continentId;
 	}
+	
 	public Set<Territory> getTerritoryAdjacent() {
+		for(Territory territory : this.territoriesA) {
+			this.territoryAdjacent.add(territory);
+		}
 		return territoryAdjacent;
 	}
+	
 	public void setTerritoryAdjacent(Set<Territory> territoryAdjacent) {
 		this.territoryAdjacent = territoryAdjacent;
 	}
+	
 	public int getPawn() {
 		return pawn;
 	}
@@ -113,6 +126,17 @@ public class Territory {
 		this.territoryAdjacent.remove(territory);
 	}
 	
+	public boolean isAdjacent(Territory territory) {
+		getTerritoryAdjacent();
+		if(this.territoryAdjacent.contains(territory)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
 	/**
 	 * 
 	 * @param territory
@@ -130,7 +154,7 @@ public class Territory {
 		if(nbDefense > 2) { //secure the number of dice thrown for the defender
 			nbDefense = 1;
 		}
-		if(territoryAdjacent.contains(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
+		if(isAdjacent(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
 			Fight fight = new Fight();
 			ArrayList<Integer> resultats = new ArrayList<Integer>();
 			System.out.println("Territoire voisin");
@@ -161,11 +185,16 @@ public class Territory {
 		territory.setPawn(nbPawns);
 	}
 	
-	public void moveFortify(Territory territory, Territory targetTerritory, int nbPawnDeplace ) { //move pawn from a territory to another.
-		
-		if(territoryAdjacent.contains(targetTerritory.id) && (territory.pawn > 1)) {
-			territory.setPawn(territory.getPawn()-nbPawnDeplace);
+	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace ) { //move pawn from a territory to another.
+		if(isAdjacent(targetTerritory) && (this.pawn > 1)) {
+			this.pawn = this.pawn-nbPawnDeplace;
+			System.out.println(this.pawn);
 			targetTerritory.setPawn(targetTerritory.getPawn()+ nbPawnDeplace);
+			System.out.println(this.pawn);
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
@@ -217,4 +246,31 @@ public class Territory {
 		
 			return false;
 		}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Territory other = (Territory) obj;
+		//if (id != other.id)
+		if (getId() != other.getId())
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Territory [id=" + id + ", name=" + name + ", continentId=" + continentId + ", territoryAdjacent="
+				 + ", pawn=" + pawn + ", player=" + player + "]";
+	}
+	
+	
+	
+	
 }

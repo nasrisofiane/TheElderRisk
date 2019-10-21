@@ -21,6 +21,7 @@ public class SicknesstormController {
 	
 	@GetMapping("/player/{id}")
 	public Player getPlayer(@PathVariable Integer id) {
+		
 		return sicknesstormService.getAplayer(id);																																																																																																																																																																												
 	}
 	
@@ -42,5 +43,15 @@ public class SicknesstormController {
 	@GetMapping("/territories")
 	public List<Territory> getTerritories(){
 		return sicknesstormService.getTerritories();
+	}
+	
+	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
+	public boolean moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
+		return sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
+	}
+	
+	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
+	public boolean isAdjacent(@PathVariable int territoryA, @PathVariable int territoryB) {
+		return sicknesstormService.isAdjacent(territoryA, territoryB);
 	}
 }

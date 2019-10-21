@@ -31,4 +31,12 @@ public class SicknesstormService{
 		return territoryRepo.findAll();
 	}
 	
+	public boolean movePawns(int idTerritoryA, int idTerritoryB, int nbPawns) {
+		return this.getAterritory(idTerritoryA).moveFortify(this.getAterritory(idTerritoryB), nbPawns);
+	}
+	
+	public boolean isAdjacent(int territoryA, int territoryB) {
+		return this.getAterritory(territoryA).isAdjacent(this.getAterritory(territoryB));
+	}
+	
 }

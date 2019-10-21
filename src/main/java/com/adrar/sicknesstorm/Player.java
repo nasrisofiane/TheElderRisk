@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "players")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Player {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +39,7 @@ public class Player {
 	@Column(name ="name")
 	private String name;
 	
+	@JsonIgnoreProperties("territoryAdjacent")
 	@OneToMany(mappedBy = "player" ,cascade = CascadeType.ALL)
 	private Set<Territory> playerTerritories = new HashSet<Territory>();
 
