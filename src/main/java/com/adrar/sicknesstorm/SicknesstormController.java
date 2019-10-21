@@ -53,4 +53,10 @@ public class SicknesstormController {
 	public void addplayer(@RequestBody Player player) {
 
 	 sicknesstormService.addplayer(player);}
-}
+	
+	@GetMapping(value = "/adda/{idPlayer}/{idTerritory}/{pawn}")
+
+	public void addPawn(@PathVariable int idPlayer ,@PathVariable int idTerritory, @PathVariable int pawn) {
+	 sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
+	}
+	}

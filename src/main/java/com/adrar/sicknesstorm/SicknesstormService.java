@@ -28,9 +28,21 @@ public class SicknesstormService{
 	}
 	
 	public List<Territory> getTerritories(){
+	
 		return territoryRepo.findAll();
 	}
 	public  void addplayer(Player player) {
 		 playerRepo.save(player);
 	}
+	
+	public boolean addPawn(int idplayer ,int idTerritory , int pawn ) {
+		if (this.getAplayer(idplayer).getId() == this.getAterritory(idTerritory).getPlayer().getId()){
+		   	this.getAterritory(idTerritory).setPawn(this.getAterritory(idTerritory).getPawn() + pawn);
+		   	territoryRepo.save(this.getAterritory(idTerritory));
+		   	return true;
+		}else {
+			return false;
+		}
+	}
+	
 }
