@@ -31,9 +31,21 @@ public class SicknesstormService{
 	
 		return territoryRepo.findAll();
 	}
+
+	
+	public boolean movePawns(int idTerritoryA, int idTerritoryB, int nbPawns) {
+		return this.getAterritory(idTerritoryA).moveFortify(this.getAterritory(idTerritoryB), nbPawns);
+	}
+	
+	public boolean isAdjacent(int territoryA, int territoryB) {
+		return this.getAterritory(territoryA).isAdjacent(this.getAterritory(territoryB));
+	}
+	
+
 	public  void addplayer(Player player) {
 		 playerRepo.save(player);
 	}
+
 	
 	public boolean addPawn(int idplayer ,int idTerritory , int pawn ) {
 		if (this.getAplayer(idplayer).getId() == this.getAterritory(idTerritory).getPlayer().getId()){
@@ -44,5 +56,4 @@ public class SicknesstormService{
 			return false;
 		}
 	}
-	
 }
