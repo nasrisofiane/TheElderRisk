@@ -9,8 +9,11 @@ import javax.swing.text.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -45,6 +48,7 @@ public class SicknesstormController {
 		return sicknesstormService.getTerritories();
 	}
 	
+
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
 	public boolean moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
 		return sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
@@ -54,4 +58,12 @@ public class SicknesstormController {
 	public boolean isAdjacent(@PathVariable int territoryA, @PathVariable int territoryB) {
 		return sicknesstormService.isAdjacent(territoryA, territoryB);
 	}
+
+	
+	@PostMapping(value = "/add")
+
+	public void addplayer(@RequestBody Player player) {
+
+	 sicknesstormService.addplayer(player);}
+
 }

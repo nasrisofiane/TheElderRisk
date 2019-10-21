@@ -30,6 +30,7 @@ public class SicknesstormService{
 	public List<Territory> getTerritories(){
 		return territoryRepo.findAll();
 	}
+
 	
 	public boolean movePawns(int idTerritoryA, int idTerritoryB, int nbPawns) {
 		return this.getAterritory(idTerritoryA).moveFortify(this.getAterritory(idTerritoryB), nbPawns);
@@ -39,4 +40,9 @@ public class SicknesstormService{
 		return this.getAterritory(territoryA).isAdjacent(this.getAterritory(territoryB));
 	}
 	
+
+	public  void addplayer(Player player) {
+		 playerRepo.save(player);
+	}
+
 }
