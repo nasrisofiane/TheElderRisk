@@ -185,25 +185,39 @@ public class Territory {
 		territory.setPawn(nbPawns);
 	}
 	
-	/*public boolean testTer(Territory territory){ 
-		int i1 = 0;
-        if (territory.getPlayer() == null) {
-        	System.out.println("NON Ameliorer");
-         		return false; 
-          }else{
-      		for(Territory terr : territory.getTerritoryAdjacent()) {
-      			if(terr.getPlayer() == null) {
-      			}else {
-      				System.out.println("OK");
-          			this.testTer(terr);
-      			}
-      			
-      		}
-      		
-      		System.out.println(territory.getTerritoryAdjacent().toString());
-        	return true;  
-        }
-	}  */
+	public boolean checkBeforeMoveFortify(Player player, Territory territoryA, Set<Territory> chemins){ 
+		System.out.println(this.id);
+		this.getTerritoryAdjacent();
+		if(territoryA.getPlayer() != null) {
+			if(territoryA.getPlayer().getId() == player.getId()) {
+				for(Territory territory : this.territoryAdjacent) {
+					if(territory.getPlayer() != null) {
+						if(!chemins.contains(territory) && territory.getPlayer().getId() == player.getId()) {
+							chemins.add(this);
+							if(territory.getId() == territoryA.getId()) {
+								System.out.println("TRUE");
+								return true;
+							}
+							else {
+								System.out.println("Continue");
+								return territory.checkBeforeMoveFortify(player, territoryA, chemins);
+							}
+						}
+					}
+					
+					
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+		System.out.println("FALSE");
+		return false;
+	} 
 	
 	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace) { //move pawn from a territory to another.
 		if(isAdjacent(targetTerritory) && (this.pawn > 1)) {
@@ -270,7 +284,17 @@ public class Territory {
 
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
+		System.out.println("equals "+this.id+" "+this.name+" "+((Territory)obj).getId()+" "+((Territory)obj).getName());
+
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -278,8 +302,7 @@ public class Territory {
 		if (getClass() != obj.getClass())
 			return false;
 		Territory other = (Territory) obj;
-		//if (id != other.id)
-		if (getId() != other.getId())
+		if (id != other.id)
 			return false;
 		return true;
 	}
