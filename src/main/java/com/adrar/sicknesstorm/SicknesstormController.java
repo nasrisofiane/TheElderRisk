@@ -64,6 +64,11 @@ public class SicknesstormController {
 		sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
 	}
 	
+	
+	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
+	public void startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
+		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense);
+	}
 	/*@GetMapping("/save") Methode de test pour moveFortify, à ne pas toucher !!
 	public void savePlayerIntoATerritory() {
 		sicknesstormService.savePlayerIntoATerritory();

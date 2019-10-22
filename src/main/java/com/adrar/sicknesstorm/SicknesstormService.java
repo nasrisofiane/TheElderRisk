@@ -70,4 +70,8 @@ public class SicknesstormService{
 
         
 }
+	
+	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense) {
+		this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+	}
 }
