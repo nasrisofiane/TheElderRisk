@@ -44,8 +44,8 @@ public class SicknesstormController {
 	
 
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
-	public boolean moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
-		return sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
+	public void moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
+		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
 	}
 	
 	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
@@ -62,7 +62,18 @@ public class SicknesstormController {
 	public void addPawn(@PathVariable int idPlayer ,@PathVariable int idTerritory, @PathVariable int pawn) {
 		sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
 	}
+
+	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
+	public void startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
+		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense);
+	}
 	
+	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" siginfie addTerritoryToPlayer*/
+	public void addTerritoryToPlayer(@PathVariable int idplayer ,@PathVariable int idTerritory) {
+		sicknesstormService.addTerritoryToPlayer(idplayer, idTerritory);
+	}
+	
+
 }
 
 
