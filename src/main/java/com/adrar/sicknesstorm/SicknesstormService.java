@@ -1,6 +1,8 @@
 package com.adrar.sicknesstorm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,11 +27,10 @@ public class SicknesstormService{
 	
 	public Territory getAterritory(Integer id) {
 		//territoryRepo.getOne(id).testTer(territoryRepo.getOne(id));
-		return territoryRepo.getOne(id);
+		return territoryRepo.findById(id).get();
 	}
 	
 	public List<Territory> getTerritories(){
-	
 		return territoryRepo.findAll();
 	}
 
@@ -39,12 +40,6 @@ public class SicknesstormService{
 	
 	public void addPlayer(Player player) {
 		 playerRepo.save(player);
-	}
-	
-	//A SUPRIMER CECI EST UN TEST
-	public void savePlayerIntoATerritory() {
-		this.getAterritory(3).setPlayer(this.getAplayer(1));
-		territoryRepo.save(this.getAterritory(3));
 	}
 	
 	public boolean addPawn(int idplayer ,int idTerritory , int pawn ) {
