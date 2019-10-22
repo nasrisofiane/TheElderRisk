@@ -42,6 +42,23 @@ public class SicknesstormService{
 		 playerRepo.save(player);
 	}
 	
+	public void initializeGame(Game game) {
+		game.initialize(this.getAllPlayers());
+		for(Player player : game.getPlayerList()) {
+			int i = 0;
+			int j = 0;
+			for(Territory territory : this.getTerritories()) {
+				territory.setPlayer(player);
+				i++;
+				if(i == j +7) {
+					j = i;
+					break;
+				}
+			}
+			playerRepo.save(player);
+		}
+	}
+	
 	public boolean addPawn(int idplayer ,int idTerritory , int pawn ) {
 		if(this.getAterritory(idTerritory).getPlayer()!= null) {
 			if (this.getAplayer(idplayer).getId() == this.getAterritory(idTerritory).getPlayer().getId()){
@@ -54,17 +71,14 @@ public class SicknesstormService{
 		}else {
 			return false;
 		}
-		
 	}
 	
 	public void movePawns (int idTerritorya , int idTerritoryb , int pawn) {
         this.getAterritory(idTerritorya).setPawn(this.getAterritory(idTerritorya).getPawn()-pawn);
         this.getAterritory(idTerritoryb).setPawn(pawn);
 	   	territoryRepo.save(this.getAterritory(idTerritorya));
-		territoryRepo.save(this.getAterritory(idTerritoryb));
-
-        
-}
+		territoryRepo.save(this.getAterritory(idTerritoryb));    
+	}
 	
 	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense) {
 		this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
@@ -73,6 +87,7 @@ public class SicknesstormService{
 	public void addTerritoryToPlayer ( int idplayer , int idTerritory) {
 		this.getAterritory(idTerritory).setPlayer(this.getAplayer(idplayer));
 		playerRepo.save(this.getAplayer(idplayer));
-		territoryRepo.save(this.getAterritory(idTerritory));}
+		territoryRepo.save(this.getAterritory(idTerritory));
+	}
 
 }

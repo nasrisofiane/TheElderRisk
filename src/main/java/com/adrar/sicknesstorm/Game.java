@@ -1,12 +1,15 @@
 package com.adrar.sicknesstorm;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Game {
 	private int id; 
-	private ArrayList<Player> playerList = new ArrayList();	
+	private List<Player> playerList = new ArrayList();	
 	
-	public  void round(Player player) {
+	public void round(Player player) {
 		/*int pawnToPlace = 3;
 		Territory territory = player.getPlayerTerritories().get(0);
 		Territory targetTerritory = player.getPlayerTerritories().get(0);
@@ -14,6 +17,26 @@ public class Game {
 		territory.moveFortify(territory, targetTerritory);*/
 	}
 	
+	public void initialize(List<Player> players) {
+		this.playerList = players;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<Player> getPlayerList() {
+		return playerList;
+	}
+
+	public void setPlayerList(List<Player> playerList) {
+		this.playerList = playerList;
+	}
+
 	public void addPlayer(Player player) {
 		playerList.add(player);
 	}
@@ -22,7 +45,6 @@ public class Game {
 		playerList.remove(player);	
 
 	}
-	
 	/**
 	 * start the game with a while loop that call a round with the next player passed in parameter
 	 */
