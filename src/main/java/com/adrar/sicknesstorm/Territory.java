@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name ="territories")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Territory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -185,7 +185,27 @@ public class Territory {
 		territory.setPawn(nbPawns);
 	}
 	
-	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace ) { //move pawn from a territory to another.
+	/*public boolean testTer(Territory territory){ 
+		int i1 = 0;
+        if (territory.getPlayer() == null) {
+        	System.out.println("NON Ameliorer");
+         		return false; 
+          }else{
+      		for(Territory terr : territory.getTerritoryAdjacent()) {
+      			if(terr.getPlayer() == null) {
+      			}else {
+      				System.out.println("OK");
+          			this.testTer(terr);
+      			}
+      			
+      		}
+      		
+      		System.out.println(territory.getTerritoryAdjacent().toString());
+        	return true;  
+        }
+	}  */
+	
+	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace) { //move pawn from a territory to another.
 		if(isAdjacent(targetTerritory) && (this.pawn > 1)) {
 			this.pawn = this.pawn-nbPawnDeplace;
 			System.out.println(this.pawn);
