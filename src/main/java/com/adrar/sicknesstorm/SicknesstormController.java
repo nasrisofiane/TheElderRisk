@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SicknesstormController {
 	@Autowired
 	SicknesstormService sicknesstormService;
+	
+	Game game = new Game();
 	
 	@GetMapping("/player/{id}")
 	public Player getPlayer(@PathVariable Integer id) {
@@ -72,6 +76,14 @@ public class SicknesstormController {
 	public void addTerritoryToPlayer(@PathVariable int idplayer ,@PathVariable int idTerritory) {
 		sicknesstormService.addTerritoryToPlayer(idplayer, idTerritory);
 	}
+	
+	@GetMapping("/initializegame")
+	public Game initializeGame() {
+		
+		sicknesstormService.initializeGame(this.game);
+		return game;
+	}
+	
 	
 
 }
