@@ -64,10 +64,10 @@ public class SicknesstormController {
 		sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
 	}
 	
-	@GetMapping("/save")
+	/*@GetMapping("/save") Methode de test pour moveFortify, à ne pas toucher !!
 	public void savePlayerIntoATerritory() {
 		sicknesstormService.savePlayerIntoATerritory();
-	}
+	}*/
 }
 
 

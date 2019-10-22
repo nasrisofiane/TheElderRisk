@@ -24,7 +24,7 @@ public class SicknesstormService{
 	}
 	
 	public Territory getAterritory(Integer id) {
-		territoryRepo.getOne(id).testTer(territoryRepo.getOne(id));
+		//territoryRepo.getOne(id).testTer(territoryRepo.getOne(id));
 		return territoryRepo.getOne(id);
 	}
 	

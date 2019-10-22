@@ -185,7 +185,7 @@ public class Territory {
 		territory.setPawn(nbPawns);
 	}
 	
-	public boolean testTer(Territory territory){ 
+	/*public boolean testTer(Territory territory){ 
 		int i1 = 0;
         if (territory.getPlayer() == null) {
         	System.out.println("NON Ameliorer");
@@ -203,7 +203,7 @@ public class Territory {
       		System.out.println(territory.getTerritoryAdjacent().toString());
         	return true;  
         }
-	}  
+	}  */
 	
 	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace) { //move pawn from a territory to another.
 		if(isAdjacent(targetTerritory) && (this.pawn > 1)) {
