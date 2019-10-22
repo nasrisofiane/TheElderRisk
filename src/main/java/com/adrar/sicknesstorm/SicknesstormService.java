@@ -33,10 +33,6 @@ public class SicknesstormService{
 		return territoryRepo.findAll();
 	}
 
-	public boolean movePawns(int idTerritoryA, int idTerritoryB, int nbPawns) {
-		return this.getAterritory(idTerritoryA).moveFortify(this.getAterritory(idTerritoryB), nbPawns);
-	}
-	
 	public boolean isAdjacent(int territoryA, int territoryB) {
 		return this.getAterritory(territoryA).isAdjacent(this.getAterritory(territoryB));
 	}
@@ -65,4 +61,13 @@ public class SicknesstormService{
 		}
 		
 	}
+	
+	public void movePawns (int idTerritorya , int idTerritoryb , int pawn) {
+        this.getAterritory(idTerritorya).setPawn(this.getAterritory(idTerritorya).getPawn()-pawn);
+        this.getAterritory(idTerritoryb).setPawn(pawn);
+	   	territoryRepo.save(this.getAterritory(idTerritorya));
+		territoryRepo.save(this.getAterritory(idTerritoryb));
+
+        
+}
 }

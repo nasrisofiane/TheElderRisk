@@ -44,8 +44,8 @@ public class SicknesstormController {
 	
 
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
-	public boolean moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
-		return sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
+	public void moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
+		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
 	}
 	
 	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
