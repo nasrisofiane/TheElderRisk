@@ -74,4 +74,10 @@ public class SicknesstormService{
 	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense) {
 		this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
 	}
+	
+	public void addTerritoryToPlayer ( int idplayer , int idTerritory) {
+		this.getAterritory(idTerritory).setPlayer(this.getAplayer(idplayer));
+		playerRepo.save(this.getAplayer(idplayer));
+		territoryRepo.save(this.getAterritory(idTerritory));}
+
 }
