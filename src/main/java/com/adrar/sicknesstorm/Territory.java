@@ -195,11 +195,9 @@ public class Territory {
 						if(!chemins.contains(territory) && territory.getPlayer().getId() == player.getId()) {
 							chemins.add(this);
 							if(territory.getId() == territoryA.getId()) {
-								System.out.println("TRUE");
 								return true;
 							}
 							else {
-								System.out.println("Continue");
 								return territory.checkBeforeMoveFortify(player, territoryA, chemins);
 							}
 						}
@@ -215,7 +213,6 @@ public class Territory {
 		else {
 			return false;
 		}
-		System.out.println("FALSE");
 		return false;
 	} 
 	

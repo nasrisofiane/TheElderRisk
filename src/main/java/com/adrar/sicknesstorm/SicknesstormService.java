@@ -1,6 +1,7 @@
 package com.adrar.sicknesstorm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -44,19 +45,21 @@ public class SicknesstormService{
 	
 	public void initializeGame(Game game) {
 		game.initialize(this.getAllPlayers());
+		List<Territory> territories = this.getTerritories();
+		Collections.shuffle(territories);
+		int j = 0;
 		for(Player player : game.getPlayerList()) {
-			int i = 0;
-			int j = 0;
-			for(Territory territory : this.getTerritories()) {
-				territory.setPlayer(player);
-				i++;
-				if(i == j +7) {
+			for(int i = j; i < territories.size(); i++) {
+				territories.get(i).setPlayer(player);
+				territories.get(i).setPawn(5);
+				territoryRepo.save(territories.get(i));
+				if(i == j + territories.size() / game.getPlayerList().size()) {
 					j = i;
 					break;
 				}
 			}
-			playerRepo.save(player);
 		}
+		System.out.println(j);
 	}
 	
 	public boolean addPawn(int idplayer ,int idTerritory , int pawn ) {
