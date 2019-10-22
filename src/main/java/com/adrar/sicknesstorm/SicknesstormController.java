@@ -70,7 +70,7 @@ public class SicknesstormController {
 		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense);
 	}
 	
-	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")
+	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" siginfie addTerritoryToPlayer*/
 	public void addTerritoryToPlayer(@PathVariable int idplayer ,@PathVariable int idTerritory) {
 		sicknesstormService.addTerritoryToPlayer(idplayer, idTerritory);
 	}
