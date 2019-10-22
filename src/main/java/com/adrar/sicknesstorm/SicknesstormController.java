@@ -24,7 +24,6 @@ public class SicknesstormController {
 	
 	@GetMapping("/player/{id}")
 	public Player getPlayer(@PathVariable Integer id) {
-		
 		return sicknesstormService.getAplayer(id);																																																																																																																																																																												
 	}
 	
@@ -35,12 +34,7 @@ public class SicknesstormController {
 	
 	@GetMapping("/territory/{id}")
 	public Territory getTerritory(@PathVariable Integer id) {
-		Territory changeFormatTerritory = sicknesstormService.getAterritory(id);
-		for(Territory territory : changeFormatTerritory.getTerritoryAdjacent()) {
-			territory.setTerritoryAdjacent(null);
-			territory.setPlayer(null);
-		}
-		return changeFormatTerritory;
+		return sicknesstormService.getAterritory(id);
 	}
 	
 	@GetMapping("/territories")
@@ -59,21 +53,21 @@ public class SicknesstormController {
 		return sicknesstormService.isAdjacent(territoryA, territoryB);
 	}
 
-	
-	@PostMapping(value = "/add")
-
-	public void addplayer(@RequestBody Player player) {
-
-	 sicknesstormService.addplayer(player);}
+	@PostMapping(value = "/addplayer")
+	public void addPlayer(@RequestBody Player player) {
+		sicknesstormService.addPlayer(player);
+	}
 
 	
-	@GetMapping(value = "/adda/{idPlayer}/{idTerritory}/{pawn}")
-
+	@GetMapping(value = "/addpawn/{idPlayer}/{idTerritory}/{pawn}")
 	public void addPawn(@PathVariable int idPlayer ,@PathVariable int idTerritory, @PathVariable int pawn) {
-	 sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
+		sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
 	}
+	
+	@GetMapping("/save")
+	public void savePlayerIntoATerritory() {
+		sicknesstormService.savePlayerIntoATerritory();
 	}
-
-
 }
+
 

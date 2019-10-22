@@ -30,7 +30,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "players")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Player {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
