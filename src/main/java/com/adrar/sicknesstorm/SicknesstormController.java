@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SicknesstormController {
 	@Autowired
 	SicknesstormService sicknesstormService;
+	
+	Game game = new Game();
 	
 	@GetMapping("/player/{id}")
 	public Player getPlayer(@PathVariable Integer id) {
@@ -44,7 +48,7 @@ public class SicknesstormController {
 
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
 	public void moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
-		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
+		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns, this.game);
 	}
 	
 	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
@@ -57,14 +61,14 @@ public class SicknesstormController {
 		sicknesstormService.addPlayer(player);
 	}
 	
-	@GetMapping(value = "/addpawn/{idPlayer}/{idTerritory}/{pawn}")
-	public void addPawn(@PathVariable int idPlayer ,@PathVariable int idTerritory, @PathVariable int pawn) {
-		sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
+	@GetMapping(value = "/addpawn/{idTerritory}/{pawn}")
+	public void addPawn(@PathVariable int idTerritory, @PathVariable int pawn) {
+		sicknesstormService.addPawn(idTerritory, pawn, this.game );
 	}
 
 	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
 	public void startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
-		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense);
+		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
 	}
 	
 	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" signifie addTerritoryToPlayer*/
@@ -72,7 +76,22 @@ public class SicknesstormController {
 		sicknesstormService.addTerritoryToPlayer(idplayer, idTerritory);
 	}
 	
-
+	@GetMapping("/initializegame")
+	public Game initializeGame() {
+		
+		sicknesstormService.initializeGame(this.game);
+		return game;
+	}
+	
+	@GetMapping("/closefightstep")
+	public void closeFightStep() {
+		sicknesstormService.closeFightStep(this.game);
+	}
+	
+	@GetMapping("/closemovefortifystep")
+	public void closeMoveFortifyStep() {
+		sicknesstormService.closeMoveFortifyStep(this.game);
+	}
 }
 
 
