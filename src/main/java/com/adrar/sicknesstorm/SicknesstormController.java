@@ -92,6 +92,11 @@ public class SicknesstormController {
 	public void closeMoveFortifyStep() {
 		sicknesstormService.closeMoveFortifyStep(this.game);
 	}
+	
+	@GetMapping("/roundphase")
+	public GamePhase gamePhase() {
+		return sicknesstormService.gamePhase(this.game);
+	}
 }
 
 

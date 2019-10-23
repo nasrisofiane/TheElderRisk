@@ -11,9 +11,11 @@ public class Game {
 	private int turnPlayerNumber = 0;
 	private Player playerTurn;
 	private int pawnsToPlace;
-	private boolean placePawnDone;
+	private GamePhase phase = GamePhase.PLACEPAWN;
+	/*private boolean placePawnDone;
 	private boolean attackDone;
 	private boolean moveFortifyDone;
+	*/
 	
 	public int getTurnPlayerNumber() {
 		return turnPlayerNumber;
@@ -23,7 +25,7 @@ public class Game {
 		this.turnPlayerNumber = turnPlayerNumber;
 	}
 
-	public boolean isPlacePawnDone() {
+	/*public boolean isPlacePawnDone() {
 		return placePawnDone;
 	}
 
@@ -45,16 +47,20 @@ public class Game {
 
 	public void setMoveFortifyDone(boolean moveFortifyDone) {
 		this.moveFortifyDone = moveFortifyDone;
-	}
+	}*/
 
 	public void initialize(List<Player> players) {
 		this.playerList = players;
 	}
-	
+	/**
+	 * set all boolean all phases of a round to false and return the player that have to play
+	 * @return the player that have to play
+	 */
 	public Player round() {
-		this.placePawnDone = false;
+		/*this.placePawnDone = false;
 		this.attackDone = false;
-		this.moveFortifyDone = false;
+		this.moveFortifyDone = false;*/
+		this.phase = GamePhase.PLACEPAWN;
 		this.playerTurn = this.playerList.get(this.turnPlayerNumber);
 		this.pawnsToPlace = playerTurn.getPlayerTerritories().size() / 3;
 		if(this.turnPlayerNumber < this.playerList.size()) {
@@ -85,7 +91,11 @@ public class Game {
 		this.pawnsToPlace = pawnsToPlace;
 	}
 
-	public String checkRoundStep() {
+	/**
+	 * 
+	 * @return return a String with the step that have not been done.
+	 */
+	/*public String checkRoundStep() {
 		if(this.placePawnDone == true) {
 			if(this.attackDone == true) {
 				if(this.moveFortifyDone == true) {
@@ -103,10 +113,22 @@ public class Game {
 			return "placePawnStep";
 		}
 		return null;
-	}
+	}*/
+	
+	
 	
 	public int getId() {
 		return id;
+	}
+
+	
+
+	public GamePhase getPhase() {
+		return phase;
+	}
+
+	public void setPhase(GamePhase phase) {
+		this.phase = phase;
 	}
 
 	public void setId(int id) {
