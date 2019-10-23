@@ -8,17 +8,101 @@ import java.util.Set;
 public class Game {
 	private int id; 
 	private List<Player> playerList = new ArrayList();	
+	private int turnPlayerNumber = 0;
+	private Player playerTurn;
+	private int pawnsToPlace;
+	private boolean placePawnDone;
+	private boolean attackDone;
+	private boolean moveFortifyDone;
 	
-	public void round(Player player) {
-		/*int pawnToPlace = 3;
-		Territory territory = player.getPlayerTerritories().get(0);
-		Territory targetTerritory = player.getPlayerTerritories().get(0);
-		territory.attack(territory, 1, 2);
-		territory.moveFortify(territory, targetTerritory);*/
+	public int getTurnPlayerNumber() {
+		return turnPlayerNumber;
 	}
-	
+
+	public void setTurnPlayerNumber(int turnPlayerNumber) {
+		this.turnPlayerNumber = turnPlayerNumber;
+	}
+
+	public boolean isPlacePawnDone() {
+		return placePawnDone;
+	}
+
+	public void setPlacePawnDone(boolean placePawnDone) {
+		this.placePawnDone = placePawnDone;
+	}
+
+	public boolean isAttackDone() {
+		return attackDone;
+	}
+
+	public void setAttackDone(boolean attackDone) {
+		this.attackDone = attackDone;
+	}
+
+	public boolean isMoveFortifyDone() {
+		return moveFortifyDone;
+	}
+
+	public void setMoveFortifyDone(boolean moveFortifyDone) {
+		this.moveFortifyDone = moveFortifyDone;
+	}
+
 	public void initialize(List<Player> players) {
 		this.playerList = players;
+	}
+	
+	public Player round() {
+		this.placePawnDone = false;
+		this.attackDone = false;
+		this.moveFortifyDone = false;
+		this.playerTurn = this.playerList.get(this.turnPlayerNumber);
+		this.pawnsToPlace = playerTurn.getPlayerTerritories().size() / 3;
+		if(this.turnPlayerNumber < this.playerList.size()) {
+			this.turnPlayerNumber += 1;
+		}
+		else {
+			this.turnPlayerNumber += 0;
+		}
+		System.out.println("Player TURN => "+playerTurn.getName());
+		return playerTurn;
+	}
+	
+	
+	
+	public Player getPlayerTurn() {
+		return playerTurn;
+	}
+
+	public void setPlayerTurn(Player playerTurn) {
+		this.playerTurn = playerTurn;
+	}
+
+	public int getPawnsToPlace() {
+		return pawnsToPlace;
+	}
+
+	public void setPawnsToPlace(int pawnsToPlace) {
+		this.pawnsToPlace = pawnsToPlace;
+	}
+
+	public String checkRoundStep() {
+		if(this.placePawnDone == true) {
+			if(this.attackDone == true) {
+				if(this.moveFortifyDone == true) {
+					this.round();
+				}
+				else {
+					return "moveFortifyStep";
+				}
+			}
+			else {
+				return "attackStep";
+			}
+		}
+		else {
+			return "placePawnStep";
+		}
+		return null;
 	}
 	
 	public int getId() {
@@ -45,20 +129,10 @@ public class Game {
 		playerList.remove(player);	
 
 	}
-	/**
-	 * start the game with a while loop that call a round with the next player passed in parameter
-	 */
+	
 	public void startGame() {
-		int playerTurn = 0;
-		while(this.playerList.size() > 1) {
-			this.round(this.playerList.get(playerTurn));
-			if(playerList.size() >= playerTurn+1){
-				playerTurn += 1;
-			}
-			else {
-				playerTurn = 0;
-			}
-		}
+		
+		
 	}
 	
 	public void endGame() {

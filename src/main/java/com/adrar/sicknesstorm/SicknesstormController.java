@@ -49,7 +49,7 @@ public class SicknesstormController {
 
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
 	public void moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
-		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns);
+		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns, this.game);
 	}
 	
 	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
@@ -62,14 +62,14 @@ public class SicknesstormController {
 		sicknesstormService.addPlayer(player);
 	}
 	
-	@GetMapping(value = "/addpawn/{idPlayer}/{idTerritory}/{pawn}")
-	public void addPawn(@PathVariable int idPlayer ,@PathVariable int idTerritory, @PathVariable int pawn) {
-		sicknesstormService.addPawn(idPlayer ,idTerritory, pawn );
+	@GetMapping(value = "/addpawn/{idTerritory}/{pawn}")
+	public void addPawn(@PathVariable int idTerritory, @PathVariable int pawn) {
+		sicknesstormService.addPawn(idTerritory, pawn, this.game );
 	}
 
 	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
 	public void startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
-		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense);
+		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
 	}
 	
 	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" siginfie addTerritoryToPlayer*/
@@ -84,8 +84,15 @@ public class SicknesstormController {
 		return game;
 	}
 	
+	@GetMapping("/closefightstep")
+	public void closeFightStep() {
+		sicknesstormService.closeFightStep(this.game);
+	}
 	
-
+	@GetMapping("/closemovefortifystep")
+	public void closeMoveFortifyStep() {
+		sicknesstormService.closeMoveFortifyStep(this.game);
+	}
 }
 
 

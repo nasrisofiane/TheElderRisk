@@ -60,31 +60,66 @@ public class SicknesstormService{
 			}
 		}
 		System.out.println(j);
+		game.round();
 	}
 	
-	public boolean addPawn(int idplayer ,int idTerritory , int pawn ) {
-		if(this.getAterritory(idTerritory).getPlayer()!= null) {
-			if (this.getAplayer(idplayer).getId() == this.getAterritory(idTerritory).getPlayer().getId()){
-			   	this.getAterritory(idTerritory).setPawn(this.getAterritory(idTerritory).getPawn() + pawn);
-			   	territoryRepo.save(this.getAterritory(idTerritory));
-			   	return true;
-			}else {
+	public boolean addPawn(int idTerritory , int pawn, Game game ) {
+			Territory territory = this.getAterritory(idTerritory);
+			if(game.getPlayerTurn().getId() == territory.getPlayer().getId()) {
+				if(game.getPawnsToPlace() > 0 && pawn <= game.getPawnsToPlace()) {
+					
+					game.setPawnsToPlace(game.getPawnsToPlace() - pawn);
+					territory.setPawn(territory.getPawn() + pawn);
+				   	territoryRepo.save(territory);
+				   	if(game.getPawnsToPlace() == 0) {
+				   		game.setPlacePawnDone(true);
+				   	}
+				   	else {
+				   		System.out.println("YOU HAVE TO PLACE ALL YOUR AVAILABLE PAWNS");
+				   	}
+				   	return true;
+				}
+				else {
+					System.out.println("NOT ENOUGH PAWNS");
+				}
+			   	
+			}
+			else {
+				System.out.println("NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER" + territory.getPlayer().getName());
 				return false;
 			}
-		}else {
-			return false;
+		return false;
+	}
+	
+	public void movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
+		if(game.checkRoundStep() == "moveFortifyStep") {
+			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritorya).getPlayer().getId()) {
+					this.getAterritory(idTerritorya).moveFortify(this.getAterritory(idTerritoryb), pawn);
+				   	territoryRepo.save(this.getAterritory(idTerritorya));
+					territoryRepo.save(this.getAterritory(idTerritoryb));  
+			}
+		}
+		else {
+			System.out.println("MOVE PAWNS NOT AVAILABLE");
 		}
 	}
 	
-	public void movePawns (int idTerritorya , int idTerritoryb , int pawn) {
-        this.getAterritory(idTerritorya).setPawn(this.getAterritory(idTerritorya).getPawn()-pawn);
-        this.getAterritory(idTerritoryb).setPawn(pawn);
-	   	territoryRepo.save(this.getAterritory(idTerritorya));
-		territoryRepo.save(this.getAterritory(idTerritoryb));    
-	}
-	
-	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense) {
-		this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
+		if(game.checkRoundStep() == "attackStep") {
+			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritoryAtk).getPlayer().getId()) {
+				this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+				territoryRepo.save(this.getAterritory(idTerritoryAtk));
+				territoryRepo.save(this.getAterritory(idTerritoryDef));
+			}
+			else {
+				System.out.println("NOT YOUR TERRITORY");
+			}
+		}
+		else {
+			System.out.println("ATTACK IS NOT AVAILABLE");
+		}
+		
+		
 	}
 	
 	public void addTerritoryToPlayer ( int idplayer , int idTerritory) {
@@ -92,5 +127,13 @@ public class SicknesstormService{
 		playerRepo.save(this.getAplayer(idplayer));
 		territoryRepo.save(this.getAterritory(idTerritory));
 	}
-
+	
+	public void closeFightStep(Game game) {
+		game.setAttackDone(true);
+	}
+	
+	public void closeMoveFortifyStep(Game game) {
+		game.setMoveFortifyDone(true);
+		game.checkRoundStep();
+	}
 }
