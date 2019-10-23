@@ -2,6 +2,7 @@ package com.adrar.sicknesstorm;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -148,10 +149,10 @@ public class Territory {
 	 * if the attacker get all pawn from the attacked territory, call conquerTerritory(Territory, Nbpawns)
 	 */
 	public void attack(Territory territory, int nbAttack, int nbDefense) {
-		if(nbAttack >= 3) {//secure the number of dice thrown for the attacker
+		if(nbAttack > territory.getPawn()) {//secure the number of dice thrown for the attacker
 			nbAttack = 1;
 		}
-		if(nbDefense > 2) { //secure the number of dice thrown for the defender
+		if(nbDefense > this.pawn) { //secure the number of dice thrown for the defender
 			nbDefense = 1;
 		}
 		if(isAdjacent(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
@@ -173,6 +174,9 @@ public class Territory {
 			}
 			if(territory.getPawn() <= 0) {
 				this.conquerTerritory(territory, resultats.get(0));
+			}
+			if(this.pawn <= 0) {
+				territory.conquerTerritory(this, resultats.get(1));
 			}
 		}//END OF : if the territory attacked is a neighbor of this territory so the fight can be executed
 		else {
@@ -217,16 +221,17 @@ public class Territory {
 	} 
 	
 	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace) { //move pawn from a territory to another.
-		if(isAdjacent(targetTerritory) && (this.pawn > 1)) {
-			this.pawn = this.pawn-nbPawnDeplace;
-			System.out.println(this.pawn);
-			targetTerritory.setPawn(targetTerritory.getPawn()+ nbPawnDeplace);
-			System.out.println(this.pawn);
-			return true;
+		 Set<Territory> chemins = new HashSet<Territory>();
+		if(this.checkBeforeMoveFortify(this.player, targetTerritory, chemins) == true) {
+			if(this.pawn - nbPawnDeplace >= 1) {
+				targetTerritory.setPawn(targetTerritory.getPawn() + nbPawnDeplace);
+				this.pawn -= nbPawnDeplace;
+			}
+			else {
+				System.out.println("Not enough pawns");
+			}
 		}
-		else {
-			return false;
-		}
+		return this.checkBeforeMoveFortify(this.player, targetTerritory, chemins);
 	}
 	
 	public boolean shifumi() {
