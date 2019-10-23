@@ -67,8 +67,8 @@ public class SicknesstormController {
 	}
 
 	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
-	public void startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
-		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
+	public String startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
+		return sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
 	}
 	
 	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" signifie addTerritoryToPlayer*/
@@ -78,19 +78,18 @@ public class SicknesstormController {
 	
 	@GetMapping("/initializegame")
 	public Game initializeGame() {
-		
 		sicknesstormService.initializeGame(this.game);
 		return game;
 	}
 	
 	@GetMapping("/closefightstep")
-	public void closeFightStep() {
-		sicknesstormService.closeFightStep(this.game);
+	public String closeFightStep() {
+		return sicknesstormService.closeFightStep(this.game);
 	}
 	
 	@GetMapping("/closemovefortifystep")
-	public void closeMoveFortifyStep() {
-		sicknesstormService.closeMoveFortifyStep(this.game);
+	public String closeMoveFortifyStep() {
+		return sicknesstormService.closeMoveFortifyStep(this.game);
 	}
 	
 	@GetMapping("/roundphase")

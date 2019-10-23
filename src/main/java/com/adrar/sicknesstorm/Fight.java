@@ -43,14 +43,17 @@ public class Fight {
 	 */
 	public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
 		if(nbAtk <= this.nbPawnMaxAtk && nbDef <= this.nbPawnMaxDef) {
-			ArrayList<Integer> resultat = this.checkWinner(this.dice(nbAtk), this.dice(nbDef));
-			System.out.println(resultat);
-			return resultat;
+			
 		}
 		else {
-			System.out.println("ici");
-			return null;
+			System.out.println("ERROR START");
+			System.out.println("Attacker number of dice =>"+nbAtk);
+			System.out.println("Defender number of dice =>"+nbDef);
+			System.out.println("ERROR END");
 		}
+		ArrayList<Integer> resultat = this.checkWinner(this.dice(nbAtk), this.dice(nbDef));
+		System.out.println(resultat);
+		return resultat;
 	}
 	
 	public ArrayList<Integer> checkWinner(ArrayList<Integer>atk , ArrayList<Integer> defd) {
