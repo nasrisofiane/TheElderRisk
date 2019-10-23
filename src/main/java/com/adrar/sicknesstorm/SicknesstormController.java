@@ -45,7 +45,6 @@ public class SicknesstormController {
 	public List<Territory> getTerritories(){
 		return sicknesstormService.getTerritories();
 	}
-	
 
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
 	public void moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
@@ -72,7 +71,7 @@ public class SicknesstormController {
 		sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
 	}
 	
-	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" siginfie addTerritoryToPlayer*/
+	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" signifie addTerritoryToPlayer*/
 	public void addTerritoryToPlayer(@PathVariable int idplayer ,@PathVariable int idTerritory) {
 		sicknesstormService.addTerritoryToPlayer(idplayer, idTerritory);
 	}
