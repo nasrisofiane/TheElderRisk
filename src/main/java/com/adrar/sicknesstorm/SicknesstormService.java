@@ -43,12 +43,13 @@ public class SicknesstormService{
 		 playerRepo.save(player);
 	}
 	
+	//Initialize the game with all the players, shuffle the territories and start Round method.
 	public void initializeGame(Game game) {
 		game.initialize(this.getAllPlayers());
 		List<Territory> territories = this.getTerritories();
 		Collections.shuffle(territories);
 		int j = 0;
-		for(Player player : game.getPlayerList()) {
+		for(Player player : game.getPlayerList()) { //affect all territories randomly to all players.
 			for(int i = j; i < territories.size(); i++) {
 				territories.get(i).setPlayer(player);
 				territories.get(i).setPawn(5);
@@ -59,12 +60,12 @@ public class SicknesstormService{
 				}
 			}
 		}
-		System.out.println(j);
 		game.round();
 	}
 	
 	public boolean addPawn(int idTerritory , int pawn, Game game ) {
 			Territory territory = this.getAterritory(idTerritory);
+			
 			if(game.getPlayerTurn().getId() == territory.getPlayer().getId()) {
 				if(game.getPawnsToPlace() > 0 && pawn <= game.getPawnsToPlace()) {
 					
@@ -72,7 +73,7 @@ public class SicknesstormService{
 					territory.setPawn(territory.getPawn() + pawn);
 				   	territoryRepo.save(territory);
 				   	if(game.getPawnsToPlace() == 0) {
-				   		game.setPlacePawnDone(true);
+				   		game.setPhase(GamePhase.ATTACK);
 				   	}
 				   	else {
 				   		System.out.println("YOU HAVE TO PLACE ALL YOUR AVAILABLE PAWNS");
@@ -92,7 +93,7 @@ public class SicknesstormService{
 	}
 	
 	public void movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
-		if(game.checkRoundStep() == "moveFortifyStep") {
+		if(game.getPhase() == GamePhase.MOVEFORTIFY) {
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritorya).getPlayer().getId()) {
 					this.getAterritory(idTerritorya).moveFortify(this.getAterritory(idTerritoryb), pawn);
 				   	territoryRepo.save(this.getAterritory(idTerritorya));
@@ -105,7 +106,7 @@ public class SicknesstormService{
 	}
 	
 	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
-		if(game.checkRoundStep() == "attackStep") {
+		if(game.getPhase() == GamePhase.ATTACK) {
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritoryAtk).getPlayer().getId()) {
 				this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
 				territoryRepo.save(this.getAterritory(idTerritoryAtk));
@@ -129,11 +130,15 @@ public class SicknesstormService{
 	}
 	
 	public void closeFightStep(Game game) {
-		game.setAttackDone(true);
+		game.setPhase(GamePhase.MOVEFORTIFY);
 	}
 	
 	public void closeMoveFortifyStep(Game game) {
-		game.setMoveFortifyDone(true);
-		game.checkRoundStep();
+		//game.setMoveFortifyDone(true);
+		game.round();
+	}
+	
+	public GamePhase gamePhase(Game game) {
+		return game.getPhase();
 	}
 }
