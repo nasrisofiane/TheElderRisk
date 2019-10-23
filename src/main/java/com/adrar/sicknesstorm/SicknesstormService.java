@@ -45,22 +45,28 @@ public class SicknesstormService{
 	
 	//Initialize the game with all the players, shuffle the territories and start Round method.
 	public void initializeGame(Game game) {
-		game.initialize(this.getAllPlayers());
-		List<Territory> territories = this.getTerritories();
-		Collections.shuffle(territories);
-		int j = 0;
-		for(Player player : game.getPlayerList()) { //affect all territories randomly to all players.
-			for(int i = j; i < territories.size(); i++) {
-				territories.get(i).setPlayer(player);
-				territories.get(i).setPawn(5);
-				territoryRepo.save(territories.get(i));
-				if(i == j + territories.size() / game.getPlayerList().size()) {
-					j = i;
-					break;
+		if(game.getPhase() == GamePhase.INITIALIZE) {
+			game.initialize(this.getAllPlayers());
+			List<Territory> territories = this.getTerritories();
+			Collections.shuffle(territories);
+			int j = 0;
+			
+			for(Player player : game.getPlayerList()) { //affect all territories randomly to all players.
+				for(int i = j; i < territories.size(); i++) {
+					territories.get(i).setPlayer(player);
+					territories.get(i).setPawn(5);
+					territoryRepo.save(territories.get(i));
+					if(i == j + territories.size() / game.getPlayerList().size()) {
+						j = i;
+						break;
+					}
 				}
 			}
+			game.round();
 		}
-		game.round();
+		else {
+			System.out.println("GAME ALREADY INITIALIZED");
+		}
 	}
 	
 	public boolean addPawn(int idTerritory , int pawn, Game game ) {
@@ -105,22 +111,27 @@ public class SicknesstormService{
 		}
 	}
 	
-	public void startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
+	public String startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
 		if(game.getPhase() == GamePhase.ATTACK) {
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritoryAtk).getPlayer().getId()) {
-				this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
-				territoryRepo.save(this.getAterritory(idTerritoryAtk));
-				territoryRepo.save(this.getAterritory(idTerritoryDef));
+				if(this.getAterritory(idTerritoryDef).getPlayer().getId() == game.getPlayerTurn().getId()) {
+					return "CANNOT ATTACK YOUR OWN TERRITORIES";
+				}
+				else {
+					this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+					territoryRepo.save(this.getAterritory(idTerritoryAtk));
+					territoryRepo.save(this.getAterritory(idTerritoryDef));
+				}
 			}
 			else {
-				System.out.println("NOT YOUR TERRITORY");
+				return "NOT YOUR TERRITORY";
 			}
 		}
 		else {
-			System.out.println("ATTACK IS NOT AVAILABLE");
+			return "ATTACK IS NOT AVAILABLE";
 		}
 		
-		
+		return "";
 	}
 	
 	public void addTerritoryToPlayer ( int idplayer , int idTerritory) {
@@ -129,13 +140,24 @@ public class SicknesstormService{
 		territoryRepo.save(this.getAterritory(idTerritory));
 	}
 	
-	public void closeFightStep(Game game) {
-		game.setPhase(GamePhase.MOVEFORTIFY);
+	public String closeFightStep(Game game) {
+		if(game.getPhase() == GamePhase.ATTACK) {
+			game.setPhase(GamePhase.MOVEFORTIFY);
+			return "PHASE CHANGED TO => "+ game.getPhase();
+		}
+		else {
+			return "CANNOT CLOSE THE PHASE, PHASE =>"+game.getPhase().toString();
+		}
 	}
 	
-	public void closeMoveFortifyStep(Game game) {
-		//game.setMoveFortifyDone(true);
-		game.round();
+	public String closeMoveFortifyStep(Game game) {
+		if(game.getPhase() == GamePhase.MOVEFORTIFY) {
+			game.round();
+			return "NEXT PLAYER";
+		}
+		else {
+			return "CANNOT CLOSE THE PHASE, PHASE =>"+game.getPhase().toString();
+		}
 	}
 	
 	public GamePhase gamePhase(Game game) {

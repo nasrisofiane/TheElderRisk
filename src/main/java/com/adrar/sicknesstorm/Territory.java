@@ -149,10 +149,10 @@ public class Territory {
 	 * if the attacker get all pawn from the attacked territory, call conquerTerritory(Territory, Nbpawns)
 	 */
 	public void attack(Territory territory, int nbAttack, int nbDefense) {
-		if(nbAttack > territory.getPawn()) {//secure the number of dice thrown for the attacker
+		if(nbAttack > territory.getPawn() || nbAttack > 3) {//secure the number of dice thrown for the attacker
 			nbAttack = 1;
 		}
-		if(nbDefense > this.pawn) { //secure the number of dice thrown for the defender
+		if(nbDefense > this.pawn || nbDefense > 2) { //secure the number of dice thrown for the defender
 			nbDefense = 1;
 		}
 		if(isAdjacent(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
