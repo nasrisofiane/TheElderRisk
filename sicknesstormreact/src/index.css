@@ -1,5 +1,530 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+  
 }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+.tout{
+
+
+height: 600px;
+}
+#Cerveau{ 
+
+ 
+
+}
+ 
+ 
+
+#Cerveau1{ height: 80px;
+  width: 140px;
+   background-color : coral ;
+ border:solid black 2px; 
+ display: inline-block;
+  }
+  #Cerveau2{ height: 80px;
+    background-color : coral ;
+  border:solid black 2px; 
+  width: 140px;
+  display: inline-block;
+}
+  #Cerveau3{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Cerveau4{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Cerveau5{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Cerveau6{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+
+
+
+
+  .Poumondroit{  position:relative;
+   
+  }
+
+
+  
+  #Poumondroit1{ 
+    width: 140px;
+    height: 80px;
+    background-color: red ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+  #Poumondroit2{ height: 80px;
+    background-color: red ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Poumondroit3{ height: 80px;
+    background-color: red ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+
+  
+
+
+
+
+
+  .Poumongauche{  position:relative;
+  }
+
+
+  #Poumongauche1{height: 80px;
+    
+  width: 140px;
+    background-color: white ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+  #Poumongauche2{height: 80px;
+    background-color: white ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Poumongauche3{height: 80px;
+    background-color: white ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  
+
+
+
+
+
+  
+  #Coeur{position:relative;  }
+  
+   #Coeur1{height: 80px;
+    width: 140px;
+    background-color: blue ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+   #Coeur2{height: 80px;
+    background-color: blue ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+ 
+ 
+
+
+
+
+
+   #Foie{ position:relative;  }
+ 
+   #Foie1{ height: 80px;
+    width: 140px;  
+    background-color: brown ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+   #Foie2{ height: 80px;
+    width: 140px;
+    background-color: brown ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+
+   #Foie3{ height: 80px;
+    width: 140px;
+    background-color: brown ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+ 
+   #Rein{ position:relative; 
+  
+}
+   #Rein1{height: 80px;
+    width: 140px;
+    background-color: chocolate ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Rein2{height: 80px;
+    width: 140px;
+    background-color: chocolate ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Rein3{height: 80px;
+    width: 140px;
+    background-color: chocolate ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+ 
+  
+
+
+ 
+ 
+   #Estomac{ position:relative; 
+  
+  }
+   #Estomac1{height: 80px;
+    width: 140px;
+    background-color: violet ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Estomac2{height: 80px;
+    width: 140px;
+    background-color: violet ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+ 
+ 
+ 
+ 
+   #Grosintestin{ position:relative;
+  
+  }
+    #Grosintestin1{ height: 80px;
+      width: 140px;
+      background-color: chartreuse ;
+      border:solid black 2px; 
+      display: inline-block;
+    }
+    #Grosintestin2{ height: 80px;
+      width: 140px;
+      background-color: chartreuse ;
+      border:solid black 2px; 
+      display: inline-block;
+    }
+    #Grosintestin3{ height: 80px;
+      width: 140px;
+      background-color: chartreuse ;
+      border:solid black 2px; 
+      display: inline-block;
+    }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    #Petitintestin{ position:relative;
+    
+    }
+   #Petitintestin1{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Petitintestin2{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Petitintestin3{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Petitintestin4{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+
+   #ca{ 
+    position:relative;
+    left:300px;
+    
+   }
+
+   form.form-example {
+    display: table;
+}
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+#Cerveau1:active{ height: 120px;
+  width: 180px;
+   background-color : coral ;
+ border:solid black 2px; 
+ display: inline-block;
+  }
+  #Cerveau2:active{ height: 80px;
+    background-color : coral ;
+  border:solid black 2px; 
+  width: 140px;
+  display: inline-block;
+}
+  #Cerveau3:active{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Cerveau4:active{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Cerveau5:active{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Cerveau6:active{height: 80px;
+    background-color : coral ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+
+
+
+
+
+
+  
+  #Poumondroit1:active{ 
+    width: 140px;
+    height: 80px;
+    background-color: red ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+  #Poumondroit2 :active{ height: 80px;
+    background-color: red ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Poumondroit3 :active{ height: 80px;
+    background-color: red ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+
+  
+
+
+
+
+
+  #Poumongauche1 :active{height: 80px;
+    
+  width: 140px;
+    background-color: white ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+  #Poumongauche2 :active{height: 80px;
+    background-color: white ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  #Poumongauche3 :active{height: 80px;
+    background-color: white ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+  
+
+
+
+
+
+  
+
+  
+   #Coeur1 :active{height: 80px;
+    width: 140px;
+    background-color: blue ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+   #Coeur2 :active{height: 80px;
+    background-color: blue ;
+    border:solid black 2px; 
+    width: 140px;
+    display: inline-block;
+  }
+ 
+ 
+
+
+
+
+
+
+ 
+   #Foie1 :active{ height: 80px;
+    width: 140px;  
+    background-color: brown ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+   #Foie2 :active{ height: 80px;
+    width: 140px;
+    background-color: brown ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+
+   #Foie3 :active{ height: 80px;
+    width: 140px;
+    background-color: brown ;
+    border:solid black 2px;
+    display: inline-block; 
+  }
+
+  
+
+   #Rein1 :active{height: 80px;
+    width: 140px;
+    background-color: chocolate ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Rein2 :active{height: 80px;
+    width: 140px;
+    background-color: chocolate ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Rein3 :active{height: 80px;
+    width: 140px;
+    background-color: chocolate ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+ 
+  
+
+
+ 
+ 
+
+   #Estomac1 :active{height: 80px;
+    width: 140px;
+    background-color: violet ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Estomac2 :active{height: 80px;
+    width: 140px;
+    background-color: violet ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+ 
+ 
+ 
+
+    #Grosintestin1 :active{ height: 80px;
+      width: 140px;
+      background-color: chartreuse ;
+      border:solid black 2px; 
+      display: inline-block;
+    }
+    #Grosintestin2 :active{ height: 80px;
+      width: 140px;
+      background-color: chartreuse ;
+      border:solid black 2px; 
+      display: inline-block;
+    }
+    #Grosintestin3 :active{ height: 80px;
+      width: 140px;
+      background-color: chartreuse ;
+      border:solid black 2px; 
+      display: inline-block;
+    }
+ 
+ 
+   
+    
+    
+   #Petitintestin1 :active{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Petitintestin2 :active{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Petitintestin3 { height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
+   #Petitintestin4 :active{ height: 80px;
+    width: 140px;
+    background-color: crimson ;
+    border:solid black 2px; 
+    display: inline-block;
+  }
