@@ -2,7 +2,7 @@ import React from 'react';
 
 
 class Formulaire extends React.Component{
-    state = {
+   /* state = {
         loading: true,
 
       };
@@ -20,15 +20,66 @@ class Formulaire extends React.Component{
           };
 
         const response = await fetch ('http://localhost:8080/addplayer', bodyRequest);
-      }
+      }*/
 
-    render(){
-        return (<div className ="champs">
+    
+          
+          /*state={
+              items: [],
+              isLoaded :false,
+          }
+      
+componentDidMount(){
+    fetch('http://localhost:8080/players')
+    .then(res => res.json())
+    .then(json =>{
+        this.setState({
+            isLoaded:true,
+            items:json,
+        })
+    });
+}*/
+async postData() {
+ try {
+let result = await fetch('http://localhost:8080/addplayer', {
+method:'post',
+headers:{
+    'Accept':'application/json',
+    'content-type':'application/json',
+},
+body:JSON.stringify({name:'sangoku+'})
+});
+ console.log(result)
+} catch(e){
+     console.log(e)
+ }
+} 
+    render(){/*
+        var{isLoaded,items} = this.state;
+        if(!isLoaded){
+            return<div>loading...</div>;
+        }
+        else {
+
+return(<div className = "load">
+{
+    <ul>
+        {items.map(item => (<li key = {item.id}>{item.name}</li>))}
+    </ul>
+}
+</div>)}*/
+       
+       
+        return (
+        
+        
+        
+        <div className ="champs">
 
     <div className ="champs1">   
         <p>joueur1</p>
         <input type="text"name="name" />
-        <button onClick="champ1">{this.state.data}Username</button>
+        <button onClick={()=> this.postData()}>Username</button>
     </div>
                 
     <div className ="champs2">
@@ -65,4 +116,4 @@ class Formulaire extends React.Component{
   
 
 
-export default Formulaire
+export default Formulaire;
