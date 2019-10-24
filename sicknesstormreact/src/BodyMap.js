@@ -9,8 +9,8 @@ export default class BodyMap extends React.Component{
       }
     render(){
         return(     
-                <div class ="carte">
-                        <div class ="tout">
+                <div className ="carte">
+                        <div className ="tout">
                         <div id  = "Cerveau"  onClick={this.handleClick}>
                         <div id ="Cerveau1">Cerveau1</div>
                         <div id ="Cerveau2" >Cerveau2</div>
