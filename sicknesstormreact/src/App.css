@@ -1,3 +1,89 @@
+
+
+
+.App {
+
+    text-align: center;
+  
+  }
+  
+  ​
+  
+  .App-logo {
+  
+    height: 40vmin;
+  
+  }
+  
+  ​
+  
+  .App-header {
+  
+    background-color: #282c34;
+  
+    min-height: 100vh;
+  
+    display: flex;
+  
+    flex-direction: column;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    font-size: calc(10px + 2vmin);
+  
+    color: white;
+  
+  }
+  
+  ​
+  
+  .App-link {
+  
+    color: #09d3ac;
+  
+  }
+  
+.champsDisabled{
+  display: none;
+}
+
+.champs{
+  background-color: rgb(52, 37, 105);
+  height: 100%;
+  width: 100%;
+  display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.border{
+border: solid black;
+width: 300px;
+height: 600px;
+background: #09d3ac;
+}
+
+.ja h3{
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+
+.jb h3{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+
+.jc h3{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+  
+.jd h3{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+=======
 .App {
   text-align: center;
 }
