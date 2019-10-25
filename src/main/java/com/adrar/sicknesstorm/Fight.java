@@ -41,7 +41,7 @@ public class Fight {
 	 * @return an ArrayList with the results of the dices, the first index is the number of dices won
 	 * by the attacker and the second index is for the defender.
 	 */
-	public ArrayList<Integer> startFight(int nbAtk , int nbDef) {
+	public ArrayList<ArrayList<Integer>> startFight(int nbAtk , int nbDef) {
 		if(nbAtk <= this.nbPawnMaxAtk && nbDef <= this.nbPawnMaxDef) {
 			
 		}
@@ -51,16 +51,26 @@ public class Fight {
 			System.out.println("Defender number of dice =>"+nbDef);
 			System.out.println("ERROR END");
 		}
-		ArrayList<Integer> resultat = this.checkWinner(this.dice(nbAtk), this.dice(nbDef));
+		ArrayList<ArrayList<Integer>> resultat = this.checkWinner(this.dice(nbAtk), this.dice(nbDef));
 		System.out.println(resultat);
 		return resultat;
 	}
 	
-	public ArrayList<Integer> checkWinner(ArrayList<Integer>atk , ArrayList<Integer> defd) {
-		ArrayList<Integer> resultat = new ArrayList(2);
-		resultat.add(0);
-		resultat.add(0);
-		
+	/**
+	 * 
+	 * @param atk
+	 * @param defd
+	 * @return a two dimensional array, at first index there's an array with the results of dices wons the second array
+	 * the dices numbers for the attackers and the last index is for the defender dices numbers
+	 */
+	
+	public ArrayList<ArrayList<Integer>> checkWinner(ArrayList<Integer>atk , ArrayList<Integer> defd) {
+		ArrayList<ArrayList<Integer>> resultat = new ArrayList(3);
+		resultat.add(new ArrayList());
+		resultat.get(0).add(0);
+		resultat.get(0).add(0);
+		resultat.add(new ArrayList());
+		resultat.add(new ArrayList());
 		int shorterArray;
 		if ( atk.size()>defd.size()) {
 			shorterArray=defd.size();
@@ -69,12 +79,19 @@ public class Fight {
 			shorterArray=atk.size();
 		}
 		
+		for(int i = 0; i < atk.size(); i++) {
+			resultat.get(1).add(atk.get(i));
+		}
+		for(int i = 0; i < defd.size(); i++) {
+			resultat.get(2).add(defd.get(i));
+		}
+		
 		for (int i= 0 ; i<shorterArray;i++) {
 			if  (Collections.max(atk) > Collections.max(defd)) {
-				resultat.set(0, resultat.get(0)+1);	
+				resultat.get(0).set(0, resultat.get(0).get(0)+1);	
 			}
 			else {
-				resultat.set(1, resultat.get(1)+1);	
+				resultat.get(0).set(1, resultat.get(0).get(1)+1);	
 			}
 			atk.remove(atk.indexOf(Collections.max(atk)));
 			defd.remove(defd.indexOf(Collections.max(defd)));
