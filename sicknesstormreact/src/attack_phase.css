@@ -1,9 +1,10 @@
 .container-attack-phase{
+    margin-top:100px;
     width: 100%;
 }
 .attack-phase{
     margin:auto;
-    border:solid;
+    border:solid 1px;
     min-width: 500px;
     width: 60%;
     display: flex;
@@ -42,4 +43,16 @@
 }
 #fight-button{
     width:30% ;
+}
+
+.fight-infos{
+    width: 500px;
+    border:solid black 1px;
+    margin: auto;
+    text-align: center;
+}
+
+.fight-infos h2{
+    margin:40px 0px 0px 0px;
+    padding:0px;
 }

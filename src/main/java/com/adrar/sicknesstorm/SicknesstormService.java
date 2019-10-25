@@ -118,7 +118,7 @@ public class SicknesstormService{
 					return "CANNOT ATTACK YOUR OWN TERRITORIES";
 				}
 				else {
-					ArrayList<Integer> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+					ArrayList<ArrayList<Integer>> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
 					territoryRepo.save(this.getAterritory(idTerritoryAtk));
 					territoryRepo.save(this.getAterritory(idTerritoryDef));
 					return result.toString();
