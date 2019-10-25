@@ -118,9 +118,10 @@ public class SicknesstormService{
 					return "CANNOT ATTACK YOUR OWN TERRITORIES";
 				}
 				else {
-					this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+					ArrayList<Integer> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
 					territoryRepo.save(this.getAterritory(idTerritoryAtk));
 					territoryRepo.save(this.getAterritory(idTerritoryDef));
+					return result.toString();
 				}
 			}
 			else {
@@ -130,8 +131,6 @@ public class SicknesstormService{
 		else {
 			return "ATTACK IS NOT AVAILABLE";
 		}
-		
-		return "";
 	}
 	
 	public void addTerritoryToPlayer ( int idplayer , int idTerritory) {

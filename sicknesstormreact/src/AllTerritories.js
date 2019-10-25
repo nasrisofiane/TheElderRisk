@@ -33,7 +33,7 @@ export default class AllTerritories extends React.Component{
         return(
             <div id={this.props.id}>
                 <label for={this.props.name}> {this.props.name.toUpperCase()} </label>
-                <select onClick={()=> {this.componentDidMount()}} name="territories" className="territories" id={this.props.name} onChange={e => this.props.action(e.target.options[e.target.selectedIndex])}>
+                <select onClick={()=> {this.componentDidMount()}} name="territories" className="territories" id={this.props.name} onChange={e => this.props.action(e.target.options[e.target.selectedIndex], this.props.name)}>
                     {this.state.isLoaded ? this.state.territories.map((territories) => <option value={territories.id}>{territories.name.replace(/_/g, ' ')}</option>) : <option>Loading..</option>}
                 </select>
             </div>
