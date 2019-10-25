@@ -10,49 +10,45 @@ code {
 .tout{
 
 
-height: 600px;
-}
-#Cerveau{ 
-
- 
 
 }
 
-
-#Cerveau1{ height: 80px;
-  width: 140px;
+#Cerveau1{ height: 140px;
+  width: 200px;
    background-color : coral ;
  border:solid black 2px; 
  display: inline-block;
+
+
   }
-  #Cerveau2{ height: 80px;
+  #Cerveau2{ height: 140px;
     background-color : coral ;
   border:solid black 2px; 
-  width: 140px;
+  width: 200px;
   display: inline-block;
 }
-  #Cerveau3{height: 80px;
+  #Cerveau3{height: 140px;
     background-color : coral ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
-  #Cerveau4{height: 80px;
+  #Cerveau4{height: 140px;
     background-color : coral ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
-  #Cerveau5{height: 80px;
+  #Cerveau5{height: 140px;
     background-color : coral ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
-  #Cerveau6{height: 80px;
+  #Cerveau6{height: 140px;
     background-color : coral ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
 
@@ -66,22 +62,22 @@ height: 600px;
 
   
   #Poumondroit1{ 
-    width: 140px;
-    height: 80px;
+    width: 200px;
+    height: 140px;
     background-color: red ;
     border:solid black 2px;
     display: inline-block; 
   }
-  #Poumondroit2{ height: 80px;
+  #Poumondroit2{ height: 140px;
     background-color: red ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
-  #Poumondroit3{ height: 80px;
+  #Poumondroit3{ height: 140px;
     background-color: red ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
 
@@ -95,23 +91,23 @@ height: 600px;
   }
 
 
-  #Poumongauche1{height: 80px;
+  #Poumongauche1{height: 140px;
     
-  width: 140px;
+  width: 200px;
     background-color: white ;
     border:solid black 2px;
     display: inline-block; 
   }
-  #Poumongauche2{height: 80px;
+  #Poumongauche2{height: 140px;
     background-color: white ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
-  #Poumongauche3{height: 80px;
+  #Poumongauche3{height: 140px;
     background-color: white ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
   
@@ -123,16 +119,16 @@ height: 600px;
   
   #Coeur{position:relative;  }
   
-   #Coeur1{height: 80px;
-    width: 140px;
+   #Coeur1{height: 140px;
+    width: 200px;
     background-color: blue ;
     border:solid black 2px;
     display: inline-block; 
   }
-   #Coeur2{height: 80px;
+   #Coeur2{height: 140px;
     background-color: blue ;
     border:solid black 2px; 
-    width: 140px;
+    width: 200px;
     display: inline-block;
   }
  
@@ -144,21 +140,21 @@ height: 600px;
 
    #Foie{ position:relative;  }
  
-   #Foie1{ height: 80px;
-    width: 140px;  
+   #Foie1{ height: 140px;
+    width: 200px;  
     background-color: brown ;
     border:solid black 2px;
     display: inline-block; 
   }
-   #Foie2{ height: 80px;
-    width: 140px;
+   #Foie2{ height: 140px;
+    width: 200px;
     background-color: brown ;
     border:solid black 2px;
     display: inline-block; 
   }
 
-   #Foie3{ height: 80px;
-    width: 140px;
+   #Foie3{ height: 140px;
+    width: 200px;
     background-color: brown ;
     border:solid black 2px;
     display: inline-block; 
@@ -167,20 +163,20 @@ height: 600px;
    #Rein{ position:relative; 
   
 }
-   #Rein1{height: 80px;
-    width: 140px;
+   #Rein1{height: 140px;
+    width: 200px;
     background-color: chocolate ;
     border:solid black 2px; 
     display: inline-block;
   }
-   #Rein2{height: 80px;
-    width: 140px;
+   #Rein2{height: 140px;
+    width: 200px;
     background-color: chocolate ;
     border:solid black 2px; 
     display: inline-block;
   }
-   #Rein3{height: 80px;
-    width: 140px;
+   #Rein3{height: 140px;
+    width: 200px;
     background-color: chocolate ;
     border:solid black 2px; 
     display: inline-block;
@@ -194,14 +190,14 @@ height: 600px;
    #Estomac{ position:relative; 
   
   }
-   #Estomac1{height: 80px;
-    width: 140px;
+   #Estomac1{height: 140px;
+    width: 200px;
     background-color: violet ;
     border:solid black 2px; 
     display: inline-block;
   }
-   #Estomac2{height: 80px;
-    width: 140px;
+   #Estomac2{height: 140px;
+    width: 200px;
     background-color: violet ;
     border:solid black 2px; 
     display: inline-block;
@@ -213,20 +209,20 @@ height: 600px;
    #Grosintestin{ position:relative;
   
   }
-    #Grosintestin1{ height: 80px;
-      width: 140px;
+    #Grosintestin1{ height: 140px;
+      width: 200px;
       background-color: chartreuse ;
       border:solid black 2px; 
       display: inline-block;
     }
-    #Grosintestin2{ height: 80px;
-      width: 140px;
+    #Grosintestin2{ height: 140px;
+      width: 200px;
       background-color: chartreuse ;
       border:solid black 2px; 
       display: inline-block;
     }
-    #Grosintestin3{ height: 80px;
-      width: 140px;
+    #Grosintestin3{ height: 140px;
+      width: 200px;
       background-color: chartreuse ;
       border:solid black 2px; 
       display: inline-block;
@@ -241,43 +237,31 @@ height: 600px;
     #Petitintestin{ position:relative;
     
     }
-   #Petitintestin1{ height: 80px;
-    width: 140px;
+   #Petitintestin1{ height: 140px;
+    width: 200px;
     background-color: crimson ;
     border:solid black 2px; 
     display: inline-block;
   }
-   #Petitintestin2{ height: 80px;
-    width: 140px;
+   #Petitintestin2{ height: 140px;
+    width: 200px;
     background-color: crimson ;
     border:solid black 2px; 
     display: inline-block;
   }
-   #Petitintestin3{ height: 80px;
-    width: 140px;
+   #Petitintestin3{ height: 140px;
+    width: 200px;
     background-color: crimson ;
     border:solid black 2px; 
     display: inline-block;
   }
-   #Petitintestin4{ height: 80px;
-    width: 140px;
+   #Petitintestin4{ height: 140px;
+    width: 200px;
     background-color: crimson ;
     border:solid black 2px; 
     display: inline-block;
   }
 
-   #ca{ 
-    position:relative;
-    left:300px;
-    
-   }
-
-   form.form-example {
-    display: table;
-}
-    
-
-
 
 
 
@@ -300,231 +284,3 @@ height: 600px;
  
  
 
-#Cerveau1:active{ height: 120px;
-  width: 180px;
-   background-color : coral ;
- border:solid black 2px; 
- display: inline-block;
-  }
-  #Cerveau2:active{ height: 80px;
-    background-color : coral ;
-  border:solid black 2px; 
-  width: 140px;
-  display: inline-block;
-}
-  #Cerveau3:active{height: 80px;
-    background-color : coral ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-  #Cerveau4:active{height: 80px;
-    background-color : coral ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-  #Cerveau5:active{height: 80px;
-    background-color : coral ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-  #Cerveau6:active{height: 80px;
-    background-color : coral ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-
-
-
-
-
-
-  
-  #Poumondroit1:active{ 
-    width: 140px;
-    height: 80px;
-    background-color: red ;
-    border:solid black 2px;
-    display: inline-block; 
-  }
-  #Poumondroit2 :active{ height: 80px;
-    background-color: red ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-  #Poumondroit3 :active{ height: 80px;
-    background-color: red ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-
-  
-
-
-
-
-
-  #Poumongauche1 :active{height: 80px;
-    
-  width: 140px;
-    background-color: white ;
-    border:solid black 2px;
-    display: inline-block; 
-  }
-  #Poumongauche2 :active{height: 80px;
-    background-color: white ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-  #Poumongauche3 :active{height: 80px;
-    background-color: white ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
-  
-
-
-
-
-
-  
-
-  
-   #Coeur1 :active{height: 80px;
-    width: 140px;
-    background-color: blue ;
-    border:solid black 2px;
-    display: inline-block; 
-  }
-   #Coeur2 :active{height: 80px;
-    background-color: blue ;
-    border:solid black 2px; 
-    width: 140px;
-    display: inline-block;
-  }
- 
- 
-
-
-
-
-
-
- 
-   #Foie1 :active{ height: 80px;
-    width: 140px;  
-    background-color: brown ;
-    border:solid black 2px;
-    display: inline-block; 
-  }
-   #Foie2 :active{ height: 80px;
-    width: 140px;
-    background-color: brown ;
-    border:solid black 2px;
-    display: inline-block; 
-  }
-
-   #Foie3 :active{ height: 80px;
-    width: 140px;
-    background-color: brown ;
-    border:solid black 2px;
-    display: inline-block; 
-  }
-
-  
-
-   #Rein1 :active{height: 80px;
-    width: 140px;
-    background-color: chocolate ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
-   #Rein2 :active{height: 80px;
-    width: 140px;
-    background-color: chocolate ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
-   #Rein3 :active{height: 80px;
-    width: 140px;
-    background-color: chocolate ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
- 
-  
-
-
- 
- 
-
-   #Estomac1 :active{height: 80px;
-    width: 140px;
-    background-color: violet ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
-   #Estomac2 :active{height: 80px;
-    width: 140px;
-    background-color: violet ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
- 
- 
- 
-
-    #Grosintestin1 :active{ height: 80px;
-      width: 140px;
-      background-color: chartreuse ;
-      border:solid black 2px; 
-      display: inline-block;
-    }
-    #Grosintestin2 :active{ height: 80px;
-      width: 140px;
-      background-color: chartreuse ;
-      border:solid black 2px; 
-      display: inline-block;
-    }
-    #Grosintestin3 :active{ height: 80px;
-      width: 140px;
-      background-color: chartreuse ;
-      border:solid black 2px; 
-      display: inline-block;
-    }
- 
- 
-   
-    
-    
-   #Petitintestin1 :active{ height: 80px;
-    width: 140px;
-    background-color: crimson ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
-   #Petitintestin2 :active{ height: 80px;
-    width: 140px;
-    background-color: crimson ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
-   #Petitintestin3 { height: 80px;
-    width: 140px;
-    background-color: crimson ;
-    border:solid black 2px; 
-    display: inline-block;
-  }
-   #Petitintestin4 :active{ height: 80px;
-    width: 140px;
-    background-color: crimson ;
-    border:solid black 2px; 
-    display: inline-block;
-  }

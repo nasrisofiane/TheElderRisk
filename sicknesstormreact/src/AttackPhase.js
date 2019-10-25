@@ -5,6 +5,8 @@ import './attack_phase.css';
 export default class AttackPhase extends React.Component{
     state = {isLoaded : false, diceOne : 1, diceTwo: 1, territoryAttacker: null, territoryDefender:null, resultLastFight: null};
 
+    
+
     dicesInputs =({target:{id, value}}) => {
         if(id =="dice-one"){
             this.setState({diceOne:value});
@@ -25,27 +27,77 @@ export default class AttackPhase extends React.Component{
         }
     }
 
-     sendAttackToServer = async () =>{
+   
+
+    sendAttackToServer = async () =>{
         if(this.state.territoryAttacker != null && this.state.territoryDefender != null && this.state.diceOne != null && this.state.diceTwo != null){
             try{
                 let response = await fetch(`http://localhost:8080/fight/${this.state.territoryAttacker}/${this.state.territoryDefender}/${this.state.diceOne}/${this.state.diceTwo}`);
                 if(response.ok){
                     let data = await response.text()
-                    this.setState({isLoaded : true,resultLastFight : data});
-                    console.log(this.state.resultLastFight);
-                    throw new Error(response.statusText);
-                }
                     
+                    try{
+                        if(Array.isArray(JSON.parse(data))){
+                            var dataJson = JSON.parse(data);
+                            
+                            this.setState({isLoaded : true, resultLastFight : dataJson});
+                        }
+                    }
+                    catch(e){
+                        this.setState({isLoaded : true, resultLastFight : data});
+                    }
+                    console.log(data);
+                    console.log(JSON.parse(data));
+                    throw new Error(response.statusText);
+                }       
             }
-            catch(err){
-                console.log(err);
-                
+            catch(err){ 
             }
         }
         else{
             alert("Be sure that you've well selected both territory.");
         }
-        
+    }
+
+    renderFight(resultLastFight){
+        if(typeof resultLastFight ==  "string"){
+            return <div>{resultLastFight}</div>;
+        }else{
+            const results = this.state.resultLastFight.map((dicesResults) => { return [dicesResults]});
+            const jsxRenderResultsWonDices = [];
+            const jsxRenderResultsDiceAttack = [];
+            const jsxRenderResultsDiceDefender = [];
+            
+            for(var i = 0; i < results[1].length; i++){
+                jsxRenderResultsDiceAttack.push(results[1][i]);
+            }
+
+            for(var i = 0; i < results[2].length; i++){
+                jsxRenderResultsDiceDefender.push(results[2][i]);
+            }
+
+            jsxRenderResultsWonDices.push(results[0][0]);
+            jsxRenderResultsWonDices.push(results[0][1]);
+            
+            console.log(jsxRenderResultsWonDices);
+            console.log(jsxRenderResultsDiceAttack);
+            return(
+                <div>   
+                        <h2>Attacker Dices results</h2>
+                        {jsxRenderResultsDiceAttack[0].map((dices, index) => {return <div>Dice n°{index} -> {dices} </div> })}
+                    
+                    <div>
+                        <h2>Defender Dices results</h2>
+                        {jsxRenderResultsDiceDefender[0].map((dices, index) => { return <div>Dice n°{index} -> {dices} </div> })}
+                    </div>
+                    <div>
+                        <h2>Fight result</h2>
+                        <div>Attacker loosed {jsxRenderResultsWonDices[0][1]} pawn(s) </div>
+                        <div>Defender loosed {jsxRenderResultsWonDices[0][0]} pawn(s) </div>
+                    </div>
+                </div>
+            );
+        }
     }
     
     render(){
@@ -61,8 +113,9 @@ export default class AttackPhase extends React.Component{
                     </div>
                     <button id="fight-button" onClick={this.sendAttackToServer}>Fight</button>
                 </div>
-                <h2>{this.state.isLoaded ? this.state.data : "Loading.."}</h2>
+                <div className="fight-infos">{this.state.isLoaded ? this.renderFight(this.state.resultLastFight): "Fight logs"}</div>
             </div>
         );
     }
 }
+
