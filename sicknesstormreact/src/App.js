@@ -8,8 +8,9 @@ class App extends Component {
     return (
       <div className="App">
         <BodyMap/>
-        {/* <Formulaire/>
-        <AttackPhase/> */}
+        <Formulaire/>
+        <AttackPhase/>
+
       </div>
     );
   }
