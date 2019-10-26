@@ -3,6 +3,8 @@ import './App.css';
 import Formulaire from './formulaire';
 import BodyMap from './BodyMap';
 import AttackPhase from './AttackPhase';
+import MoovFortify from './MoovFortify';
+import PlacePawnInterface from './PlacePawnInterface';
 class App extends Component {
   constructor(props){
     super(props)
@@ -36,6 +38,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <BodyMap/>
+        <Formulaire/>
+        <AttackPhase/>
+        <MoovFortify/>
+        <PlacePawnInterface/>
+
         {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent}/> : "" }
         {this.state.roundPhase != "INITIALIZE" ? <BodyMap/> : ""}
         {this.state.roundPhase != "INITIALIZE" ? <AttackPhase/> : ""}
