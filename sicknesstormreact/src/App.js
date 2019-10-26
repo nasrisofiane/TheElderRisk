@@ -3,6 +3,8 @@ import './App.css';
 import Formulaire from './formulaire';
 import BodyMap from './BodyMap';
 import AttackPhase from './AttackPhase';
+import MoovFortify from './MoovFortify';
+import PlacePawnInterface from './PlacePawnInterface';
 class App extends Component {
   
 
@@ -18,7 +20,8 @@ class App extends Component {
         <BodyMap/>
         <Formulaire/>
         <AttackPhase/>
-
+        <MoovFortify/>
+        <PlacePawnInterface/>
 
       </div>
     );
