@@ -5,8 +5,6 @@ import './attack_phase.css';
 export default class AttackPhase extends React.Component{
     state = {isLoaded : false, diceOne : 1, diceTwo: 1, territoryAttacker: null, territoryDefender:null, resultLastFight: null};
 
-    
-
     dicesInputs =({target:{id, value}}) => {
         if(id =="dice-one"){
             this.setState({diceOne:value});
