@@ -3,7 +3,9 @@ import React from 'react';
 
 class Formulaire extends React.Component{
 
-
+    constructor(props){
+        super(props)
+    }
     dismiss() {
         this.props.unmountMe();
     } 
@@ -61,6 +63,7 @@ this.setState({
      try {
    let result = await fetch('http://localhost:8080/initializegame') 
    let data = await result.json()
+    await this.props.updatephase();
    console.log(data);
      }
  catch(e){
@@ -119,7 +122,7 @@ this.setState({
 
 
 <div className="initialize">
-    <button onClick={()=> {this.getData(); this.setState({cssClass : "champsDisabled"})}}>initialize</button>
+    <button onClick={()=> { this.getData()}}>initialize</button>
 </div>
 
 
