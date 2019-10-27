@@ -20,7 +20,7 @@ territoriesInputs = (territorySelected, listName) => {
         this.setState({territoryDefender : territorySelected.value});
     }
 }
-    async postData() {
+    async addpawn() {
         try {
        let result = await fetch(`http://localhost:8080/addplayer/${this.territoriesInputs}/{pawn}`, {
        method:'get',
@@ -45,10 +45,10 @@ territoriesInputs = (territorySelected, listName) => {
     handleInputChange=(event) => {
     event.preventDefault()
     console.log(event)
-    console.log(event.target.name)
+    console.log(event.target.pawn)
     console.log(event.target.value)
     this.setState({
-    [event.target.name]:event.target.value
+    [event.target.pawn]:event.target.value
     })
     }
 
@@ -62,7 +62,7 @@ render (){
    <h3>how many pawns you wanna send ?</h3>
     <form onSubmit={this.handleSubmit}>
     <p><input type ="text" placeholder ="pawn" value={this.state.pawn} pawn= "fullname" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData()}>Send</button></p>
+    <p><button onClick={()=>this.addpawn()}>Send</button></p>
     </form> 
         </div> 
         )
