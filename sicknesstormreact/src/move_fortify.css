@@ -1,11 +1,11 @@
-.container-attack-phase{
+.container-movepawns-phase{
     position: fixed;
     top:200px;
     left:0px;
     min-width: 300px;
     width: 400px;
 }
-.attack-phase{
+.movepawns-phase{
     border:solid 1px;
     display: flex;
     justify-content: center;
@@ -13,14 +13,14 @@
 }
 
 
-.dices-container{
+.number-pawns-container{
     width: 100%;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-.dices-container h3{
+.number-pawns-container h3{
     width: 100%;
     text-align: center;
     margin: 0px;
@@ -28,30 +28,20 @@
 }
 
 
-.dices-container input{
+.number-pawns-container input{
     height: 20px;
     width: 50px;
     text-align: center;
 }
 
-#list-attackers, #list-defenders{
+#list-territories-start, #list-territories-arrive{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 48%;
 }
-#fight-button{
+#move-pawns-button{
     width:30% ;
 }
 
-.fight-infos{
-    border:solid black 1px;
-    margin: auto;
-    text-align: center;
-}
-
-.fight-infos h2{
-    margin:40px 0px 0px 0px;
-    padding:0px;
-}

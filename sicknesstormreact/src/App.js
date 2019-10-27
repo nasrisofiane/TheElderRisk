@@ -5,6 +5,8 @@ import BodyMap from './BodyMap';
 import AttackPhase from './AttackPhase';
 import MoovFortify from './MoovFortify';
 import PlacePawnInterface from './PlacePawnInterface';
+import PlayerTurn from './PlayerTurn';
+
 class App extends Component {
   constructor(props){
     super(props)
@@ -29,6 +31,7 @@ class App extends Component {
     }
   }
 
+
   handleEvent(phase){
     this.setState({roundPhase: "ef"});
     this.componentDidMount();
@@ -38,17 +41,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <BodyMap/>
+        {/* <BodyMap/>
         <Formulaire/>
         <AttackPhase/>
         <MoovFortify/>
-        <PlacePawnInterface/>
-
-        {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent}/> : "" }
-        {this.state.roundPhase != "INITIALIZE" ? <BodyMap/> : ""}
-        {this.state.roundPhase != "INITIALIZE" ? <AttackPhase/> : ""}
-
-
+        <PlacePawnInterface/> */}
+        {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent}/> : ""}
+        {this.state.roundPhase != "INITIALIZE" ? <BodyMap /> : ""}
       </div>
     );
   }

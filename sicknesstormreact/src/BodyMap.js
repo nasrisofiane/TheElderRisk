@@ -1,41 +1,83 @@
 import React from 'react';
+import AttackPhase from './AttackPhase';
+import MoovFortify from './MoovFortify';
+import PlayerTurn from './PlayerTurn';
 export default class BodyMap extends React.Component{
     
     constructor(){
             super();
-            this.state = {isLoaded : false ,territories:{}};
+            this.state = {isLoaded : false ,territories:{}, roundPhase:null, playerTurn : null};
+            this.handleEvent = this.handleEvent.bind(this);
         }
         
-        async componentDidMount(){
-            try{
-                let response = await fetch(`http://localhost:8080/territories`);
-                if(response.ok){
-                    let data = await response.json()
-                    let dataTreated = data.map((territories) => { return [territories.id, territories.name, territories.pawn, territories.player.name]});
-                    this.setState({
-                        isLoaded : true,
-                        territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
-                    })
-                    throw new Error(response.statusText);
-                }
-                    
-            }
-            catch(err){
-                console.log(err);
+    async componentDidMount(){
+        try{
+            let response = await fetch(`http://localhost:8080/territories`);
+            if(response.ok){
+                let data = await response.json()
+                let dataTreated = data.map((territories) => { return [territories.id, territories.name, territories.pawn, territories.player.name]});
+                this.setState({
+                    isLoaded : true,
+                    territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
+                })
+                await this.getPhase();
+                await this.getPlayerTurn();
+                throw new Error(response.statusText);
+            }       
+        }
+        catch(err){
+              console.log(err);
+        }
+    }
+
+    async getPlayerTurn(){
+        try{
+            let response = await fetch(`http://localhost:8080/playerturn`);
+            if(response.ok){
+                let data = await response.json()
+                this.setState({
+                  playerTurn : data.name
+                })
+                console.log(data.name);
+                throw new Error(response.statusText);
             }
         }
+        catch(err){
+        }
+    }
+
+    //retrieve the actual phase of the round, when it's up to date it set the state.
+    async getPhase(){
+        try{
+            let response = await fetch(`http://localhost:8080/roundphase`);
+            if(response.ok){
+                let data = await response.json()
+                await this.setState({
+                  roundPhase : data
+                })
+                console.log(data);
+                throw new Error(response.statusText);
+            }
+        }
+            catch(err){
+        }
+    }
+
+    //method created to be passed in a child to call the fetch that retrieve the phase data.
+    handleEvent(phase){
+        this.getPhase();
+        this.componentDidMount();
+        this.getPlayerTurn();
+        console.log("event sent");
+      }
         
     handleClick(e) {
         var attaque = e.target.id;
         e.preventDefault();
-        
         console.log('continant selectionner est le '+attaque);
       }
     
     render(){
-       
-        
-        console.log(this.state.territories);
         return(     
                 <div className ="carte">
                         <div className="tout">
@@ -44,7 +86,7 @@ export default class BodyMap extends React.Component{
                         
                         
                         <div id="Cerveau1">{this.state.isLoaded ? "(ID = "+this.state.territories[0][0]+")   ( Nom = "+this.state.territories[0][1]+")     ( pawns = "+this.state.territories[0][2]+") (joueur = "+this.state.territories[0][3]+")": <div>Loading..</div>}</div>
-                        <div id="Cerveau2">\n{this.state.isLoaded ? "(ID = "+this.state.territories[1][0]+")     ( Nom = "+this.state.territories[1][1]+")     ( pawns = "+this.state.territories[1][2]+") (joueur = "+this.state.territories[1][3]+")": <div>Loading..</div>}</div>
+                        <div id="Cerveau2">{this.state.isLoaded ? "(ID = "+this.state.territories[1][0]+")     ( Nom = "+this.state.territories[1][1]+")     ( pawns = "+this.state.territories[1][2]+") (joueur = "+this.state.territories[1][3]+")": <div>Loading..</div>}</div>
                         <div id="Cerveau3">{this.state.isLoaded ? "(ID = "+this.state.territories[2][0]+")     ( Nom = "+this.state.territories[2][1]+")     ( pawns = "+this.state.territories[2][2]+") (joueur = "+this.state.territories[2][3]+")": <div>Loading..</div>}</div>
                         <div id="Cerveau4">{this.state.isLoaded ? "(ID = "+this.state.territories[3][0]+")     ( Nom = "+this.state.territories[3][1]+")     ( pawns = "+this.state.territories[3][2]+") (joueur = "+this.state.territories[3][3]+")": <div>Loading..</div>}</div>
                         <div id="Cerveau5">{this.state.isLoaded ? "(ID = "+this.state.territories[4][0]+")     ( Nom = "+this.state.territories[4][1]+")     ( pawns = "+this.state.territories[4][2]+") (joueur = "+this.state.territories[4][3]+")": <div>Loading..</div>}</div>
@@ -106,6 +148,9 @@ export default class BodyMap extends React.Component{
                         <div id="Petitintestin4" >{this.state.isLoaded ?  "(ID = "+this.state.territories[28][0]+")     ( Nom = "+this.state.territories[28][1]+")     ( pawns = "+this.state.territories[28][2]+") (joueur = "+this.state.territories[28][3]+")": <div>Loading..</div>}</div>
                     </div>
                     </div>
+                    {this.state.roundPhase != "INITIALIZE" ? <PlayerTurn playerturn={this.state.playerTurn}/> : ""}
+                    {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase updatephase={this.handleEvent}  /> : ""}
+                    {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify updatephase={this.handleEvent} /> : ""}
                 </div>
               
         );

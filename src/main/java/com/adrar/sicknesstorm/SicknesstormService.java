@@ -98,17 +98,19 @@ public class SicknesstormService{
 		return false;
 	}
 	
-	public void movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
+	public String movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
 		if(game.getPhase() == GamePhase.MOVEFORTIFY) {
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritorya).getPlayer().getId()) {
 					this.getAterritory(idTerritorya).moveFortify(this.getAterritory(idTerritoryb), pawn);
 				   	territoryRepo.save(this.getAterritory(idTerritorya));
 					territoryRepo.save(this.getAterritory(idTerritoryb));  
+					return "YOUR PAWNS HAVE BEEN WELL MOVED FROM "+this.getAterritory(idTerritorya).getName()+" TO "+this.getAterritory(idTerritoryb).getName()+"";
 			}
 		}
 		else {
-			System.out.println("MOVE PAWNS NOT AVAILABLE");
+			return "MOVE PAWNS NOT AVAILABLE";
 		}
+		return "";
 	}
 	
 	public String startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
@@ -161,5 +163,9 @@ public class SicknesstormService{
 	
 	public GamePhase gamePhase(Game game) {
 		return game.getPhase();
+	}
+	
+	public Player playerTurn(Game game) {
+		return game.getPlayerTurn();
 	}
 }
