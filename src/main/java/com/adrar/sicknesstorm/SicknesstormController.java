@@ -47,8 +47,8 @@ public class SicknesstormController {
 	}
 
 	@GetMapping("/movefortify/{idTerritoryA}/{idTerritoryB}/{nbPawns}")
-	public void moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
-		sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns, this.game);
+	public String moveFortify(@PathVariable int idTerritoryA, @PathVariable int idTerritoryB, @PathVariable int nbPawns ) {
+		return sicknesstormService.movePawns(idTerritoryA, idTerritoryB, nbPawns, this.game);
 	}
 	
 	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
@@ -95,6 +95,11 @@ public class SicknesstormController {
 	@GetMapping("/roundphase")
 	public GamePhase gamePhase() {
 		return sicknesstormService.gamePhase(this.game);
+	}
+	
+	@GetMapping("/playerturn")
+	public Player playerTurn() {
+		return sicknesstormService.playerTurn(game);
 	}
 }
 

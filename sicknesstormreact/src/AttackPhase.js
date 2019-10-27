@@ -25,6 +25,19 @@ export default class AttackPhase extends React.Component{
         }
     }
 
+    closeAttackPhase = async () =>{
+        try{
+            let response = await fetch(`http://localhost:8080/closefightstep`);
+            if(response.ok){
+                let data = await response.text()
+                console.log(data);
+                await this.props.updatephase();
+                throw new Error(response.statusText);
+            }      
+        }
+        catch(err){ 
+        }
+    }
    
 
     sendAttackToServer = async () =>{
@@ -44,6 +57,7 @@ export default class AttackPhase extends React.Component{
                     catch(e){
                         this.setState({isLoaded : true, resultLastFight : data});
                     }
+                    await this.props.updatephase();
                     console.log(data);
                     console.log(JSON.parse(data));
                     throw new Error(response.statusText);
@@ -101,6 +115,7 @@ export default class AttackPhase extends React.Component{
     render(){
         return(
             <div className="container-attack-phase">
+                <h2>Attack phase</h2>
                 <div className="attack-phase">
                     <AllTerritories action={this.territoriesInputs} id="list-attackers" name="attackers"/>
                     <AllTerritories action={this.territoriesInputs} id="list-defenders" name="defenders"/>
@@ -110,6 +125,7 @@ export default class AttackPhase extends React.Component{
                         <input id="dice-two" type="number" value={this.state.diceTwo} max="2" min="1" onChange={this.dicesInputs}/>
                     </div>
                     <button id="fight-button" onClick={this.sendAttackToServer}>Fight</button>
+                    <button id="close-fight-button" onClick={this.closeAttackPhase}>Go to next phase (move pawns)</button>
                 </div>
                 <div className="fight-infos">{this.state.isLoaded ? this.renderFight(this.state.resultLastFight): "Fight logs"}</div>
             </div>

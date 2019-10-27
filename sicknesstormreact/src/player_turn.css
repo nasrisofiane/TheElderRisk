@@ -1,0 +1,7 @@
+.player-turn{
+    position: fixed;
+    top:0px;  
+    left:0px;  
+    width: 330px;
+    border:solid black 1px;
+}

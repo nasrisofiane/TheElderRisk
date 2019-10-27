@@ -12,20 +12,21 @@ class Formulaire extends React.Component{
 
     
 //permet de lancer une requete 'post' et entrer une valeur dans la base de données . 
-async postData() {
- try {
-let result = await fetch('http://localhost:8080/addplayer', {
-method:'post',
-headers:{
-    'Accept':'application/json',
-    'content-type':'application/json',
-},
-body:JSON.stringify({name:this.state.fullname})
-});
- console.log(result)
-} catch(e){
-     console.log(e)
- }
+async postData(value) {
+    try {
+        let result = await fetch('http://localhost:8080/addplayer', {
+        method:'post',
+        headers:{
+            'Accept':'application/json',
+            'content-type':'application/json',
+        },
+        
+        body:JSON.stringify({name:value})
+        });
+        console.log(result)
+    } catch(e){
+        console.log(e)
+    }
 } 
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +89,7 @@ this.setState({
     <h3>Player 1</h3>
     <form onSubmit={this.handleSubmit}>
     <p><input type ="text" placeholder ="your name " value={this.state.fullName} name = "fullname" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData()}>Send</button></p>
+    <p><button onClick={()=>this.postData(this.state.fullName)}>Send</button></p>
     </form> 
 </div>
 
@@ -96,8 +97,8 @@ this.setState({
 <div className ="jb">
     <h3>Player 2</h3>
     <form onSubmit={this.handleSubmit}>
-    <p><input type ="text" placeholder ="your name " value={this.state.fullName} name = "fullname" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData()}>Send</button></p>
+    <p><input type ="text" placeholder ="your name " value={this.state.fullName1} name = "fullname1" onChange = {this.handleInputChange}/></p>
+    <p><button onClick={()=>this.postData(this.state.fullName1)}>Send</button></p>
     </form> 
 </div>
 
@@ -105,8 +106,8 @@ this.setState({
 <div className ="jc">
     <h3>Player 3</h3>
     <form onSubmit={this.handleSubmit}>
-    <p><input type ="text" placeholder ="your name " value={this.state.fullName} name = "fullname" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData()}>Send</button></p>
+    <p><input type ="text" placeholder ="your name " value={this.state.fullName2} name = "fullname2" onChange = {this.handleInputChange}/></p>
+    <p><button onClick={()=>this.postData(this.state.fullName2)}>Send</button></p>
     </form> 
 </div>
 
@@ -114,8 +115,8 @@ this.setState({
 <div className ="jd">
     <h3>Player 4</h3>
     <form onSubmit={this.handleSubmit}>
-    <p><input type ="text" placeholder ="your name " value={this.state.fullName} name = "fullname" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData()}>Send</button></p>
+    <p><input type ="text" placeholder ="your name " value={this.state.fullName3} name = "fullname3" onChange = {this.handleInputChange}/></p>
+    <p><button onClick={()=>this.postData(this.state.fullName3)}>Send</button></p>
     </form> 
 </div>
 
