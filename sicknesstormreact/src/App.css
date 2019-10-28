@@ -39,30 +39,29 @@
   
   ​
   
-  .App-link {
-  
-    color: #09d3ac;
-  
-  }
+.App-link {
+   color: #09d3ac;
+}
   
 .champsDisabled{
   display: none;
 }
 
 .champs{
-  background-color: rgb(52, 37, 105);
+  background-image:url('./images/bacteria.png');
+  
   height: 100%;
   width: 100%;
   display: flex;
-justify-content: center;
-align-items: center;
-
+  justify-content: center;
+  align-items: center;
 }
+
 .border{
-border: solid black;
+  box-shadow: 1px 1px 1px black;
 width: 300px;
 height: 600px;
-background: #09d3ac;
+background: linear-gradient(#f0ca21, #e5ac14);
 }
 
 .ja h3{

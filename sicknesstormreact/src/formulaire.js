@@ -1,5 +1,5 @@
 import React from 'react';
-
+import bacteria from './images/bacteria.png';
 
 class Formulaire extends React.Component{
 
@@ -12,6 +12,10 @@ class Formulaire extends React.Component{
         fullName1:null,
         fullName2:null,
         fullName3:null,
+        send1:false,
+        send2:false,
+        send3:false,
+        send4:false,
         cssClass : "champs",
         players:null,
         numberOfPlayers:null
@@ -20,7 +24,6 @@ class Formulaire extends React.Component{
     componentDidMount(){
         this.getAllPlayers();
     }
-
 
     //permet de lancer une requete 'post' et entrer une valeur dans la base de données . 
     async postData(value) {
@@ -51,11 +54,18 @@ class Formulaire extends React.Component{
         }
     } 
 
+    disableSendButtons(){
+        if(this.state.numberOfPlayers >= 4){
+            this.setState({send1: true, send2:true, send3:true, send4:true})
+        }
+    }
+
     async getAllPlayers() {
             try {
                 let result = await fetch('http://localhost:8080/players');
                 let data = await result.json()
                 this.setState({players:data,numberOfPlayers:data.length});
+                await this.disableSendButtons();
                 console.log(data)
             } catch(e){
                 console.log(e)
@@ -115,7 +125,7 @@ class Formulaire extends React.Component{
     <h3>Player 1</h3>
     <div>
     <p><input type ="text" placeholder ="your name " value={this.state.fullName} name = "fullName" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData(this.state.fullName)}>Send</button></p>
+    <p><button disabled={this.state.send1} onClick={()=>{this.postData(this.state.fullName); this.setState({send1:true})}}>Send</button></p>
     </div> 
 </div>
 
@@ -124,7 +134,7 @@ class Formulaire extends React.Component{
     <h3>Player 2</h3>
     <div>
     <p><input type ="text" placeholder ="your name " value={this.state.fullName1} name = "fullName1" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData(this.state.fullName1)}>Send</button></p>
+    <p><button disabled={this.state.send2} onClick={()=>{this.postData(this.state.fullName1); this.setState({send2:true})}}>Send</button></p>
     </div> 
 </div>
 
@@ -133,7 +143,7 @@ class Formulaire extends React.Component{
     <h3>Player 3</h3>
     <div onSubmit={this.handleSubmit}>
     <p><input type ="text" placeholder ="your name " value={this.state.fullName2} name = "fullName2" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData(this.state.fullName2)}>Send</button></p>
+    <p><button disabled={this.state.send3} onClick={()=>{this.postData(this.state.fullName2); this.setState({send3:true})}}>Send</button></p>
     </div> 
 </div>
 
@@ -142,7 +152,7 @@ class Formulaire extends React.Component{
     <h3>Player 4</h3>
     <div onSubmit={this.handleSubmit}>
     <p><input type ="text" placeholder ="your name " value={this.state.fullName3} name = "fullName3" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.postData(this.state.fullName3)}>Send</button></p>
+    <p><button disabled={this.state.send4} onClick={()=>{this.postData(this.state.fullName3); this.setState({send4:true})}}>Send</button></p>
     </div> 
 </div>
 
