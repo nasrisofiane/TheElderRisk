@@ -2,6 +2,7 @@ import React from 'react';
 import AttackPhase from './AttackPhase';
 import MoovFortify from './MoovFortify';
 import PlayerTurn from './PlayerTurn';
+import PlacePawnInterface from './PlacePawnInterface';
 export default class BodyMap extends React.Component{
     
     constructor(){
@@ -149,6 +150,7 @@ export default class BodyMap extends React.Component{
                     </div>
                     </div>
                     {this.state.roundPhase != "INITIALIZE" ? <PlayerTurn playerturn={this.state.playerTurn}/> : ""}
+                    {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface updatephase={this.handleEvent}  /> : ""}
                     {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase updatephase={this.handleEvent}  /> : ""}
                     {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify updatephase={this.handleEvent} /> : ""}
                 </div>

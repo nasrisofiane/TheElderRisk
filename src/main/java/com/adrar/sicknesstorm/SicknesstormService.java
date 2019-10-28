@@ -56,7 +56,7 @@ public class SicknesstormService{
 					territories.get(i).setPlayer(player);
 					territories.get(i).setPawn(5);
 					territoryRepo.save(territories.get(i));
-					if(i == j + territories.size() / game.getPlayerList().size()) {
+					if(i == j + Math.round(territories.size() / game.getPlayerList().size())) {
 						j = i;
 						break;
 					}
@@ -69,7 +69,7 @@ public class SicknesstormService{
 		}
 	}
 	
-	public boolean addPawn(int idTerritory , int pawn, Game game ) {
+	public String addPawn(int idTerritory , int pawn, Game game ) {
 			Territory territory = this.getAterritory(idTerritory);
 			
 			if(game.getPlayerTurn().getId() == territory.getPlayer().getId()) {
@@ -83,19 +83,21 @@ public class SicknesstormService{
 				   	}
 				   	else {
 				   		System.out.println("YOU HAVE TO PLACE ALL YOUR AVAILABLE PAWNS");
+				   		return "YOU HAVE TO PLACE ALL YOUR AVAILABLE PAWNS";
 				   	}
-				   	return true;
+				   	return "Lasts "+game.getPawnsToPlace()+" to place";
 				}
 				else {
 					System.out.println("NOT ENOUGH PAWNS");
+					return "NOT ENOUGH PAWNS";
 				}
 			   	
 			}
 			else {
 				System.out.println("NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER" + territory.getPlayer().getName());
-				return false;
+				return "NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER " + territory.getPlayer().getName();
 			}
-		return false;
+		
 	}
 	
 	public String movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
