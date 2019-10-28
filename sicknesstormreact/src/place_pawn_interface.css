@@ -1,0 +1,48 @@
+.container-addpawns-phase{
+    position: fixed;
+    top:200px;
+    left:0px;
+    min-width: 300px;
+    width: 400px;
+}
+.addpawns-phase{
+    border:solid 1px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.number-addpawns-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.number-addpawns-container h3{
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.number-addpawns-container input{
+    height: 20px;
+    width: 50px;
+    text-align: center;
+}
+
+#territories-add-pawns{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48%;
+}
+#add-pawns-button{
+    width:30% ;
+}
+
+    

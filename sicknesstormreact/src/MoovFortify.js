@@ -41,7 +41,7 @@ class MoovFortify extends React.Component{
         }
         
         
-      } 
+    } 
 
     movePawnsInputs =({target:{id, value}}) => {
             this.setState({numberOfPawn:value});

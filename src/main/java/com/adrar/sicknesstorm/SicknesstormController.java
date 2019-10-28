@@ -62,8 +62,8 @@ public class SicknesstormController {
 	}
 	
 	@GetMapping(value = "/addpawn/{idTerritory}/{pawn}")
-	public void addPawn(@PathVariable int idTerritory, @PathVariable int pawn) {
-		sicknesstormService.addPawn(idTerritory, pawn, this.game );
+	public String addPawn(@PathVariable int idTerritory, @PathVariable int pawn) {
+		return sicknesstormService.addPawn(idTerritory, pawn, this.game );
 	}
 
 	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")

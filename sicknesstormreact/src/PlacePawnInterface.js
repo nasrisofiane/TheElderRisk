@@ -1,74 +1,54 @@
 import React from 'react';
-import AttackPhase from './AttackPhase';
+import AllTerritories from './AllTerritories';
+import './place_pawn_interface.css';
 
 class PlacePawnInterface extends React.Component{ 
 
-state={
-pawn : null,
-territoryAttacker:null
-}
-setPawn = (nbPawn , listName)=>{
-    if(listName == "attackers"){
-        this.setState({pawn: nbPawn.value});
-    }
-}
-territoriesInputs = (territorySelected, listName) => {
-    if(listName == "attackers"){
-        this.setState({territoryAttacker : territorySelected.value});
-    }
-    if(listName == "defenders"){
-        this.setState({territoryDefender : territorySelected.value});
-    }
-}
-    async addpawn() {
-        try {
-       let result = await fetch(`http://localhost:8080/addplayer/${this.territoriesInputs}/{pawn}`, {
-       method:'get',
-       headers:{
-           'Accept':'application/json',
-           'content-type':'application/json',
-       },
-       body:JSON.stringify({pawn:this.state.fullname})
-       });
-        console.log(result)
-       } catch(e){
-            console.log(e)
+    state = {pawn: 1, territory:null}
+
+    sendAddPawnsToServer = async () => {
+        if(this.state.territory != null && this.state.pawn != null){
+            try{
+                let response = await fetch(`http://localhost:8080/addpawn/${parseInt(this.state.territory)}/${parseInt(this.state.pawn)}`);
+                if(response.ok){
+                    let data = await response.text()
+                    console.log(data);
+                    await this.props.updatephase();
+                    throw new Error(response.statusText);
+                }
+                    
+            }
+            catch(err){
+            }
         }
-       } 
+        else{
+            alert("Be sure that you have selected the territory");
+        }
+    } 
 
-
-       handleSubmit=(event)=>{ 
-        event.preventDefault()
-        const data = this.state
-        console.log(data)
-    }
-    handleInputChange=(event) => {
-    event.preventDefault()
-    console.log(event)
-    console.log(event.target.pawn)
-    console.log(event.target.value)
-    this.setState({
-    [event.target.pawn]:event.target.value
-    })
+    territoriesInputs = (territorySelected, listName) => {
+        this.setState({territory : territorySelected.value});
     }
 
-render (){
-<AttackPhase/>
+    addPawnsInputs =({target:{id, value}}) => {
+        this.setState({pawn:value});
+        console.log("MovePawns "+ this.state.pawn);
+    }
 
-    return(
-
-        <div className="champs">
-
-   <h3>how many pawns you wanna send ?</h3>
-    <form onSubmit={this.handleSubmit}>
-    <p><input type ="text" placeholder ="pawn" value={this.state.pawn} pawn= "fullname" onChange = {this.handleInputChange}/></p>
-    <p><button onClick={()=>this.addpawn()}>Send</button></p>
-    </form> 
+    render (){
+        return(
+        <div className="container-addpawns-phase">
+            <h2>Add Pawns phase</h2>
+                <div className="addpawns-phase">
+                    <AllTerritories action={this.territoriesInputs} id="list-territories-addpawns" name="Territories"/>
+                    <div className="number-addpawns-container">
+                        <h3>Number of pawns</h3>
+                        <input id="number-of-pawns" type="number" value={this.state.pawn} min="1" onChange={this.addPawnsInputs}/>
+                    </div>
+                    <button id="add-pawns-button" onClick={this.sendAddPawnsToServer}>Add your pawns</button>
+                </div>
         </div> 
-        )
-
-
-        
+            )      
     }
 }
 
