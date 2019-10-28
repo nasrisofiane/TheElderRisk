@@ -4,7 +4,7 @@ import './place_pawn_interface.css';
 
 class PlacePawnInterface extends React.Component{ 
 
-    state = {pawn: 1, territory:null}
+    state = {pawn: 1, territory:null, messageError:null}
 
     sendAddPawnsToServer = async () => {
         if(this.state.territory != null && this.state.pawn != null){
@@ -12,6 +12,7 @@ class PlacePawnInterface extends React.Component{
                 let response = await fetch(`http://localhost:8080/addpawn/${parseInt(this.state.territory)}/${parseInt(this.state.pawn)}`);
                 if(response.ok){
                     let data = await response.text()
+                    this.setState({messageError:data});
                     console.log(data);
                     await this.props.updatephase();
                     throw new Error(response.statusText);
@@ -47,6 +48,7 @@ class PlacePawnInterface extends React.Component{
                     </div>
                     <button id="add-pawns-button" onClick={this.sendAddPawnsToServer}>Add your pawns</button>
                 </div>
+                <div>{this.state.messageError != null ? this.state.messageError : ""}</div>
         </div> 
             )      
     }
