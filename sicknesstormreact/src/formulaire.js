@@ -24,25 +24,30 @@ class Formulaire extends React.Component{
 
     //permet de lancer une requete 'post' et entrer une valeur dans la base de données . 
     async postData(value) {
-        if(value != null && value!=""){
-            try {
-                let result = await fetch('http://localhost:8080/addplayer', {
-                method:'post',
-                headers:{
-                    'Accept':'application/json',
-                    'content-type':'application/json',
-                },
-                
-                body:JSON.stringify({name:value})
-                });
-                console.log(result)
-                this.getAllPlayers();
-            } catch(e){
-                console.log(e)
+        if(this.state.numberOfPlayers < 4){
+            if(value != null && value!=""){
+                try {
+                    let result = await fetch('http://localhost:8080/addplayer', {
+                    method:'post',
+                    headers:{
+                        'Accept':'application/json',
+                        'content-type':'application/json',
+                    },
+                    
+                    body:JSON.stringify({name:value})
+                    });
+                    console.log(result)
+                    this.getAllPlayers();
+                } catch(e){
+                    console.log(e)
+                }
+            }
+            else{
+                alert("Error");
             }
         }
         else{
-            alert("Error");
+            alert("Cannot add more than 4 players");
         }
     } 
 
