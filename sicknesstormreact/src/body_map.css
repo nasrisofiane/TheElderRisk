@@ -1,0 +1,63 @@
+
+svg{
+    position: absolute;
+    top:50px;
+    left: 0px;
+    width: 100%;
+}
+
+
+#cerveau_1, #cerveau_2, #cerveau_3, #cerveau_4, #cerveau_5, #cerveau_6, 
+#poumon_gauche_1, #poumon_gauche_2, #poumon_gauche_3, #poumon_droit_1, #poumon_droit_2, #poumon_droit_3,
+#coeur_1, #coeur_2, 
+#foie_1, #foie_2, #foie_3,
+#estomac_1, #estomac_2,
+#rein_1, #rein_2, #rein_3,
+#gros_intestin_1, #gros_intestin_2, #gros_intestin_3,
+#petit_intestin_1, #petit_intestin_2, #petit_intestin_3, #petit_intestin_4{
+    
+}
+
+.player_1{
+    fill:red;
+    background:red;
+}
+
+.player_2{
+    fill:blueviolet;
+    background: blueviolet;
+}
+
+.player_3{
+    fill:burlywood;
+    background:burlywood ;
+}
+
+.player_4{
+    fill:goldenrod;
+    background: goldenrod;
+}
+
+#cerveau_1:hover, #cerveau_2:hover, #cerveau_3:hover, #cerveau_4:hover, #cerveau_5:hover, #cerveau_6:hover, 
+#poumon_gauche_1:hover, #poumon_gauche_2:hover, #poumon_gauche_3:hover, #poumon_droit_1:hover, #poumon_droit_2:hover, #poumon_droit_3:hover,
+#coeur_1:hover, #coeur_2:hover, 
+#foie_1:hover, #foie_2:hover, #foie_3:hover,
+#estomac_1:hover, #estomac_2:hover,
+#rein_1:hover, #rein_2:hover, #rein_3:hover,
+#gros_intestin_1:hover, #gros_intestin_2:hover, #gros_intestin_3:hover,
+#petit_intestin_1:hover, #petit_intestin_2:hover, #petit_intestin_3:hover, #petit_intestin_4:hover{
+    fill:orange;
+}
+
+#preview_fight{
+    border:solid black 1px;
+    font-weight: bold;
+}
+
+#attacker-choice{
+    color:darkgreen;
+}
+
+#defender-choice{
+    color:red;
+}

@@ -40,7 +40,7 @@ class Formulaire extends React.Component{
                     body:JSON.stringify({name:value})
                     });
                     console.log(result)
-                    this.getAllPlayers();
+                    await this.getAllPlayers();
                 } catch(e){
                     console.log(e)
                 }

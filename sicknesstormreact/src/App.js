@@ -12,7 +12,7 @@ class App extends Component {
     super(props)
     this.handleEvent = this.handleEvent.bind(this);
   }
-  state = {roundPhase:null}
+  state = {roundPhase:null, players:null}
   
   async componentDidMount(){
     try{
@@ -22,6 +22,7 @@ class App extends Component {
             this.setState({
               roundPhase : data
             })
+            await this.getAllPlayers();
             console.log(data);
             throw new Error(response.statusText);
         }
@@ -31,9 +32,19 @@ class App extends Component {
     }
   }
 
+  async getAllPlayers() {
+    try {
+        let result = await fetch('http://localhost:8080/players');
+        let data = await result.json()
+        this.setState({players:data});
+        console.log(data)
+    } catch(e){
+    }
+} 
+
+
 
   handleEvent(phase){
-    this.setState({roundPhase: "ef"});
     this.componentDidMount();
     console.log("event sent");
   }
@@ -41,8 +52,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent}/> : ""}
-        {this.state.roundPhase != "INITIALIZE" ? <BodyMap /> : ""}
+        {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent} /> : ""}
+        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap players={this.state.players} /> : "LOADING..."}
       </div>
     );
   }

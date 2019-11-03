@@ -16,13 +16,8 @@ export default class AttackPhase extends React.Component{
         }
     }
 
-    territoriesInputs = (territorySelected, listName) => {
-        if(listName == "attackers"){
-            this.setState({territoryAttacker : territorySelected.value});
-        }
-        if(listName == "defenders"){
-            this.setState({territoryDefender : territorySelected.value});
-        }
+    conponentDidUpdate = async () =>{
+        console.log(this.props.territoryAttackerSelected);
     }
 
     closeAttackPhase = async () =>{
@@ -38,20 +33,25 @@ export default class AttackPhase extends React.Component{
         catch(err){ 
         }
     }
-   
+
 
     sendAttackToServer = async () =>{
-        if(this.state.territoryAttacker != null && this.state.territoryDefender != null && this.state.diceOne != null && this.state.diceTwo != null){
+        if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null && this.state.diceOne != null && this.state.diceTwo != null){
             try{
-                let response = await fetch(`http://localhost:8080/fight/${this.state.territoryAttacker}/${this.state.territoryDefender}/${this.state.diceOne}/${this.state.diceTwo}`);
+                let response = await fetch(`http://localhost:8080/fight/${this.props.territoryAttackerSelected[0]}/${this.props.territoryDefenderSelected[0]}/${this.state.diceOne}/${this.state.diceTwo}`);
                 if(response.ok){
                     let data = await response.text()
                     
                     try{
                         if(Array.isArray(JSON.parse(data))){
                             var dataJson = JSON.parse(data);
+                            if(dataJson.length == 0){
+                                this.setState({isLoaded : false, resultLastFight : null});
+                            }
+                            else{
+                                this.setState({isLoaded : true, resultLastFight : dataJson});
+                            }
                             
-                            this.setState({isLoaded : true, resultLastFight : dataJson});
                         }
                     }
                     catch(e){
@@ -115,10 +115,9 @@ export default class AttackPhase extends React.Component{
     render(){
         return(
             <div className="container-attack-phase">
+                <div id="preview_fight"><p id="attacker-choice">{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[1] :"Select a territory"} </p>VS <p id="defender-choice">{this.props.territoryDefenderSelected != null ? this.props.territoryDefenderSelected[1] :"Select a territory"} </p> </div>
                 <h2>Attack phase</h2>
                 <div className="attack-phase">
-                    <AllTerritories action={this.territoriesInputs} id="list-attackers" name="attackers"/>
-                    <AllTerritories action={this.territoriesInputs} id="list-defenders" name="defenders"/>
                     <div className="dices-container">
                         <h3>Dices</h3>
                         <input id="dice-one" type="number" value={this.state.diceOne} max="3" min="1" onChange={this.dicesInputs}/>
