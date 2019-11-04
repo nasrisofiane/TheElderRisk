@@ -9,7 +9,7 @@ class PlacePawnInterface extends React.Component{
     sendAddPawnsToServer = async () => {
         if(this.props.territoryAttackerSelected != null && this.state.pawn != null){
             try{
-                let response = await fetch(`http://localhost:8080/addpawn/${parseInt(this.props.territoryAttackerSelected[0])}/${parseInt(this.state.pawn)}`);
+                let response = await fetch(`http://localhost:8080/addpawn/${parseInt(this.props.territoryAttackerSelected[0][0])}/${parseInt(this.state.pawn)}`);
                 if(response.ok){
                     let data = await response.text()
                     this.setState({messageError:data});
@@ -37,7 +37,7 @@ class PlacePawnInterface extends React.Component{
     render (){
         return(
         <div className="container-addpawns-phase">
-            <div>{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[1] : "Select a territory"}</div>
+            <div>{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[0][1] : "Select a territory"}</div>
             <h2>Add Pawns phase</h2>
                 <div className="addpawns-phase">
                     <div className="number-addpawns-container">

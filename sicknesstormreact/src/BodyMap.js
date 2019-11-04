@@ -9,7 +9,7 @@ export default class BodyMap extends React.Component{
     
     constructor(){
             super();
-            this.state = {isLoaded : false ,territories:{}, roundPhase:null, playerTurn : null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false};
+            this.state = {isLoaded : false ,territories:{}, roundPhase:null, playerTurn : null, prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false};
             this.handleEvent = this.handleEvent.bind(this);
         }
         
@@ -35,22 +35,32 @@ export default class BodyMap extends React.Component{
 
     territorySelected = async (territory) =>{
         let found = false;
+        let territoryDom = territory;
         for(let i = 0; i < this.state.territories.length; i++){
             if(territory.id == this.state.territories[i][1]){
                 found = true;
+                
                 territory = this.state.territories[i];
                 break;
             }
         }
         if(found == true && (this.state.switchSelect == false && this.state.roundPhase == "ATTACK") || this.state.roundPhase == "PLACEPAWN" ){
-            await this.setState({territoryAttackerSelected:territory});
+            if(this.state.prevTerritorySelectedAttacker != null){
+                this.state.prevTerritorySelectedAttacker.classList.remove('attacker');
+            }
+            territoryDom.classList.add('attacker');
+            await this.setState({territoryAttackerSelected:[territory, territoryDom]});
             if(this.state.switchSelect == false && this.state.roundPhase == "ATTACK"){
-                this.setState({switchSelect:true});
+                this.setState({switchSelect:true, prevTerritorySelectedAttacker:territoryDom});
             }
         }
         else if(found == true && this.state.switchSelect == true && this.state.roundPhase == "ATTACK"){
-            await this.setState({territoryDefenderSelected:territory});
-            this.setState({switchSelect:false});
+            if(this.state.prevTerritorySelectedDefender != null){
+                this.state.prevTerritorySelectedDefender.classList.remove('defender');
+            }
+            territoryDom.classList.add('defender');
+            await this.setState({territoryDefenderSelected:[territory, territoryDom]});
+            this.setState({switchSelect:false,  prevTerritorySelectedDefender:territoryDom});
         }
         else{
             console.log("error");

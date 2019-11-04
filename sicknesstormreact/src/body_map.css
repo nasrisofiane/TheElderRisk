@@ -6,6 +6,10 @@ svg{
     width: 100%;
 }
 
+svg path, svg g{
+    stroke-width: 0.2;
+}
+
 
 #cerveau_1, #cerveau_2, #cerveau_3, #cerveau_4, #cerveau_5, #cerveau_6, 
 #poumon_gauche_1, #poumon_gauche_2, #poumon_gauche_3, #poumon_droit_1, #poumon_droit_2, #poumon_droit_3,
@@ -37,6 +41,46 @@ svg{
     fill:goldenrod;
     background: goldenrod;
 }
+
+@keyframes appearAndDisappearAttacker {
+    0% {
+        stroke:green;
+        stroke-width: 0.5;
+    }
+    50%{
+        stroke:rgba(0, 128, 0, 0.514);
+        stroke-width: 1;
+    }
+    100% {
+        stroke:green;
+        stroke-width: 0.5;
+    }
+  }
+
+.attacker {
+    animation: appearAndDisappearAttacker 3s  linear infinite;
+}
+
+@keyframes appearAndDisappearDefender {
+    0% {
+        stroke:rgb(189, 0, 0);
+        stroke-width: 0.5;
+    }
+    50%{
+        stroke:rgba(189, 0, 0, 0.438);
+        stroke-width: 1;
+    }
+    100% {
+        stroke:rgb(189, 0, 0);
+        stroke-width: 0.5;
+    }
+  }
+
+.defender {
+    animation: appearAndDisappearDefender 3s  linear infinite;
+}
+
+
 
 #cerveau_1:hover, #cerveau_2:hover, #cerveau_3:hover, #cerveau_4:hover, #cerveau_5:hover, #cerveau_6:hover, 
 #poumon_gauche_1:hover, #poumon_gauche_2:hover, #poumon_gauche_3:hover, #poumon_droit_1:hover, #poumon_droit_2:hover, #poumon_droit_3:hover,

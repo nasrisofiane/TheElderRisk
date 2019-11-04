@@ -38,7 +38,7 @@ export default class AttackPhase extends React.Component{
     sendAttackToServer = async () =>{
         if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null && this.state.diceOne != null && this.state.diceTwo != null){
             try{
-                let response = await fetch(`http://localhost:8080/fight/${this.props.territoryAttackerSelected[0]}/${this.props.territoryDefenderSelected[0]}/${this.state.diceOne}/${this.state.diceTwo}`);
+                let response = await fetch(`http://localhost:8080/fight/${this.props.territoryAttackerSelected[0][0]}/${this.props.territoryDefenderSelected[0][0]}/${this.state.diceOne}/${this.state.diceTwo}`);
                 if(response.ok){
                     let data = await response.text()
                     
@@ -114,9 +114,9 @@ export default class AttackPhase extends React.Component{
     
     render(){
         return(
-            <div className="container-attack-phase">
-                <div id="preview_fight"><p id="attacker-choice">{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[1] :"Select a territory"} </p>VS <p id="defender-choice">{this.props.territoryDefenderSelected != null ? this.props.territoryDefenderSelected[1] :"Select a territory"} </p> </div>
-                <h2>Attack phase</h2>
+            <div className="container-attack-phase" >
+                <div id="preview_fight"><p id="attacker-choice">{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[0][1] :"Select a territory"} </p>VS <p id="defender-choice">{this.props.territoryDefenderSelected != null ? this.props.territoryDefenderSelected[0][1] :"Select a territory"} </p> </div>
+                <h2 draggable="true">Attack phase</h2>
                 <div className="attack-phase">
                     <div className="dices-container">
                         <h3>Dices</h3>

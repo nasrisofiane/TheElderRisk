@@ -123,8 +123,13 @@ public class SicknesstormService{
 				}
 				else {
 					ArrayList<ArrayList<Integer>> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
-					territoryRepo.save(this.getAterritory(idTerritoryAtk));
-					territoryRepo.save(this.getAterritory(idTerritoryDef));
+					if(result != null) {
+						territoryRepo.save(this.getAterritory(idTerritoryAtk));
+						territoryRepo.save(this.getAterritory(idTerritoryDef));
+					}
+					else {
+						return "Territory not adjacent";
+					}
 					return result.toString();
 				}
 			}
