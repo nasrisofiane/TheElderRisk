@@ -33,6 +33,11 @@ export default class BodyMap extends React.Component{
         }
     }
 
+    cleanBodyFromSelectedTerritories = async () =>{
+        this.state.territoryAttackerSelected[1].classList.remove("attacker");
+        this.state.territoryDefenderSelected[1].classList.remove("defender");
+    }
+
     territorySelected = async (territory) =>{
         let found = false;
         let territoryDom = territory;
@@ -44,17 +49,18 @@ export default class BodyMap extends React.Component{
                 break;
             }
         }
-        if(found == true && (this.state.switchSelect == false && this.state.roundPhase == "ATTACK") || this.state.roundPhase == "PLACEPAWN" ){
+        if(found == true && (this.state.switchSelect == false && (this.state.roundPhase == "ATTACK" || this.state.roundPhase == "MOVEFORTIFY") ) || (found == true && this.state.roundPhase == "PLACEPAWN") ){
             if(this.state.prevTerritorySelectedAttacker != null){
+                
                 this.state.prevTerritorySelectedAttacker.classList.remove('attacker');
             }
             territoryDom.classList.add('attacker');
-            await this.setState({territoryAttackerSelected:[territory, territoryDom]});
-            if(this.state.switchSelect == false && this.state.roundPhase == "ATTACK"){
-                this.setState({switchSelect:true, prevTerritorySelectedAttacker:territoryDom});
+            await this.setState({prevTerritorySelectedAttacker:territoryDom, territoryAttackerSelected:[territory, territoryDom]});
+            if(this.state.switchSelect == false && (this.state.roundPhase == "ATTACK" || this.state.roundPhase == "MOVEFORTIFY")){
+                this.setState({switchSelect:true});
             }
         }
-        else if(found == true && this.state.switchSelect == true && this.state.roundPhase == "ATTACK"){
+        else if(found == true && this.state.switchSelect == true && (this.state.roundPhase == "ATTACK" || this.state.roundPhase == "MOVEFORTIFY")){
             if(this.state.prevTerritorySelectedDefender != null){
                 this.state.prevTerritorySelectedDefender.classList.remove('defender');
             }
@@ -123,7 +129,7 @@ export default class BodyMap extends React.Component{
                     <div id="phase-interface">
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify updatephase={this.handleEvent} /> : ""}
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify updatephase={this.handleEvent} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
                     </div>
             </div>
               
