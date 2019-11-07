@@ -1,8 +1,9 @@
 .attack-phase{
-    border:solid 1px;
+    width: 50%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    
 }
 
 
@@ -47,4 +48,13 @@
 .fight-infos h2{
     margin:40px 0px 0px 0px;
     padding:0px;
+}
+
+.attack-interface-beforepopup{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 50px;
 }

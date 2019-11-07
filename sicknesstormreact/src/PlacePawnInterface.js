@@ -65,8 +65,8 @@ class PlacePawnInterface extends React.Component{
                     </div>
                 </div>
                 <div className={"container-addpawns-phase " } style={this.state.styles}>
+                <p className="">{this.state.messageError != null ? this.state.messageError : ""}</p>
                 <h2>Add Pawns phase</h2>
-                <div>{this.state.messageError != null ? this.state.messageError : ""}</div>
                 <button id="add-pawns-button-popup" onClick={() => this.displayPhasePopUp()}>Add your pawns</button>
         </div>
             </div>

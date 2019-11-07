@@ -53,7 +53,9 @@ export default class BodyMap extends React.Component{
         }
     }
 
-    
+    territorySelectedOnMouseOut = async () =>{
+        this.setState({tooltip:null});
+    }
 
     eventOnMouseMove = (e) => {
         this.setState({styles:{top:e.screenY-90+"px", left:e.screenX-70+"px"}});
@@ -147,7 +149,7 @@ export default class BodyMap extends React.Component{
         return(     
             <div id="game-window" onMouseMove={  this.eventOnMouseMove}>
                     {this.state.tooltip != null ? this.state.tooltip : ""}
-                    {this.state.isLoaded ? <SvgBody  updateTerritories={this.state.territories} territorySelected={this.territorySelected} territorySelectedOnMouseOver={this.territorySelectedOnMouseOver}></SvgBody> : "Loading..."}
+                    {this.state.isLoaded ? <SvgBody  updateTerritories={this.state.territories} territorySelected={this.territorySelected} territorySelectedOnMouseOver={this.territorySelectedOnMouseOver} territoryTooltipCleanUpOnMouseOut={this.territorySelectedOnMouseOut}></SvgBody> : "Loading..."}
                     {this.state.roundPhase != "INITIALIZE" ? <PlayerTurn playerturn={this.state.playerTurn} players={this.props.players}/> : ""}
                     <div id="phase-interface">
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}

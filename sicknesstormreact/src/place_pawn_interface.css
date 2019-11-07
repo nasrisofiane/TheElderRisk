@@ -41,3 +41,8 @@
 .selected-territory-popup strong{
     color :red;
 }
+
+.error-message{
+    color:red;
+    font-weight: bold;
+}

@@ -37,6 +37,7 @@ public class Game {
 		this.phase = GamePhase.PLACEPAWN;
 		this.playerTurn = this.playerList.get(this.turnPlayerNumber);
 		this.pawnsToPlace = playerTurn.getPlayerTerritories().size() / 3;
+		System.out.println("Number of territories => "+playerTurn.getPlayerTerritories().size()+" | pawns to place ====> " + playerTurn.getPlayerTerritories().size() / 3);
 		this.turnPlayerNumber += 1;
 		
 		if(turnPlayerNumber == this.playerList.size()) {
