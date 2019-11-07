@@ -94,7 +94,7 @@ export default class AttackPhase extends React.Component{
             console.log(jsxRenderResultsWonDices);
             console.log(jsxRenderResultsDiceAttack);
             return(
-                <div>   
+                <div> 
                         <h2>Attacker Dices results</h2>
                         {jsxRenderResultsDiceAttack[0].map((dices, index) => {return <div>Dice n°{index} -> {dices} </div> })}
                     

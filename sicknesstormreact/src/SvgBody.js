@@ -7,8 +7,8 @@ const colorTerritory = (playerId) => {
 }
 
 const SvgBody = props => (
-    <svg viewBox="0 0 196.016 61.331" {...props} onClick={(e) => {props.territorySelected(e.target)}}>
-    <path id="foie_1" className={colorTerritory(props.updateTerritories[14][4])}
+    <svg viewBox="0 0 196.016 61.331" {...props} onClick={(e) => {props.territorySelected(e.target)}} onMouseMove={(e)=>props.territorySelectedOnMouseOver(e.target)}>
+    <path id="foie_1" className={colorTerritory(props.updateTerritories[14][4])} 
       d="M103.29 36.56c-1.15-3.782-3.475-8.125-5.698-10.603-.51-.588-1.2-1.201-1.61-1.457-.23-.153-.587-.255-.74-.23a.633.633 0 00-.358.205c-.077.077-.179.358-.204.51-.026.129-.026.537-.026.742.026.485.128 1.124.409 2.963.179 1.073.332 2.12.358 2.35.383 2.939.255 4.19-.511 5.953-.511 1.15-1.252 2.402-3.092 5.187 1.15-.41 2.504-.843 3.654-1.022.766-.128 1.89.613 2.912 1.865 1.048-2.376 2.785-5.519 4.905-6.464z"
       fill="#c83737"
       stroke="#000"

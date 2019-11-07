@@ -57,6 +57,7 @@ svg path, svg g{
     }
   }
 
+
 .attacker {
     animation: appearAndDisappearAttacker 3s  linear infinite;
 }
@@ -104,4 +105,16 @@ svg path, svg g{
 
 #defender-choice{
     color:red;
+}
+
+.tooltip{
+    background:rgba(0, 0, 0, 0.733);
+    color:white;
+    position: absolute;
+    padding:4px 9px 4px 9px;
+    z-index: 1;
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+    width: auto;
 }
