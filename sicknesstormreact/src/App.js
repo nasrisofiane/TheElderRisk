@@ -6,13 +6,19 @@ import AttackPhase from './AttackPhase';
 import MoovFortify from './MoovFortify';
 import PlacePawnInterface from './PlacePawnInterface';
 import PlayerTurn from './PlayerTurn';
+import Websocket from 'react-websocket';
 
 class App extends Component {
   constructor(props){
     super(props)
     this.handleEvent = this.handleEvent.bind(this);
   }
-  state = {roundPhase:null, players:null}
+  state = {roundPhase:null, players:null, count: 90}
+
+  handleData(data) {
+    let result = JSON.parse(data);
+    this.setState({count: this.state.count + result.movement});
+  }
   
   async componentDidMount(){
     try{
@@ -24,6 +30,10 @@ class App extends Component {
             })
             await this.getAllPlayers();
             console.log(data);
+            return(
+              <Websocket url='ws://http://localhost:8080/websocket-example'
+              onMessage={this.handleData.bind(this)}/>
+            );
             throw new Error(response.statusText);
         }
             
@@ -51,7 +61,10 @@ class App extends Component {
 
   render() {
     return (
+      
       <div className="App">
+        <strong>Count: {this.state.count}</strong>
+        
         {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent} /> : ""}
         {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap players={this.state.players} /> : "LOADING..."}
       </div>

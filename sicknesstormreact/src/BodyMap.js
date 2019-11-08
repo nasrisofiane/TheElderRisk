@@ -5,6 +5,7 @@ import PlayerTurn from './PlayerTurn';
 import PlacePawnInterface from './PlacePawnInterface';
 import SvgBody from './SvgBody';
 
+
 export default class BodyMap extends React.Component{
     
     constructor(){
