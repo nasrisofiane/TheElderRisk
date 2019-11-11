@@ -7,6 +7,9 @@ import java.util.Set;
 import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +29,26 @@ public class SicknesstormController {
 	
 	Game game = new Game();
 	
+  @MessageMapping("/message")
+  @SendTo("/topic/message")
+  public Game getGame() {
+	  game.setTerritories(sicknesstormService.getTerritories());
+      return game;
+  }	
+  
+  @MessageMapping("/getPlayerJoined")
+  @SendTo("/topic/message")
+  public List<Player> getPlayerJoined(String namePlayer){
+	  Player player = new Player();
+	  player.setName(namePlayer);
+	  if(sicknesstormService.getAllPlayers().size() <= 10) {
+		  sicknesstormService.addPlayer(player); 
+		  return sicknesstormService.getAllPlayers();
+	  }else {
+		  return null;
+	  }
+  }
+	
 	@GetMapping("/player/{id}")
 	public Player getPlayer(@PathVariable Integer id) {
 		return sicknesstormService.getAplayer(id);																																																																																																																																																																												
@@ -41,8 +64,11 @@ public class SicknesstormController {
 		return sicknesstormService.getAterritory(id);
 	}
 	
-	@GetMapping("/territories")
-	public List<Territory> getTerritories(){
+	
+	
+	@MessageMapping("/territories")
+	@SendTo("/topic/territories")
+	public List<Territory> getTerritoriesSocket(){
 		return sicknesstormService.getTerritories();
 	}
 
@@ -55,15 +81,13 @@ public class SicknesstormController {
 	public boolean isAdjacent(@PathVariable int territoryA, @PathVariable int territoryB) {
 		return sicknesstormService.isAdjacent(territoryA, territoryB);
 	}
-
-	@PostMapping(value = "/addplayer")
-	public void addPlayer(@RequestBody Player player) {
-		sicknesstormService.addPlayer(player);
-	}
 	
-	@GetMapping(value = "/addpawn/{idTerritory}/{pawn}")
-	public String addPawn(@PathVariable int idTerritory, @PathVariable int pawn) {
-		return sicknesstormService.addPawn(idTerritory, pawn, this.game );
+	@MessageMapping("/addpawn")
+	@SendTo("/topic/message")
+	public Game addPawn(List<Integer> message) {
+		sicknesstormService.addPawn(message.get(0), message.get(1), this.game );
+		this.game.setTerritories(sicknesstormService.getTerritories());
+		return this.game;
 	}
 
 	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
@@ -76,9 +100,11 @@ public class SicknesstormController {
 		sicknesstormService.addTerritoryToPlayer(idplayer, idTerritory);
 	}
 	
-	@GetMapping("/initializegame")
+	@MessageMapping("/initializegame")
+	@SendTo("/topic/message")
 	public Game initializeGame() {
 		sicknesstormService.initializeGame(this.game);
+		game.setTerritories(sicknesstormService.getTerritories());
 		return game;
 	}
 	
@@ -87,9 +113,11 @@ public class SicknesstormController {
 		return sicknesstormService.closeFightStep(this.game);
 	}
 	
-	@GetMapping("/closemovefortifystep")
-	public String closeMoveFortifyStep() {
-		return sicknesstormService.closeMoveFortifyStep(this.game);
+	@MessageMapping("/closemovefortifystep")
+	@SendTo("/topic/message")
+	public Game closeMoveFortifyStep() {
+		sicknesstormService.closeMoveFortifyStep(this.game);
+		return this.game;
 	}
 	
 	@GetMapping("/roundphase")

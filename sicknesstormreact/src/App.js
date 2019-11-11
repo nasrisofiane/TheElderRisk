@@ -6,19 +6,15 @@ import AttackPhase from './AttackPhase';
 import MoovFortify from './MoovFortify';
 import PlacePawnInterface from './PlacePawnInterface';
 import PlayerTurn from './PlayerTurn';
-import Websocket from 'react-websocket';
+import SockJsClient from 'react-stomp';
 
 class App extends Component {
   constructor(props){
     super(props)
     this.handleEvent = this.handleEvent.bind(this);
   }
-  state = {roundPhase:null, players:null, count: 90}
+  state = {roundPhase:null, territories:{}, players:null, userInfos:null, receivedMessageChange: null, game:null}
 
-  handleData(data) {
-    let result = JSON.parse(data);
-    this.setState({count: this.state.count + result.movement});
-  }
   
   async componentDidMount(){
     try{
@@ -28,31 +24,52 @@ class App extends Component {
             this.setState({
               roundPhase : data
             })
-            await this.getAllPlayers();
             console.log(data);
-            return(
-              <Websocket url='ws://http://localhost:8080/websocket-example'
-              onMessage={this.handleData.bind(this)}/>
-            );
+           
             throw new Error(response.statusText);
         }
             
     }
     catch(err){
     }
+    
   }
 
-  async getAllPlayers() {
-    try {
-        let result = await fetch('http://localhost:8080/players');
-        let data = await result.json()
-        this.setState({players:data});
-        console.log(data)
-    } catch(e){
+  sendMessage = (msg) => {
+    this.clientRef.sendMessage('/app/message', msg);
+  }
+
+  sendMessageInitiliazePhase = async () => {
+    await this.clientRef.sendMessage('/app/initializegame', "msg");
+  }
+
+  sendMessageAddPlayer = async (msg) => {
+    this.setState({userInfos: msg});
+    this.clientRef.sendMessage('/app/getPlayerJoined', msg);
+  }
+
+  sendMessageCloseMoveFortifyPhase = async () => {
+    this.clientRef.sendMessage('/app/closemovefortifystep', "msg");
+  }
+
+  sendMessageGetTerritories = async () => {
+    this.clientRef.sendMessage('/app/territories', "msg");
+  }
+
+  sendMessageToAddPawns = async (territory, nbOfPawns) => {
+    let AddPawnsInfos = [territory, nbOfPawns];
+    await this.clientRef.sendMessage('/app/addpawn', JSON.stringify(AddPawnsInfos));
+  }
+
+  messageReceived = async (msg) => {
+    if(typeof msg.playerList != 'undefined'){
+       await this.setState({roundPhase:msg.phase ,territories:msg.territories, players:msg.playerList, game:msg});
     }
-} 
-
-
+    else{
+      this.setState({players:msg});
+    }
+    console.log(msg.territories);
+  }
 
   handleEvent(phase){
     this.componentDidMount();
@@ -63,10 +80,9 @@ class App extends Component {
     return (
       
       <div className="App">
-        <strong>Count: {this.state.count}</strong>
-        
-        {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent} /> : ""}
-        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap players={this.state.players} /> : "LOADING..."}
+        <SockJsClient url='http://localhost:8080/websocket-example' topics={['/topic/message']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client; }} />
+        {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent} sendMessage={this.sendMessageAddPlayer} sendMessageInitiliazePhase={this.sendMessageInitiliazePhase} players={this.state.players}/> : ""}
+        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap sendMessageToAddPawns={this.sendMessageToAddPawns} territories={this.state.territories} sendMessageGetTerritories={ this.sendMessageGetTerritories} sendMessage={this.sendMessage} sendMessageCloseMoveFortifyPhase={this.sendMessageCloseMoveFortifyPhase} players={this.state.players} game={this.state.game} userName={this.state.userInfos}/> : "LOADING..."}
       </div>
     );
   }

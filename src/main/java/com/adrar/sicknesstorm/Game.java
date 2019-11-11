@@ -5,9 +5,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class Game {
+	
 	private int id; 
 	private List<Player> playerList = new ArrayList();	
 	private int turnPlayerNumber = 0;
@@ -16,6 +23,9 @@ public class Game {
 	private Player playerTurn;
 	private int pawnsToPlace;
 	private GamePhase phase = GamePhase.INITIALIZE;
+	
+	@Transient
+	private List<Territory> territories = new ArrayList<>();
 	
 	public int getTurnPlayerNumber() {
 		return turnPlayerNumber;
@@ -36,7 +46,9 @@ public class Game {
 	public Player round() {
 		this.phase = GamePhase.PLACEPAWN;
 		this.playerTurn = this.playerList.get(this.turnPlayerNumber);
-		this.pawnsToPlace = playerTurn.getPlayerTerritories().size() / 3;
+		System.out.println("Territoires du joueur => "+this.playerTurn.getPlayerTerritories().size());
+		this.pawnsToPlace = (int) Math.ceil(playerTurn.getPlayerTerritories().size() / 3);
+		System.out.println("BUG ICI => "+playerTurn.getPlayerTerritories().size());
 		System.out.println("Number of territories => "+playerTurn.getPlayerTerritories().size()+" | pawns to place ====> " + playerTurn.getPlayerTerritories().size() / 3);
 		this.turnPlayerNumber += 1;
 		
@@ -49,6 +61,14 @@ public class Game {
 	
 	
 	
+	public List<Territory> getTerritories() {
+		return territories;
+	}
+
+	public void setTerritories(List<Territory> territories) {
+		this.territories = territories;
+	}
+
 	public Player getPlayerTurn() {
 		return playerTurn;
 	}

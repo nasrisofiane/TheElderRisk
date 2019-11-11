@@ -9,19 +9,7 @@ class PlacePawnInterface extends React.Component{
 
     sendAddPawnsToServer = async () => {
         if(this.props.territoryAttackerSelected != null && this.state.pawn != null){
-            try{
-                let response = await fetch(`http://localhost:8080/addpawn/${parseInt(this.props.territoryAttackerSelected[0][0])}/${parseInt(this.state.pawn)}`);
-                if(response.ok){
-                    let data = await response.text()
-                    this.setState({messageError:data});
-                    console.log(data);
-                    await this.props.updatephase();
-                    throw new Error(response.statusText);
-                }
-                    
-            }
-            catch(err){
-            }
+            await this.props.sendMessageToAddPawns(parseInt(this.props.territoryAttackerSelected[0][0]), parseInt(this.state.pawn));
         }
         else{
             alert("Be sure that you have selected the territory");

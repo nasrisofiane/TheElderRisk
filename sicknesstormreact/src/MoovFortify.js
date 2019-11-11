@@ -3,20 +3,12 @@ import './move_fortify.css';
 
 class MoovFortify extends React.Component{ 
 
-    state = {isLoaded : false, numberOfPawn : 1,  messageError:null, changeClass:"hide-phase-popup", styles:{display:"block"}}
+    state = {isLoaded : true, numberOfPawn : 1,  messageError:null, changeClass:"hide-phase-popup", styles:{display:"block"}}
 
     closeMoveFortifyPhase = async () =>{
-        try{
-            let response = await fetch(`http://localhost:8080/closemovefortifystep`);
-            if(response.ok){
-                let data = await response.text()
-                await this.props.updatephase();
-                await this.props.cleanSelected();
-                throw new Error(response.statusText);
-            }      
-        }
-        catch(err){ 
-        }
+        await this.props.sendMessageCloseMoveFortifyPhase();
+        await this.props.updatephase();
+        await this.props.cleanSelected();
     }
 
     displayPhasePopUp = () =>{

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class SicknesstormService{
 	TerritoryRepository territoryRepo;
 	
 	public Player getAplayer(Integer id){
-		return playerRepo.getOne(id);
+		return playerRepo.findById(id).get();
 	}
 	
 	public List<Player> getAllPlayers(){
@@ -43,14 +44,19 @@ public class SicknesstormService{
 		 playerRepo.save(player);
 	}
 	
+	public Set<Territory> getTerritoryByPlayerId(Integer playerId){
+		return territoryRepo.findTerritoryByPlayerId(playerId);
+	}
+	
 	//Initialize the game with all the players, shuffle the territories and start Round method.
 	public void initializeGame(Game game) {
+		game.initialize(this.getAllPlayers());
 		if(game.getPhase() == GamePhase.INITIALIZE) {
 			game.initialize(this.getAllPlayers());
 			List<Territory> territories = this.getTerritories();
 			Collections.shuffle(territories);
 			int j = 0;
-			
+			int playerIndex = 0;
 			for(Player player : game.getPlayerList()) { //affect all territories randomly to all players.
 				for(int i = j; i < territories.size(); i++) {
 					territories.get(i).setPlayer(player);
@@ -61,6 +67,8 @@ public class SicknesstormService{
 						break;
 					}
 				}
+				game.getPlayerList().get(playerIndex).setPlayerTerritories(this.getTerritoryByPlayerId(player.getId()));
+				playerIndex += 1;
 			}
 			game.round();
 		}

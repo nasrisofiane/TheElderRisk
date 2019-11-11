@@ -41,13 +41,12 @@ public class Territory {
 	private int continentId;
 	
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "territories_adjacent", 
 			joinColumns = @JoinColumn(name = "territory_a"), 
 			inverseJoinColumns = @JoinColumn(name = "territory_b"))
 	private Set<Territory> territoriesA;
-	
 	
 	public Set<Territory> getTerritoriesA() {
 		return territoriesA;
@@ -58,7 +57,7 @@ public class Territory {
 	}
 
 	@JsonIgnoreProperties("territoryAdjacent")
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "territories_adjacent", 
 			joinColumns = @JoinColumn(name = "territory_b"), 
@@ -66,9 +65,8 @@ public class Territory {
 	private Set<Territory> territoryAdjacent;
 	
 	private int pawn;
-	
+
 	@JsonIgnoreProperties("playerTerritories")
-	//@ManyToOne(fetch = FetchType.LAZY)
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "player_id")
 	private Player player;

@@ -1,3 +1,6 @@
+\c postgres
+DROP DATABASE sicknesstorm;
+
 CREATE DATABASE sicknesstorm;
 
 \c sicknesstorm;

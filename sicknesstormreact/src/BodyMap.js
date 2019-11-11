@@ -10,34 +10,35 @@ export default class BodyMap extends React.Component{
     
     constructor(){
             super();
-            this.state = {isLoaded : false ,territories:{}, roundPhase:null, playerTurn : null, prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false, tooltip: null, styles: { top: 0, left: 0}};
+            this.state = {isLoaded : false, game:null ,territories:{}, roundPhase:null, playerTurn : null, prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false, tooltip: null, styles: { top: 0, left: 0}};
             this.handleEvent = this.handleEvent.bind(this);
         }
         
     async componentDidMount(){
-        try{
-            let response = await fetch(`http://localhost:8080/territories`);
-            if(response.ok){
-                let data = await response.json()
-                let dataTreated = data.map((territories) => { return [territories.id, territories.name.toLowerCase(), territories.pawn, territories.player.name, territories.player.id]});
-                this.setState({
-                    isLoaded : true,
-                    territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
-                })
-                await this.getPhase();
-                await this.getPlayerTurn();
-                throw new Error(response.statusText);
-            }       
-        }
-        catch(err){
-              console.log(err);
-        }
+        this.props.sendMessage();
+        let dataTreated = this.props.territories.map((territories) => { return [territories.id, territories.name.toLowerCase(), territories.pawn, territories.player.name, territories.player.id]});
+        this.setState({
+            isLoaded : true,
+            territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
+        })
+        await this.getPhase();
+        await this.getPlayerTurn();
+    }
+
+    componentDidUpdate = async () =>{
+        let dataTreated = this.props.territories.map((territories) => { return [territories.id, territories.name.toLowerCase(), territories.pawn, territories.player.name, territories.player.id]});
+            this.setState({
+                isLoaded : true,
+            territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
+        })
+        this.setState({game:this.props.game, roundPhase: this.props.game.phase, playerTurn:this.props.game.playerTurn.name});
     }
 
     cleanBodyFromSelectedTerritories = async () =>{
         this.state.territoryAttackerSelected[1].classList.remove("attacker");
         this.state.territoryDefenderSelected[1].classList.remove("defender");
     }
+
     territorySelectedOnMouseOver = async (territory) =>{
         for(let i = 0; i < this.state.territories.length; i++){
             if(territory.id == this.state.territories[i][1]){
@@ -95,8 +96,7 @@ export default class BodyMap extends React.Component{
         }
         else{
             console.log("error");
-        }
-        
+        }   
     }
 
     async getPlayerTurn(){
@@ -115,48 +115,26 @@ export default class BodyMap extends React.Component{
         }
     }
 
-    //retrieve the actual phase of the round, when it's up to date it set the state.
-    async getPhase(){
-        try{
-            let response = await fetch(`http://localhost:8080/roundphase`);
-            if(response.ok){
-                let data = await response.json()
-                await this.setState({
-                  roundPhase : data
-                })
-                console.log(data);
-                throw new Error(response.statusText);
-            }
-        }
-            catch(err){
-        }
-    }
-
     //method created to be passed in a child to call the fetch that retrieve the phase data.
-    handleEvent(){
-        this.getPhase();
-        this.componentDidMount();
-        this.getPlayerTurn();
+    handleEvent = async () => {
+        await this.props.sendMessage();
         console.log("event sent");
-      }
-        
-    handleClick(e) {
-        var attaque = e.target.id;
-        e.preventDefault();
-        console.log('continant selectionner est le '+attaque);
       }
     
     render(){
-        return(     
+        return(
             <div id="game-window" onMouseMove={  this.eventOnMouseMove}>
+                {this.props.userName != null ? this.props.userName : "ERROR"}
+                
                     {this.state.tooltip != null ? this.state.tooltip : ""}
-                    {this.state.isLoaded ? <SvgBody  updateTerritories={this.state.territories} territorySelected={this.territorySelected} territorySelectedOnMouseOver={this.territorySelectedOnMouseOver} territoryTooltipCleanUpOnMouseOut={this.territorySelectedOnMouseOut}></SvgBody> : "Loading..."}
+                    {this.state.isLoaded ? <SvgBody  updateTerritories={this.state.territories} territorySelected={this.territorySelected} territorySelectedOnMouseOver={this.territorySelectedOnMouseOver} territoryTooltipCleanUpOnMouseOut={this.territorySelectedOnMouseOut} ></SvgBody> : "Loading..."}
                     {this.state.roundPhase != "INITIALIZE" ? <PlayerTurn playerturn={this.state.playerTurn} players={this.props.players}/> : ""}
+                    {this.props.userName == this.state.playerTurn ? 
                     <div id="phase-interface">
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface sendMessageToAddPawns={this.props.sendMessageToAddPawns} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify updatephase={this.handleEvent} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
-                    </div>
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} updatephase={this.handleEvent} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                    </div> : "" }
             </div>
               
         );
