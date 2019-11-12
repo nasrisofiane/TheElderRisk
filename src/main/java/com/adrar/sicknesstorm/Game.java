@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Game {
 	
 	private int id; 
+	@JsonIgnoreProperties("playerTerritories")
 	private List<Player> playerList = new ArrayList();	
 	private int turnPlayerNumber = 0;
 	
@@ -26,6 +27,9 @@ public class Game {
 	
 	@Transient
 	private List<Territory> territories = new ArrayList<>();
+	
+	@Transient
+	private String getAttacked;
 	
 	public int getTurnPlayerNumber() {
 		return turnPlayerNumber;
@@ -61,6 +65,14 @@ public class Game {
 	
 	
 	
+	public String getGetAttacked() {
+		return getAttacked;
+	}
+
+	public void setGetAttacked(String getAttacked) {
+		this.getAttacked = getAttacked;
+	}
+
 	public List<Territory> getTerritories() {
 		return territories;
 	}

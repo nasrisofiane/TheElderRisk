@@ -1,5 +1,4 @@
 import React from 'react';
-import AllTerritories from './AllTerritories';
 import './place_pawn_interface.css';
 
 class PlacePawnInterface extends React.Component{ 

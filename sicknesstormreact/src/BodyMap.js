@@ -10,19 +10,12 @@ export default class BodyMap extends React.Component{
     
     constructor(){
             super();
-            this.state = {isLoaded : false, game:null ,territories:{}, roundPhase:null, playerTurn : null, prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false, tooltip: null, styles: { top: 0, left: 0}};
+            this.state = {diceOne : 1, isLoaded : false, game:null, getAttacked:null,territories:{}, roundPhase:null, playerTurn : null, prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false, tooltip: null, styles: { top: 0, left: 0}};
             this.handleEvent = this.handleEvent.bind(this);
-        }
+    }
         
     async componentDidMount(){
         this.props.sendMessage();
-        let dataTreated = this.props.territories.map((territories) => { return [territories.id, territories.name.toLowerCase(), territories.pawn, territories.player.name, territories.player.id]});
-        this.setState({
-            isLoaded : true,
-            territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
-        })
-        await this.getPhase();
-        await this.getPlayerTurn();
     }
 
     componentDidUpdate = async () =>{
@@ -31,7 +24,15 @@ export default class BodyMap extends React.Component{
                 isLoaded : true,
             territories : dataTreated.sort(function(a, b) {return a[0] - b[0];})
         })
-        this.setState({game:this.props.game, roundPhase: this.props.game.phase, playerTurn:this.props.game.playerTurn.name});
+        this.setState({game:this.props.game, getAttacked : this.props.game.getAttacked ,roundPhase: this.props.game.phase, playerTurn:this.props.game.playerTurn.name});
+        if(this.state.getAttacked != null){
+            if(this.state.getAttacked == this.props.userName){
+                console.log("ATTACK RECEIVED !");
+            }
+            else{
+                console.log("NOT ATTACKED");
+            }
+        }
     }
 
     cleanBodyFromSelectedTerritories = async () =>{
@@ -99,31 +100,33 @@ export default class BodyMap extends React.Component{
         }   
     }
 
-    async getPlayerTurn(){
-        try{
-            let response = await fetch(`http://localhost:8080/playerturn`);
-            if(response.ok){
-                let data = await response.json()
-                this.setState({
-                  playerTurn : data.name
-                })
-                console.log(data.name);
-                throw new Error(response.statusText);
-            }
-        }
-        catch(err){
-        }
-    }
-
     //method created to be passed in a child to call the fetch that retrieve the phase data.
     handleEvent = async () => {
         await this.props.sendMessage();
         console.log("event sent");
-      }
+    }
+
+    answerToAttack = async () =>{
+        this.props.sendMessageToAnswerFight(this.state.diceOne);
+    }
+
+    dicesInputs =({target:{id, value}}) => {
+        if(id =="dice-one"){
+            this.setState({diceOne:value});
+            console.log("Dice One => "+ this.state.diceOne);
+        }
+    }
     
     render(){
         return(
             <div id="game-window" onMouseMove={  this.eventOnMouseMove}>
+                {this.state.getAttacked != null && this.state.getAttacked == this.props.userName ? 
+                <div id="answer-attack">
+                    <h2>Answer to the attack</h2>
+                    <h3>Dice</h3>
+                    <input id="dice-one" type="number" value={this.state.diceOne} max="3" min="1" onChange={this.dicesInputs}/>
+                <button onClick={() => this.answerToAttack()}>Defend with {this.state.diceOne} pawns</button>GET ATTACKED
+                    </div> : ""}
                 {this.props.userName != null ? this.props.userName : "ERROR"}
                 
                     {this.state.tooltip != null ? this.state.tooltip : ""}
@@ -132,7 +135,7 @@ export default class BodyMap extends React.Component{
                     {this.props.userName == this.state.playerTurn ? 
                     <div id="phase-interface">
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface sendMessageToAddPawns={this.props.sendMessageToAddPawns} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} updatephase={this.handleEvent} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
                     </div> : "" }
             </div>

@@ -90,9 +90,25 @@ public class SicknesstormController {
 		return this.game;
 	}
 
-	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
-	public String startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
-		return sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
+//	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
+//	public String startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
+//		return sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
+//	}
+	
+	@MessageMapping("/fight")
+	@SendTo("/topic/message")
+	public Game startFight(List<Integer> message) {
+		sicknesstormService.buildFight(message, this.game);
+		this.game.setTerritories(sicknesstormService.getTerritories());
+		return this.game;
+	}
+	
+	@MessageMapping("/answerfight")
+	@SendTo("/topic/message")
+	public Game startFight(int message) {
+		sicknesstormService.answerFight(message, this.game);
+		this.game.setTerritories(sicknesstormService.getTerritories());
+		return this.game;
 	}
 	
 	@GetMapping(value = "/attp/{idplayer}/{idTerritory}")  /*"attp" signifie addTerritoryToPlayer*/

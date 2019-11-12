@@ -1,18 +1,13 @@
 import React from 'react';
-import AllTerritories from './AllTerritories';
 import './attack_phase.css';
 
 export default class AttackPhase extends React.Component{
-    state = {isLoaded : false, diceOne : 1, diceTwo: 1, territoryAttacker: null, territoryDefender:null, resultLastFight: null, changeClass:"hide-phase-popup", styles:{display:"block"}};
+    state = {isLoaded : false, diceOne : 1, territoryAttacker: null, territoryDefender:null, resultLastFight: null};
 
     dicesInputs =({target:{id, value}}) => {
         if(id =="dice-one"){
             this.setState({diceOne:value});
             console.log("Dice One => "+ this.state.diceOne);
-        }
-        if(id =="dice-two"){
-            this.setState({diceTwo:value});
-            console.log("Dice Two => "+ this.state.diceTwo);
         }
     }
 
@@ -34,58 +29,17 @@ export default class AttackPhase extends React.Component{
         }
     }
 
-    displayPhasePopUp = () =>{
-        if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null){
-            if(this.state.changeClass == "hide-phase-popup"){
-                this.setState({changeClass:"", styles:{display:"none"}});
-            }
-            else{
-                this.setState({changeClass:"hide-phase-popup", styles:{display:"block"}});
-            }
-        }
-        else{
-            alert("Select a territory first");
-        }
-    }
-
-
     sendAttackToServer = async () =>{
-        if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null && this.state.diceOne != null && this.state.diceTwo != null){
-            try{
-                let response = await fetch(`http://localhost:8080/fight/${this.props.territoryAttackerSelected[0][0]}/${this.props.territoryDefenderSelected[0][0]}/${this.state.diceOne}/${this.state.diceTwo}`);
-                if(response.ok){
-                    let data = await response.text()
-                    
-                    try{
-                        if(Array.isArray(JSON.parse(data))){
-                            var dataJson = JSON.parse(data);
-                            if(dataJson.length == 0){
-                                this.setState({isLoaded : false, resultLastFight : null});
-                            }
-                            else{
-                                this.setState({isLoaded : true, resultLastFight : dataJson});
-                            }
-                            
-                        }
-                    }
-                    catch(e){
-                        this.setState({isLoaded : true, resultLastFight : data});
-                    }
-                    await this.props.updatephase();
-                    console.log(data);
-                    console.log(JSON.parse(data));
-                    
-                    throw new Error(response.statusText);
-                }       
-            }
-            catch(err){ 
-            }
-            this.displayPhasePopUp(); 
+        if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null && this.state.diceOne != null){
+            await this.props.sendMessageToFight(this.props.territoryAttackerSelected[0][0], this.props.territoryDefenderSelected[0][0], this.state.diceOne);
+           
         }
         else{
             alert("Be sure that you've well selected both territory.");
         }
+        await this.props.updatephase();
     }
+
 
     renderFight(resultLastFight){
         if(typeof resultLastFight ==  "string"){
@@ -131,28 +85,27 @@ export default class AttackPhase extends React.Component{
     render(){
         return(
             <div className="container-attack-phase" >
-                 <div className={"infos-phase-popup "+ this.state.changeClass}>
+                 {this.props.getAttacked != null ? <div className={"infos-phase-popup "}>
                     <div className="form-phase">
                         <div className="fight-infos">{this.state.isLoaded ? this.renderFight(this.state.resultLastFight): "Fight logs"}</div>
                         <div id="preview_fight"><p id="attacker-choice">{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[0][1] :"Select a territory"} </p>VS <p id="defender-choice">{this.props.territoryDefenderSelected != null ? this.props.territoryDefenderSelected[0][1] :"Select a territory"} </p> </div>
-                        <button onClick={this.displayPhasePopUp}>Close fight logs</button>
+                        <p>WAITING DEFENDER'S ANSWER</p>
                     </div>
-                </div>
+                </div> : ""}
                 <div style={this.state.styles}>
                     
-                    <div className="attack-interface-beforepopup">
+                    {this.props.getAttacked == null ? <div className="attack-interface-beforepopup">
                         <div className="attack-phase">
                         <h2>Attack phase</h2>
                             <div className="dices-container">
                                 <h3>Dices</h3>
                                 <input id="dice-one" type="number" value={this.state.diceOne} max="3" min="1" onChange={this.dicesInputs}/>
-                                <input id="dice-two" type="number" value={this.state.diceTwo} max="2" min="1" onChange={this.dicesInputs}/>
                             </div>
                             
                             <button id="fight-button" onClick={this.sendAttackToServer}>Fight</button>
                             <button id="close-fight-button" onClick={this.closeAttackPhase}>Go to next phase (move pawns)</button>
                         </div>
-                    </div>
+                    </div> : ""}
                 </div>
             </div>
         );

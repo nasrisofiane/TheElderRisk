@@ -19,6 +19,18 @@ public class SicknesstormService{
 	@Autowired
 	TerritoryRepository territoryRepo;
 	
+	private List<Integer> lastFightTerritories = new ArrayList<>();
+	
+	
+	
+	public List<Integer> getLastFightTerritories() {
+		return lastFightTerritories;
+	}
+
+	public void setLastFightTerritories(List<Integer> lastFightTerritories) {
+		this.lastFightTerritories = lastFightTerritories;
+	}
+
 	public Player getAplayer(Integer id){
 		return playerRepo.findById(id).get();
 	}
@@ -129,6 +141,26 @@ public class SicknesstormService{
 		}
 	}
 	
+	public Game buildFight (List<Integer> fightRequestInfos, Game game) {
+		if(game.getPhase() == GamePhase.ATTACK) {
+			game.setGetAttacked(this.getAterritory(fightRequestInfos.get(1)).getPlayer().getName());
+			this.lastFightTerritories = fightRequestInfos;
+		}
+		else {
+		}
+		return game;
+	}
+	
+	public Game answerFight (int nbDefense, Game game) {
+		if(game.getPhase() == GamePhase.ATTACK) {
+			this.startFight(this.lastFightTerritories.get(0), this.lastFightTerritories.get(1), this.lastFightTerritories.get(2), nbDefense, game);
+		}
+		else {
+		}
+		return game;
+	}
+	
+	
 	public String startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
 		if(game.getPhase() == GamePhase.ATTACK) {
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritoryAtk).getPlayer().getId()) {
@@ -136,14 +168,16 @@ public class SicknesstormService{
 					return "CANNOT ATTACK YOUR OWN TERRITORIES";
 				}
 				else {
-					ArrayList<ArrayList<Integer>> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+					ArrayList<Territory> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
 					if(result != null) {
-						territoryRepo.save(this.getAterritory(idTerritoryAtk));
-						territoryRepo.save(this.getAterritory(idTerritoryDef));
+						territoryRepo.save(result.get(0));
+						territoryRepo.save(result.get(1));
 					}
 					else {
 						return "Territory not adjacent";
 					}
+					this.lastFightTerritories = null;
+					game.setGetAttacked(null);
 					return result.toString();
 				}
 			}

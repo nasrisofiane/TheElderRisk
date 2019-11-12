@@ -146,7 +146,7 @@ public class Territory {
 	 * if there's only 1 pawn on the Territory attacked, perform a shifumi.
 	 * if the attacker get all pawn from the attacked territory, call conquerTerritory(Territory, Nbpawns)
 	 */
-	public ArrayList<ArrayList<Integer>> attack(Territory territory, int nbAttack, int nbDefense) {
+	public ArrayList<Territory> attack(Territory territory, int nbAttack, int nbDefense) {
 		ArrayList<ArrayList<Integer>> resultats = new ArrayList<>();
 		if(nbAttack > territory.getPawn() || nbAttack > 3) {//secure the number of dice thrown for the attacker
 			nbAttack = 1;
@@ -177,7 +177,10 @@ public class Territory {
 			if(this.pawn <= 0) {
 				territory.conquerTerritory(this, resultats.get(0).get(1));
 			}
-			return resultats;
+			ArrayList<Territory> territoriesChanged = new ArrayList<Territory>();
+			territoriesChanged.add(this);
+			territoriesChanged.add(territory);
+			return territoriesChanged;
 		}//END OF : if the territory attacked is a neighbor of this territory so the fight can be executed
 		else {
 			System.out.println("Territoire non voisin");
@@ -296,8 +299,7 @@ public class Territory {
 
 	@Override
 	public boolean equals(Object obj) {
-		System.out.println("equals "+this.id+" "+this.name+" "+((Territory)obj).getId()+" "+((Territory)obj).getName());
-
+		//System.out.println("equals "+this.id+" "+this.name+" "+((Territory)obj).getId()+" "+((Territory)obj).getName());
 		if (this == obj)
 			return true;
 		if (obj == null)
