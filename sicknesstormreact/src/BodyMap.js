@@ -40,30 +40,9 @@ export default class BodyMap extends React.Component{
         this.state.territoryDefenderSelected[1].classList.remove("defender");
     }
 
-    territorySelectedOnMouseOver = async (territory) =>{
-        for(let i = 0; i < this.state.territories.length; i++){
-            if(territory.id == this.state.territories[i][1]){
-                this.setState({tooltip:<div className="tooltip" style={this.state.styles}>
-                    <p>Territory name : <strong>{this.state.territories[i][1]}</strong></p>
-                    <p>Pawns present : <strong>{this.state.territories[i][2]}</strong></p>
-                    <p>Territory owner : <strong>{this.state.territories[i][3]}</strong></p>
-                    </div>});
-                break;
-            }
-            else{
-                this.setState({tooltip:null});
-            }
-        }
-    }
-
-    territorySelectedOnMouseOut = async () =>{
-        this.setState({tooltip:null});
-    }
-
     eventOnMouseMove = (e) => {
         this.setState({styles:{top:e.screenY-90+"px", left:e.screenX-70+"px"}});
-       
-      }
+    }
 
     territorySelected = async (territory) =>{
         let found = false;

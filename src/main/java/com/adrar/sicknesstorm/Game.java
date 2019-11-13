@@ -50,12 +50,8 @@ public class Game {
 	public Player round() {
 		this.phase = GamePhase.PLACEPAWN;
 		this.playerTurn = this.playerList.get(this.turnPlayerNumber);
-		System.out.println("Territoires du joueur => "+this.playerTurn.getPlayerTerritories().size());
 		this.pawnsToPlace = (int) Math.ceil(playerTurn.getPlayerTerritories().size() / 3);
-		System.out.println("BUG ICI => "+playerTurn.getPlayerTerritories().size());
-		System.out.println("Number of territories => "+playerTurn.getPlayerTerritories().size()+" | pawns to place ====> " + playerTurn.getPlayerTerritories().size() / 3);
 		this.turnPlayerNumber += 1;
-		
 		if(turnPlayerNumber == this.playerList.size()) {
 			this.turnPlayerNumber = 0;
 		}

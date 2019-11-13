@@ -60,13 +60,16 @@ public class SicknesstormService{
 		return territoryRepo.findTerritoryByPlayerId(playerId);
 	}
 	
-	//Initialize the game with all the players, shuffle the territories and start Round method.
+	/**
+	 * Initilize the game with a suffle of all territories and attributes territories to each player.
+	 * @param game
+	 */
 	public void initializeGame(Game game) {
-		game.initialize(this.getAllPlayers());
 		if(game.getPhase() == GamePhase.INITIALIZE) {
 			game.initialize(this.getAllPlayers());
 			List<Territory> territories = this.getTerritories();
 			Collections.shuffle(territories);
+			//Algorithm that gives all territory randomly to each player.
 			int j = 0;
 			int playerIndex = 0;
 			for(Player player : game.getPlayerList()) { //affect all territories randomly to all players.
@@ -82,6 +85,7 @@ public class SicknesstormService{
 				game.getPlayerList().get(playerIndex).setPlayerTerritories(this.getTerritoryByPlayerId(player.getId()));
 				playerIndex += 1;
 			}
+			//End of the algorithm
 			game.round();
 		}
 		else {
@@ -89,12 +93,13 @@ public class SicknesstormService{
 		}
 	}
 	
-	public String addPawn(int idTerritory , int pawn, Game game ) {
+	public void addPawn(int idTerritory , int pawn, Game game ) {
 			Territory territory = this.getAterritory(idTerritory);
 			
+			/* condition that check if the id of the playerTurn is equal to the territory
+			that he want to add pawn*/
 			if(game.getPlayerTurn().getId() == territory.getPlayer().getId()) {
 				if(game.getPawnsToPlace() > 0 && pawn <= game.getPawnsToPlace()) {
-					
 					game.setPawnsToPlace(game.getPawnsToPlace() - pawn);
 					territory.setPawn(territory.getPawn() + pawn);
 				   	territoryRepo.save(territory);
@@ -103,25 +108,30 @@ public class SicknesstormService{
 				   	}
 				   	else {
 				   		System.out.println("YOU HAVE TO PLACE ALL YOUR AVAILABLE PAWNS");
-				   		return "YOU HAVE TO PLACE ALL YOUR AVAILABLE PAWNS";
 				   	}
-				   	return "Lasts "+game.getPawnsToPlace()+" to place";
 				}
 				else {
 					System.out.println("NOT ENOUGH PAWNS");
-					return "NOT ENOUGH PAWNS";
 				}
 			   	
 			}
 			else {
 				System.out.println("NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER" + territory.getPlayer().getName());
-				return "NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER " + territory.getPlayer().getName();
 			}
 		
 	}
 	
+	/**
+	 * Move the pawns from the territoryA to the territoryB if it respect the conditions.
+	 * @param idTerritorya
+	 * @param idTerritoryb
+	 * @param pawn
+	 * @param game
+	 * @return
+	 */
 	public String movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
 		if(game.getPhase() == GamePhase.MOVEFORTIFY) {
+			// Condition that check if the territoryA AND territoryB owner is equal to the player's turn
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritorya).getPlayer().getId() && game.getPlayerTurn().getId() == this.getAterritory(idTerritoryb).getPlayer().getId()) {
 					if(this.getAterritory(idTerritorya).moveFortify(this.getAterritory(idTerritoryb), pawn) == true) {
 					   	territoryRepo.save(this.getAterritory(idTerritorya));
@@ -141,16 +151,30 @@ public class SicknesstormService{
 		}
 	}
 	
+	/**
+	 * Method that take the attacks informations and store it in an array called "lastFightTerritories"
+	 * also set the GetAttacked from the Class Game to the name of the owner of the territory that get attacked.
+	 * @param fightRequestInfos
+	 * @param game
+	 * @return game
+	 */
 	public Game buildFight (List<Integer> fightRequestInfos, Game game) {
-		if(game.getPhase() == GamePhase.ATTACK) {
+		if(game.getPhase() == GamePhase.ATTACK && this.isAdjacent(fightRequestInfos.get(0), fightRequestInfos.get(1)) == true) {
 			game.setGetAttacked(this.getAterritory(fightRequestInfos.get(1)).getPlayer().getName());
 			this.lastFightTerritories = fightRequestInfos;
 		}
 		else {
+			
 		}
 		return game;
 	}
 	
+	/**
+	 * Method that will call Start fight with the array's values and the parameter nbDefense sent from the controller
+	 * @param nbDefense
+	 * @param game
+	 * @return game
+	 */
 	public Game answerFight (int nbDefense, Game game) {
 		if(game.getPhase() == GamePhase.ATTACK) {
 			this.startFight(this.lastFightTerritories.get(0), this.lastFightTerritories.get(1), this.lastFightTerritories.get(2), nbDefense, game);
@@ -160,7 +184,16 @@ public class SicknesstormService{
 		return game;
 	}
 	
-	
+	/**
+	 * Method that start a fight with the parameters passed, once the fight is done, the GetAttaked
+	 * from Game class is set to null same for the array "lastFightTerritories"
+	 * @param idTerritoryAtk
+	 * @param idTerritoryDef
+	 * @param nbAttack
+	 * @param nbDefense
+	 * @param game
+	 * @return
+	 */
 	public String startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
 		if(game.getPhase() == GamePhase.ATTACK) {
 			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritoryAtk).getPlayer().getId()) {

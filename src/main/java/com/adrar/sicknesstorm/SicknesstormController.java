@@ -64,8 +64,6 @@ public class SicknesstormController {
 		return sicknesstormService.getAterritory(id);
 	}
 	
-	
-	
 	@MessageMapping("/territories")
 	@SendTo("/topic/territories")
 	public List<Territory> getTerritoriesSocket(){
@@ -89,11 +87,6 @@ public class SicknesstormController {
 		this.game.setTerritories(sicknesstormService.getTerritories());
 		return this.game;
 	}
-
-//	@GetMapping(value = "/fight/{idTerritoryAtk}/{idTerritoryDef}/{nbAttack}/{nbDefense}")
-//	public String startFight(@PathVariable int idTerritoryAtk ,@PathVariable int idTerritoryDef, @PathVariable int nbAttack , @PathVariable int nbDefense) {
-//		return sicknesstormService.startFight(idTerritoryAtk, idTerritoryDef, nbAttack, nbDefense, this.game);
-//	}
 	
 	@MessageMapping("/fight")
 	@SendTo("/topic/message")

@@ -148,6 +148,7 @@ public class Territory {
 	 */
 	public ArrayList<Territory> attack(Territory territory, int nbAttack, int nbDefense) {
 		ArrayList<ArrayList<Integer>> resultats = new ArrayList<>();
+		//Check the dices input, if it do not respect the number it set the dice to 1.
 		if(nbAttack > territory.getPawn() || nbAttack > 3) {//secure the number of dice thrown for the attacker
 			nbAttack = 1;
 		}
@@ -156,7 +157,6 @@ public class Territory {
 		}
 		if(isAdjacent(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
 			Fight fight = new Fight();
-			
 			System.out.println("Territoire voisin");
 			if(territory.getPawn() == 1) {
 				if(this.shifumi() == true) {
@@ -193,8 +193,14 @@ public class Territory {
 		territory.setPawn(nbPawns);
 	}
 	
+	/**
+	 * Method that check if the territory that you want to move your pawn to is adjcent and your territory.
+	 * @param player
+	 * @param territoryA
+	 * @param chemins
+	 * @return
+	 */
 	public boolean checkBeforeMoveFortify(Player player, Territory territoryA, Set<Territory> chemins){ 
-		System.out.println(this.id);
 		this.getTerritoryAdjacent();
 		if(territoryA.getPlayer() != null) {
 			if(territoryA.getPlayer().getId() == player.getId()) {
@@ -210,8 +216,6 @@ public class Territory {
 							}
 						}
 					}
-					
-					
 				}
 			}
 			else {
@@ -225,7 +229,9 @@ public class Territory {
 	} 
 	
 	public boolean moveFortify(Territory targetTerritory, int nbPawnDeplace) { //move pawn from a territory to another.
-		 Set<Territory> chemins = new HashSet<Territory>();
+		Set<Territory> chemins = new HashSet<Territory>(); //chemins Array will be passed into the checkBefore() method
+		
+		//Condition that check the pawn can be move.
 		if(this.checkBeforeMoveFortify(this.player, targetTerritory, chemins) == true) {
 			if(this.pawn - nbPawnDeplace >= 1) {
 				targetTerritory.setPawn(targetTerritory.getPawn() + nbPawnDeplace);
