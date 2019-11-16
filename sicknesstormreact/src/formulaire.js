@@ -11,7 +11,8 @@ class Formulaire extends React.Component{
         cssClass : "champs",
         players:null,
         numberOfPlayers:null,
-        userName:null
+        userName:null,
+        isSent:false
     }
 
     componentDidMount = async () => {
@@ -26,7 +27,7 @@ class Formulaire extends React.Component{
 
     postData = async (value) => {
         await this.props.sendMessage(value);
-        
+        this.setState({isSent:true});
     } 
 
     handleChange = async () =>{
@@ -51,13 +52,13 @@ class Formulaire extends React.Component{
             <div className ={this.state.cssClass}>
                 <div className ="border">
                     <div className="players">    
-                        <div className ="ja">
+                    { this.state.isSent != true ? <div className ="ja">
                         <h3>Player's name'</h3>
                         <div>
                             <p><input type ="text" placeholder ="your name " value={this.state.username} name = "fullName" onChange = {this.handleInputChange}/></p>
                             <p><button onClick={()=>{this.postData(this.state.userName)}}>Send</button></p>
                         </div>
-                    </div>
+                    </div> : ""}
                     <div className="initialize">
                         {this.state.players != null && this.state.players.length > 1 ? <button onClick={()=> { this.getData()}}>Start game with ({this.state.numberOfPlayers}) players</button> : "" }
                     </div>

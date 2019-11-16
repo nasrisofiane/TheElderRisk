@@ -33,6 +33,8 @@ public class Player {
 	
 	private String name;
 	
+	private String sessionId;
+	
 	@JsonIgnoreProperties({"territoryAdjacent", "player"})
 	private Set<Territory> playerTerritories = new HashSet<Territory>();
 
@@ -44,6 +46,14 @@ public class Player {
 		this.id = id;
 	}
 	
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
 	public String getName() {
 		return name;
 	}

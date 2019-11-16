@@ -9,29 +9,27 @@ class App extends Component {
     super(props)
     this.handleEvent = this.handleEvent.bind(this);
   }
-  state = {roundPhase:null, territories:{}, players:null, userInfos:null, receivedMessageChange: null, game:null}
+  state = {roundPhase:null, territories:{}, players:null, userInfos:"null", receivedMessageChange: null, game:null}
 
-  
-  async componentDidMount(){
+  retrieveMySessionId = async (userName) => {
     try{
-        let response = await fetch(`http://localhost:8080/roundphase`);
-        if(response.ok){
-            let data = await response.json()
-            this.setState({
-              roundPhase : data
-            })
-            console.log(data);
-           
-            throw new Error(response.statusText);
-        }
-            
-    }
-    catch(err){
-    }
-    
+      let response = await fetch(`http://localhost:8080/restoregame/${userName}`);
+      if(response.ok){
+          let data = await response.text()
+          if(data == null || data == 'undefined' || data != ""){
+            console.log("COMPLETE");
+            localStorage.setItem('sessionId', data);
+          }
+          console.log(localStorage.getItem('sessionId'));
+          console.log(data);
+          throw new Error(response.statusText);
+      }
+  }
+  catch(err){
+  }
   }
 
-  sendMessage = (msg) => {
+  sendMessage = async (msg) => {
     this.clientRef.sendMessage('/app/message', msg);
   }
 
@@ -79,12 +77,21 @@ class App extends Component {
   messageReceived = async (msg) => {
     if(typeof msg.playerList != 'undefined'){
        await this.setState({roundPhase:msg.phase ,territories:msg.territories, players:msg.playerList, game:msg});
-       
+       console.log("ORDERED TERRITORIES ?");
+       console.log(this.state.territories);
     }
     else{
       this.setState({players:msg});
     }
-    console.log(this.state.territories);
+    
+        this.state.players.forEach((player) => {
+          if(player.sessionId === localStorage.getItem('sessionId')){
+            this.setState({userInfos : player.name});
+          }
+        })  
+    
+    console.log(localStorage.getItem('sessionId'));
+    console.log(this.state.game);
   }
 
   handleEvent(phase){
@@ -96,9 +103,9 @@ class App extends Component {
     return (
       
       <div className="App">
-        <SockJsClient url='http://localhost:8080/websocket-example' topics={['/topic/message']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client; }} />
+        <SockJsClient url='http://localhost:8080/sicknesstorm' topics={['/topic/message']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client; }} />
         {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent} sendMessage={this.sendMessageAddPlayer} sendMessageInitiliazePhase={this.sendMessageInitiliazePhase} players={this.state.players}/> : ""}
-        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap sendMessageToCloseFightStep={this.sendMessageToCloseFightStep} sendMessageToMovePawns={this.sendMessageToMovePawns} sendMessageToAnswerFight={this.sendMessageToAnswerFight} sendMessageToFight={this.sendMessageToFight} sendMessageToAddPawns={this.sendMessageToAddPawns} territories={this.state.territories} sendMessageGetTerritories={ this.sendMessageGetTerritories} sendMessage={this.sendMessage} sendMessageCloseMoveFortifyPhase={this.sendMessageCloseMoveFortifyPhase} players={this.state.players} game={this.state.game} userName={this.state.userInfos}/> : "LOADING..."}
+        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap retrieveMySessionId={this.retrieveMySessionId} sendMessageToCloseFightStep={this.sendMessageToCloseFightStep} sendMessageToMovePawns={this.sendMessageToMovePawns} sendMessageToAnswerFight={this.sendMessageToAnswerFight} sendMessageToFight={this.sendMessageToFight} sendMessageToAddPawns={this.sendMessageToAddPawns} territories={this.state.territories} sendMessageGetTerritories={ this.sendMessageGetTerritories} sendMessage={this.sendMessage} sendMessageCloseMoveFortifyPhase={this.sendMessageCloseMoveFortifyPhase} players={this.state.players} game={this.state.game} userName={this.state.userInfos}/> : "LOADING..."}
       </div>
     );
   }

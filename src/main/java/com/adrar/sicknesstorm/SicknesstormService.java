@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpAttributesContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,28 +27,40 @@ public class SicknesstormService{
 	public void setLastFightTerritories(List<Integer> lastFightTerritories) {
 		this.lastFightTerritories = lastFightTerritories;
 	}
-
-	public Territory getAterritory(Integer id) {
-		return territoryRepo.findById(id).get();
-	}
 	
 	public List<Territory> getTerritories(){
 		return territoryRepo.findAll();
 	}
 
-	public boolean isAdjacent(int territoryA, int territoryB) {
-		return this.getAterritory(territoryA).isAdjacent(this.getAterritory(territoryB));
+	public boolean isAdjacent(int territoryA, int territoryB, Game game) {
+		Territory territoryAdjacentA = null;
+		Territory territoryAdjacentB = null;
+		for(Territory territory : game.getTerritories()) {
+			if(territory.getId() == territoryA) {
+				territoryAdjacentA = territory;
+			}
+			if(territory.getId() == territoryB) {
+				territoryAdjacentB = territory;
+			}
+		}
+		return territoryAdjacentA.isAdjacent(territoryAdjacentB);
 	}
 	
 	public List<Player> addPlayer(Player player, Game game) {
-		 game.addPlayer(player);
-		 return game.getPlayerList();
+		
+		for(Player playerInList : game.getPlayerList()) {
+			if(playerInList.getSessionId() == SimpAttributesContextHolder.currentAttributes().getSessionId()) {
+				System.out.println("ALREADY ADDED");
+				return game.getPlayerList();
+			}
+		}
+		
+		player.setSessionId(SimpAttributesContextHolder.currentAttributes().getSessionId());
+		game.addPlayer(player);
+		System.out.println("GOT IT => " +player.getSessionId());
+		return game.getPlayerList();
 	}
-	
-	public Set<Territory> getTerritoryByPlayerId(Integer playerId){
-		return territoryRepo.findTerritoryByPlayerId(playerId);
-	}
-	
+
 	/**
 	 * Initilize the game with a suffle of all territories and attributes territories to each player.
 	 * @param game
@@ -166,14 +179,27 @@ public class SicknesstormService{
 	 * @return game
 	 */
 	public Game buildFight (List<Integer> fightRequestInfos, Game game) {
-		if(game.getPhase() == GamePhase.ATTACK && this.isAdjacent(fightRequestInfos.get(0), fightRequestInfos.get(1)) == true) {
-			for(Territory territory : game.getTerritories()) {
-				if(territory.getId() == fightRequestInfos.get(1)) {
-					game.setGetAttacked(territory.getPlayer().getName());
-					break;
-				}
+		
+		Territory territoryAtk = null;
+		Territory territoryDef = null;
+		
+		for(Territory territory : game.getTerritories()) {
+			if(territory.getId() == fightRequestInfos.get(0)) {
+				territoryAtk = territory;
 			}
-			this.lastFightTerritories = fightRequestInfos;
+			if(territory.getId() == fightRequestInfos.get(1)) {
+				territoryDef = territory;
+			}
+		}
+		
+		if(territoryAtk.getPlayer().getId() != territoryDef.getPlayer().getId()) {
+			if(game.getPhase() == GamePhase.ATTACK && this.isAdjacent(fightRequestInfos.get(0), fightRequestInfos.get(1), game) == true) {
+				game.setGetAttacked(territoryDef.getPlayer().getName());
+				this.lastFightTerritories = fightRequestInfos;
+			}
+		}
+		else {
+			System.out.println("Cannot attack your own territories");
 		}
 		return game;
 	}
@@ -269,5 +295,14 @@ public class SicknesstormService{
 	
 	public Player playerTurn(Game game) {
 		return game.getPlayerTurn();
+	}
+	
+	public String restoreGame(String name, Game game) {
+		for(Player player : game.getPlayerList()) {
+			if(player.getName().equals(name)) {
+				return player.getSessionId();
+			}
+		}
+		return null;
 	}
 }

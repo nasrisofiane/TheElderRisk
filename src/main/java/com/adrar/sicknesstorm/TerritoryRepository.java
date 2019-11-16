@@ -8,6 +8,4 @@ import org.springframework.data.repository.query.Param;
 
 public interface TerritoryRepository extends JpaRepository<Territory, Integer> {
 	
-	@Query(value = "SELECT * FROM territories WHERE player_id = :playerid", nativeQuery = true)
-	public Set<Territory> findTerritoryByPlayerId(@Param("playerid") Integer playerId);
 }

@@ -16,9 +16,11 @@ export default class BodyMap extends React.Component{
         
     async componentDidMount(){
         this.props.sendMessage();
+        this.props.retrieveMySessionId(this.props.userName);
     }
 
     componentDidUpdate = async () =>{
+        
         let dataTreated = this.props.territories.map((territories) => { return [territories.id, territories.name.toLowerCase(), territories.pawn, territories.player.name, territories.player.id]});
             this.setState({
                 isLoaded : true,
@@ -33,6 +35,7 @@ export default class BodyMap extends React.Component{
                 console.log("NOT ATTACKED");
             }
         }
+        console.log(this.props.userName);
     }
 
     cleanBodyFromSelectedTerritories = async () =>{
@@ -41,7 +44,6 @@ export default class BodyMap extends React.Component{
     }
 
     eventOnMouseMove = (e) => {
-        this.setState({styles:{top:e.screenY-90+"px", left:e.screenX-70+"px"}});
     }
 
     territorySelected = async (territory) =>{
@@ -109,12 +111,12 @@ export default class BodyMap extends React.Component{
                 {this.props.userName != null ? this.props.userName : "ERROR"}
                 
                     {this.state.tooltip != null ? this.state.tooltip : ""}
-                    {this.state.isLoaded ? <SvgBody  updateTerritories={this.state.territories} territorySelected={this.territorySelected} territorySelectedOnMouseOver={this.territorySelectedOnMouseOver} territoryTooltipCleanUpOnMouseOut={this.territorySelectedOnMouseOut} ></SvgBody> : "Loading..."}
+                    {this.state.isLoaded ? <SvgBody  updateTerritories={this.state.territories} territorySelected={this.territorySelected}  ></SvgBody> : "Loading..."}
                     {this.state.roundPhase != "INITIALIZE" ? <PlayerTurn playerturn={this.state.playerTurn} players={this.props.players}/> : ""}
                     {this.props.userName == this.state.playerTurn ? 
                     <div id="phase-interface">
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface sendMessageToAddPawns={this.props.sendMessageToAddPawns} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase sendMessageToCloseFightStep={this.props.sendMessageToCloseFightStep} getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase userName={this.props.userName} game={this.state.game} sendMessageToCloseFightStep={this.props.sendMessageToCloseFightStep} getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoveFortify sendMessageToMovePawns={this.props.sendMessageToMovePawns} sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
                     </div> : "" }
             </div>

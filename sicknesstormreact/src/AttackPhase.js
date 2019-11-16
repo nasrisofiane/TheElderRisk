@@ -1,5 +1,6 @@
 import React from 'react';
 import './attack_phase.css';
+import PlayerTurn from './PlayerTurn';
 
 export default class AttackPhase extends React.Component{
     state = {isLoaded : false, diceOne : 1, territoryAttacker: null, territoryDefender:null, resultLastFight: null};
@@ -73,7 +74,7 @@ export default class AttackPhase extends React.Component{
     render(){
         return(
             <div className="container-attack-phase" >
-                 {this.props.getAttacked != null ? <div className={"infos-phase-popup "}>
+                 {this.props.getAttacked != null && this.props.game.playerTurn.name == this.props.userName ? <div className={"infos-phase-popup "}>
                     <div className="form-phase">
                         <div className="fight-infos">{this.state.isLoaded ? this.renderFight(this.state.resultLastFight): "Fight logs"}</div>
                         <div id="preview_fight"><p id="attacker-choice">{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[0][1] :"Select a territory"} </p>VS <p id="defender-choice">{this.props.territoryDefenderSelected != null ? this.props.territoryDefenderSelected[0][1] :"Select a territory"} </p> </div>
@@ -95,7 +96,7 @@ export default class AttackPhase extends React.Component{
                         </div>
                     </div> : ""}
                 </div>
-            </div>
+            </div> 
         );
     }
 }

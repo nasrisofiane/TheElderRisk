@@ -38,10 +38,6 @@ public class Game {
 	public void setTurnPlayerNumber(int turnPlayerNumber) {
 		this.turnPlayerNumber = turnPlayerNumber;
 	}
-
-	public void initialize(List<Player> players) {
-		this.playerList = players;
-	}
 	
 	/**
 	 * set all boolean all phases of a round to false and return the player that have to play

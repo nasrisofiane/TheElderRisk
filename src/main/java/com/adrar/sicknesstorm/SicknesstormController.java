@@ -7,9 +7,13 @@ import java.util.Set;
 import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpAttributesContextHolder;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.socket.messaging.SessionConnectEvent;
+import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -27,32 +32,32 @@ public class SicknesstormController {
 	@Autowired
 	SicknesstormService sicknesstormService;
 	
+	@Autowired
+	SimpMessageSendingOperations messageTemplate;
+	
 	Game game = new Game();
 	
-  @MessageMapping("/message")
-  @SendTo("/topic/message")
-  public Game getGame() {
-      return game;
-  }	
-  
-  @MessageMapping("/getPlayerJoined")
-  @SendTo("/topic/message")
-  public List<Player> getPlayerJoined(String namePlayer){
-	  Player player = new Player();
-	  player.setId(this.game.getPlayerList().size()+1);
-	  player.setName(namePlayer);
-	  return sicknesstormService.addPlayer(player, this.game);  
-  }
-
-//	@GetMapping("/players")
-//	public List<Player> getAllPlayers(){
-//		return sicknesstormService.getAllPlayers();
-//	}
+	@EventListener
+	private Game onSubscribeEvent(SessionSubscribeEvent event) {
+    	messageTemplate.convertAndSend("/topic/message", game);
+    	System.out.println("IT'S YOU => " +SimpAttributesContextHolder.currentAttributes().getSessionId());
+        return game;
+    }
 	
-	@GetMapping("/territory/{id}")
-	public Territory getTerritory(@PathVariable Integer id) {
-		return sicknesstormService.getAterritory(id);
-	}
+	@MessageMapping("/message")
+  	@SendTo("/topic/message")
+  	public Game getGame() {
+      	return game;
+  	}	
+	
+  	@MessageMapping("/getPlayerJoined")
+  	@SendTo("/topic/message")
+  	public List<Player> getPlayerJoined(String namePlayer){
+  		Player player = new Player();
+	  	player.setId(this.game.getPlayerList().size()+1);
+	  	player.setName(namePlayer);
+	  	return sicknesstormService.addPlayer(player, this.game);  
+  	}
 	
 	@MessageMapping("/territories")
 	@SendTo("/topic/territories")
@@ -64,11 +69,6 @@ public class SicknesstormController {
 	@SendTo("/topic/message")
 	public Game moveFortify(List<Integer> message) {
 		return sicknesstormService.movePawns(message.get(0), message.get(1), message.get(2), this.game);
-	}
-	
-	@GetMapping("/isadjacent/{territoryA}/{territoryB}")
-	public boolean isAdjacent(@PathVariable int territoryA, @PathVariable int territoryB) {
-		return sicknesstormService.isAdjacent(territoryA, territoryB);
 	}
 	
 	@MessageMapping("/addpawn")
@@ -112,9 +112,9 @@ public class SicknesstormController {
 		return sicknesstormService.gamePhase(this.game);
 	}
 	
-	@GetMapping("/playerturn")
-	public Player playerTurn() {
-		return sicknesstormService.playerTurn(game);
+	@GetMapping("/restoregame/{userName}")
+	public String restoreGame(@PathVariable String userName) {
+		return sicknesstormService.restoreGame(userName, this.game);
 	}
 }
 
