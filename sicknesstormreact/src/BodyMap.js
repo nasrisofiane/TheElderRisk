@@ -1,6 +1,6 @@
 import React from 'react';
 import AttackPhase from './AttackPhase';
-import MoovFortify from './MoovFortify';
+import MoveFortify from './MoveFortify';
 import PlayerTurn from './PlayerTurn';
 import PlacePawnInterface from './PlacePawnInterface';
 import SvgBody from './SvgBody';
@@ -114,8 +114,8 @@ export default class BodyMap extends React.Component{
                     {this.props.userName == this.state.playerTurn ? 
                     <div id="phase-interface">
                         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "PLACEPAWN" ? <PlacePawnInterface sendMessageToAddPawns={this.props.sendMessageToAddPawns} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
-                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoovFortify sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} updatephase={this.handleEvent} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "ATTACK" ? <AttackPhase sendMessageToCloseFightStep={this.props.sendMessageToCloseFightStep} getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                        {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase == "MOVEFORTIFY" ? <MoveFortify sendMessageToMovePawns={this.props.sendMessageToMovePawns} sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
                     </div> : "" }
             </div>
               

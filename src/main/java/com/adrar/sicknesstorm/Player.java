@@ -26,20 +26,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
-@Entity
-@Table(name = "players")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "playerTerritories"})
 public class Player {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Integer id;
 	
-	@Column(name ="name")
 	private String name;
 	
 	@JsonIgnoreProperties({"territoryAdjacent", "player"})
-	@OneToMany(mappedBy = "player" , fetch=FetchType.EAGER)
 	private Set<Territory> playerTerritories = new HashSet<Territory>();
 
 	public Integer getId() {

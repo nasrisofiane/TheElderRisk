@@ -13,15 +13,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SicknesstormService{
-	@Autowired
-	PlayerRepository playerRepo;
 	
 	@Autowired
 	TerritoryRepository territoryRepo;
 	
 	private List<Integer> lastFightTerritories = new ArrayList<>();
-	
-	
 	
 	public List<Integer> getLastFightTerritories() {
 		return lastFightTerritories;
@@ -31,16 +27,7 @@ public class SicknesstormService{
 		this.lastFightTerritories = lastFightTerritories;
 	}
 
-	public Player getAplayer(Integer id){
-		return playerRepo.findById(id).get();
-	}
-	
-	public List<Player> getAllPlayers(){
-		return playerRepo.findAll();
-	}
-	
 	public Territory getAterritory(Integer id) {
-		//territoryRepo.getOne(id).testTer(territoryRepo.getOne(id));
 		return territoryRepo.findById(id).get();
 	}
 	
@@ -52,8 +39,9 @@ public class SicknesstormService{
 		return this.getAterritory(territoryA).isAdjacent(this.getAterritory(territoryB));
 	}
 	
-	public void addPlayer(Player player) {
-		 playerRepo.save(player);
+	public List<Player> addPlayer(Player player, Game game) {
+		 game.addPlayer(player);
+		 return game.getPlayerList();
 	}
 	
 	public Set<Territory> getTerritoryByPlayerId(Integer playerId){
@@ -64,45 +52,52 @@ public class SicknesstormService{
 	 * Initilize the game with a suffle of all territories and attributes territories to each player.
 	 * @param game
 	 */
-	public void initializeGame(Game game) {
+	public Game initializeGame(Game game) {
 		if(game.getPhase() == GamePhase.INITIALIZE) {
-			game.initialize(this.getAllPlayers());
-			List<Territory> territories = this.getTerritories();
-			Collections.shuffle(territories);
+			List<Territory> retrieveTerritories = this.getTerritories();
+			Collections.shuffle(retrieveTerritories);
+			game.setTerritories(retrieveTerritories);
+			
 			//Algorithm that gives all territory randomly to each player.
-			int j = 0;
 			int playerIndex = 0;
-			for(Player player : game.getPlayerList()) { //affect all territories randomly to all players.
-				for(int i = j; i < territories.size(); i++) {
-					territories.get(i).setPlayer(player);
-					territories.get(i).setPawn(5);
-					territoryRepo.save(territories.get(i));
-					if(i == j + Math.round(territories.size() / game.getPlayerList().size())) {
-						j = i;
-						break;
-					}
-				}
-				game.getPlayerList().get(playerIndex).setPlayerTerritories(this.getTerritoryByPlayerId(player.getId()));
+
+			for(Territory territory : game.getTerritories()) {
+				game.getPlayerList().get(playerIndex).addTerritory(territory);
+				territory.setPlayer(game.getPlayerList().get(playerIndex));
+				territory.setPawn(3);
 				playerIndex += 1;
+				if(playerIndex >= game.getPlayerList().size()) {
+					playerIndex = 0;
+				}
+				System.out.println("TERRITORY NAME => "+ territory.getName() + " | OWNER => "+ territory.getPlayer().getName());
 			}
+			
 			//End of the algorithm
 			game.round();
+			return game;
 		}
 		else {
 			System.out.println("GAME ALREADY INITIALIZED");
 		}
+		return null;
 	}
 	
-	public void addPawn(int idTerritory , int pawn, Game game ) {
-			Territory territory = this.getAterritory(idTerritory);
+	public Game addPawn(int idTerritory , int pawn, Game game ) {
+			Territory territoryAddPawn = null;
+			
+			for(Territory territory : game.getTerritories()) {
+				if(territory.getId() == idTerritory) {
+					territoryAddPawn = territory;
+					break;
+				}
+			}
 			
 			/* condition that check if the id of the playerTurn is equal to the territory
 			that he want to add pawn*/
-			if(game.getPlayerTurn().getId() == territory.getPlayer().getId()) {
+			if(game.getPlayerTurn().getId() == territoryAddPawn.getPlayer().getId()) {
 				if(game.getPawnsToPlace() > 0 && pawn <= game.getPawnsToPlace()) {
 					game.setPawnsToPlace(game.getPawnsToPlace() - pawn);
-					territory.setPawn(territory.getPawn() + pawn);
-				   	territoryRepo.save(territory);
+					territoryAddPawn.setPawn(territoryAddPawn.getPawn() + pawn);
 				   	if(game.getPawnsToPlace() == 0) {
 				   		game.setPhase(GamePhase.ATTACK);
 				   	}
@@ -116,9 +111,9 @@ public class SicknesstormService{
 			   	
 			}
 			else {
-				System.out.println("NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER" + territory.getPlayer().getName());
+				System.out.println("NOT YOUR TERRITORY => " + game.getPlayerTurn().getName()+ " => TERRITORY OWNER" + territoryAddPawn.getPlayer().getName());
 			}
-		
+		return game;
 	}
 	
 	/**
@@ -129,26 +124,38 @@ public class SicknesstormService{
 	 * @param game
 	 * @return
 	 */
-	public String movePawns (int idTerritorya , int idTerritoryb , int pawn, Game game) {
+	public Game movePawns (int idTerritoryA , int idTerritoryB , int pawn, Game game) {
 		if(game.getPhase() == GamePhase.MOVEFORTIFY) {
+
+			Territory territoryA = null;
+			Territory territoryB = null;
+			
+				for(Territory territory : game.getTerritories()) {
+					if(territory.getId() == idTerritoryA) {
+						territoryA = territory;
+					}
+					if(territory.getId() == idTerritoryB) {
+						territoryB = territory;
+					}
+				}
+				
 			// Condition that check if the territoryA AND territoryB owner is equal to the player's turn
-			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritorya).getPlayer().getId() && game.getPlayerTurn().getId() == this.getAterritory(idTerritoryb).getPlayer().getId()) {
-					if(this.getAterritory(idTerritorya).moveFortify(this.getAterritory(idTerritoryb), pawn) == true) {
-					   	territoryRepo.save(this.getAterritory(idTerritorya));
-						territoryRepo.save(this.getAterritory(idTerritoryb));  
-						return "YOUR PAWNS HAVE BEEN WELL MOVED FROM "+this.getAterritory(idTerritorya).getName()+" TO "+this.getAterritory(idTerritoryb).getName()+"";
+			if(game.getPlayerTurn().getId() == territoryA.getPlayer().getId() && game.getPlayerTurn().getId() == territoryB.getPlayer().getId()) {
+					if(territoryA.moveFortify(territoryB, pawn) == true) { 
+						System.out.println( "YOUR PAWNS HAVE BEEN WELL MOVED FROM "+territoryA.getName()+" TO "+territoryB.getName()+"");
 					}
 					else {
-						return "TERRITORY NOT NEIGHBOR ";
+						System.out.println( "TERRITORY NOT NEIGHBOR ");
 					}
 			}
 			else {
-				return "NOT YOUR TERRITORY";
+				System.out.println( "NOT YOUR TERRITORY");
 			}
 		}
 		else {
-			return "MOVE PAWNS NOT AVAILABLE";
+			System.out.println( "MOVE PAWNS NOT AVAILABLE");
 		}
+		return game;
 	}
 	
 	/**
@@ -160,11 +167,13 @@ public class SicknesstormService{
 	 */
 	public Game buildFight (List<Integer> fightRequestInfos, Game game) {
 		if(game.getPhase() == GamePhase.ATTACK && this.isAdjacent(fightRequestInfos.get(0), fightRequestInfos.get(1)) == true) {
-			game.setGetAttacked(this.getAterritory(fightRequestInfos.get(1)).getPlayer().getName());
+			for(Territory territory : game.getTerritories()) {
+				if(territory.getId() == fightRequestInfos.get(1)) {
+					game.setGetAttacked(territory.getPlayer().getName());
+					break;
+				}
+			}
 			this.lastFightTerritories = fightRequestInfos;
-		}
-		else {
-			
 		}
 		return game;
 	}
@@ -178,8 +187,6 @@ public class SicknesstormService{
 	public Game answerFight (int nbDefense, Game game) {
 		if(game.getPhase() == GamePhase.ATTACK) {
 			this.startFight(this.lastFightTerritories.get(0), this.lastFightTerritories.get(1), this.lastFightTerritories.get(2), nbDefense, game);
-		}
-		else {
 		}
 		return game;
 	}
@@ -195,16 +202,27 @@ public class SicknesstormService{
 	 * @return
 	 */
 	public String startFight (int idTerritoryAtk , int idTerritoryDef , int nbAttack , int nbDefense, Game game) {
+		Territory territoryAtk = null;
+		Territory territoryDef = null;
+		
 		if(game.getPhase() == GamePhase.ATTACK) {
-			if(game.getPlayerTurn().getId() == this.getAterritory(idTerritoryAtk).getPlayer().getId()) {
-				if(this.getAterritory(idTerritoryDef).getPlayer().getId() == game.getPlayerTurn().getId()) {
+			
+			for(Territory territory : game.getTerritories()) {
+				if(territory.getId() == idTerritoryAtk) {
+					territoryAtk = territory;
+				}
+				if(territory.getId() == idTerritoryDef) {
+					territoryDef = territory;
+				}
+			}
+			
+			if(game.getPlayerTurn().getId() == territoryAtk.getPlayer().getId()) {
+				if(territoryDef.getPlayer().getId() == game.getPlayerTurn().getId()) {
 					return "CANNOT ATTACK YOUR OWN TERRITORIES";
 				}
 				else {
-					ArrayList<Territory> result = this.getAterritory(idTerritoryAtk).attack(this.getAterritory(idTerritoryDef), nbAttack , nbDefense);
+					ArrayList<Territory> result = territoryAtk.attack(territoryDef, nbAttack , nbDefense);
 					if(result != null) {
-						territoryRepo.save(result.get(0));
-						territoryRepo.save(result.get(1));
 					}
 					else {
 						return "Territory not adjacent";
@@ -223,30 +241,26 @@ public class SicknesstormService{
 		}
 	}
 	
-	public void addTerritoryToPlayer ( int idplayer , int idTerritory) {
-		this.getAterritory(idTerritory).setPlayer(this.getAplayer(idplayer));
-		playerRepo.save(this.getAplayer(idplayer));
-		territoryRepo.save(this.getAterritory(idTerritory));
-	}
-	
-	public String closeFightStep(Game game) {
+	public Game closeFightStep(Game game) {
 		if(game.getPhase() == GamePhase.ATTACK) {
 			game.setPhase(GamePhase.MOVEFORTIFY);
-			return "PHASE CHANGED TO => "+ game.getPhase();
+			System.out.println( "PHASE CHANGED TO => "+ game.getPhase());
 		}
 		else {
-			return "CANNOT CLOSE THE PHASE, PHASE =>"+game.getPhase().toString();
+			System.out.println( "CANNOT CLOSE THE PHASE, PHASE =>"+game.getPhase().toString());
 		}
+		return game;
 	}
 	
-	public String closeMoveFortifyStep(Game game) {
+	public Game closeMoveFortifyStep(Game game) {
 		if(game.getPhase() == GamePhase.MOVEFORTIFY) {
 			game.round();
-			return "NEXT PLAYER";
+			System.out.println( "NEXT PLAYER");
 		}
 		else {
-			return "CANNOT CLOSE THE PHASE, PHASE =>"+game.getPhase().toString();
+			System.out.println( "CANNOT CLOSE THE PHASE, PHASE =>"+game.getPhase().toString());
 		}
+		return game;
 	}
 	
 	public GamePhase gamePhase(Game game) {

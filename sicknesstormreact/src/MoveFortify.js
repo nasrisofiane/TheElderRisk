@@ -1,13 +1,12 @@
 import React from 'react';
 import './move_fortify.css';
 
-class MoovFortify extends React.Component{ 
+export default class MoveFortify extends React.Component{ 
 
     state = {isLoaded : true, numberOfPawn : 1,  messageError:null, changeClass:"hide-phase-popup", styles:{display:"block"}}
 
     closeMoveFortifyPhase = async () =>{
         await this.props.sendMessageCloseMoveFortifyPhase();
-        await this.props.updatephase();
         await this.props.cleanSelected();
     }
 
@@ -27,26 +26,12 @@ class MoovFortify extends React.Component{
     
     sendMovePawnsToServer = async () => {
         if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null && this.state.numberOfPawn != null){
-            try{
-                let response = await fetch(`http://localhost:8080/movefortify/${this.props.territoryAttackerSelected[0][0]}/${this.props.territoryDefenderSelected[0][0]}/${parseInt(this.state.numberOfPawn)}`);
-                if(response.ok){
-                    let data = await response.text()
-                    this.setState({isLoaded:true});
-                    console.log(data);
-                    this.setState({messageError:data});
-                    await this.props.updatephase();
-                    throw new Error(response.statusText);
-                }
-                    
-            }
-            catch(err){
-            }
+            this.props.sendMessageToMovePawns(this.props.territoryAttackerSelected[0][0], this.props.territoryDefenderSelected[0][0], this.state.numberOfPawn);
         }
         else{
             alert("Be sure that you have selected the territories");
         }
         this.displayPhasePopUp();
-        
     } 
 
     movePawnsInputs =({target:{id, value}}) => {
@@ -80,7 +65,3 @@ class MoovFortify extends React.Component{
     }
 }
 
-
-
-  
-export default MoovFortify;

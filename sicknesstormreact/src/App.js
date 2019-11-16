@@ -45,11 +45,12 @@ class App extends Component {
   }
 
   sendMessageCloseMoveFortifyPhase = async () => {
-    this.clientRef.sendMessage('/app/closemovefortifystep', "msg");
+    this.clientRef.sendMessage('/app/closemovefortifystep', "");
   }
 
   sendMessageGetTerritories = async () => {
-    this.clientRef.sendMessage('/app/territories', "msg");
+    console.log("GET TERRITORIES");
+    this.clientRef.sendMessage('/app/territories', "");
   }
 
   sendMessageToAddPawns = async (territory, nbOfPawns) => {
@@ -66,6 +67,15 @@ class App extends Component {
     await this.clientRef.sendMessage('/app/answerfight', JSON.stringify(nbdef));
   }
 
+  sendMessageToMovePawns = async (territoryA, territoryB, nbOfPawns) => {
+    let movePawnsInfos = [territoryA, territoryB, nbOfPawns];
+    await this.clientRef.sendMessage('/app/movefortify', JSON.stringify(movePawnsInfos));
+  }
+
+  sendMessageToCloseFightStep = async () =>{
+    this.clientRef.sendMessage('/app/closefightstep', "");
+  }
+
   messageReceived = async (msg) => {
     if(typeof msg.playerList != 'undefined'){
        await this.setState({roundPhase:msg.phase ,territories:msg.territories, players:msg.playerList, game:msg});
@@ -74,8 +84,6 @@ class App extends Component {
     else{
       this.setState({players:msg});
     }
-
-    
     console.log(this.state.territories);
   }
 
@@ -90,7 +98,7 @@ class App extends Component {
       <div className="App">
         <SockJsClient url='http://localhost:8080/websocket-example' topics={['/topic/message']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client; }} />
         {this.state.roundPhase == "INITIALIZE" ? <Formulaire updatephase={this.handleEvent} sendMessage={this.sendMessageAddPlayer} sendMessageInitiliazePhase={this.sendMessageInitiliazePhase} players={this.state.players}/> : ""}
-        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap sendMessageToAnswerFight={this.sendMessageToAnswerFight} sendMessageToFight={this.sendMessageToFight} sendMessageToAddPawns={this.sendMessageToAddPawns} territories={this.state.territories} sendMessageGetTerritories={ this.sendMessageGetTerritories} sendMessage={this.sendMessage} sendMessageCloseMoveFortifyPhase={this.sendMessageCloseMoveFortifyPhase} players={this.state.players} game={this.state.game} userName={this.state.userInfos}/> : "LOADING..."}
+        {this.state.roundPhase != "INITIALIZE" && this.state.players != null ? <BodyMap sendMessageToCloseFightStep={this.sendMessageToCloseFightStep} sendMessageToMovePawns={this.sendMessageToMovePawns} sendMessageToAnswerFight={this.sendMessageToAnswerFight} sendMessageToFight={this.sendMessageToFight} sendMessageToAddPawns={this.sendMessageToAddPawns} territories={this.state.territories} sendMessageGetTerritories={ this.sendMessageGetTerritories} sendMessage={this.sendMessage} sendMessageCloseMoveFortifyPhase={this.sendMessageCloseMoveFortifyPhase} players={this.state.players} game={this.state.game} userName={this.state.userInfos}/> : "LOADING..."}
       </div>
     );
   }

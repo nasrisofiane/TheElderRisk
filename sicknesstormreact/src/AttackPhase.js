@@ -16,28 +16,16 @@ export default class AttackPhase extends React.Component{
     }
 
     closeAttackPhase = async () =>{
-        try{
-            let response = await fetch(`http://localhost:8080/closefightstep`);
-            if(response.ok){
-                let data = await response.text()
-                console.log(data);
-                await this.props.updatephase();
-                throw new Error(response.statusText);
-            }      
-        }
-        catch(err){ 
-        }
+        this.props.sendMessageToCloseFightStep();
     }
 
     sendAttackToServer = async () =>{
         if(this.props.territoryAttackerSelected != null && this.props.territoryDefenderSelected != null && this.state.diceOne != null){
             await this.props.sendMessageToFight(this.props.territoryAttackerSelected[0][0], this.props.territoryDefenderSelected[0][0], this.state.diceOne);
-           
         }
         else{
             alert("Be sure that you've well selected both territory.");
         }
-        await this.props.updatephase();
     }
 
 

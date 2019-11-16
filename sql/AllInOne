@@ -5,11 +5,6 @@ CREATE DATABASE sicknesstorm;
 
 \c sicknesstorm;
 
-create table players ( id serial PRIMARY KEY ,
-name VARCHAR);
-
-
-
 create table continents ( id serial PRIMARY KEY , name VARCHAR);
 
 insert into continents (name) values ('Cerveau');
@@ -30,9 +25,7 @@ insert into continents (name) values ('Gros_intestin');
 
 insert into continents (name) values ('Petit_intestin');
 
-create table territories ( id serial PRIMARY KEY, name VARCHAR , continent_id INT REFERENCES continents , 
-pawn INT default 0  , player_id INT default null REFERENCES players
-) ;
+create table territories ( id serial PRIMARY KEY, name VARCHAR , continent_id INT REFERENCES continents );
 
 INSERT INTO territories (name, continent_id) VALUES ('Cerveau_1', 1);
 INSERT INTO territories (name, continent_id) VALUES ('Cerveau_2', 1);

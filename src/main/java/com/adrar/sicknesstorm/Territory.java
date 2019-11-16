@@ -64,11 +64,11 @@ public class Territory {
 			inverseJoinColumns = @JoinColumn(name = "territory_a"))
 	private Set<Territory> territoryAdjacent;
 	
+	@Transient
 	private int pawn;
 
 	@JsonIgnoreProperties("playerTerritories")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "player_id")
+	@Transient
 	private Player player;
 
 	public int getId() {
