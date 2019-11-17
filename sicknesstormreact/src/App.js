@@ -76,7 +76,8 @@ class App extends Component {
 
   messageReceived = async (msg) => {
     if(typeof msg.playerList != 'undefined'){
-       await this.setState({roundPhase:msg.phase ,territories:msg.territories, players:msg.playerList, game:msg});
+      let territoriesReceived = msg.territories.map((territories) => { return [territories.id, territories.name.toLowerCase(), territories.pawn, territories.player.name, territories.player.id]});
+       await this.setState({roundPhase:msg.phase ,territories:territoriesReceived.sort(function(a, b) {return a[0] - b[0];}), players:msg.playerList, game:msg});
        console.log("ORDERED TERRITORIES ?");
        console.log(this.state.territories);
     }

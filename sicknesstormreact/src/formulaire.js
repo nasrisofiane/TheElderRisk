@@ -15,10 +15,6 @@ class Formulaire extends React.Component{
         isSent:false
     }
 
-    componentDidMount = async () => {
-      
-    }
-
     componentDidUpdate = async () => {
         if(this.props.players != null){
             await this.handleChange(); 
@@ -26,7 +22,8 @@ class Formulaire extends React.Component{
     }
 
     postData = async (value) => {
-        await this.props.sendMessage(value);
+        let valueRegexed = value.replace(/[^a-zA-Z0-9]/g, '');
+        await this.props.sendMessage(valueRegexed);
         this.setState({isSent:true});
     } 
 

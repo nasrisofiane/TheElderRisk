@@ -158,19 +158,10 @@ public class Territory {
 		if(isAdjacent(territory)) { // if the territory attacked is a neighbor of this territory so the fight can be executed
 			Fight fight = new Fight();
 			System.out.println("Territoire voisin");
-			if(territory.getPawn() == 1) {
-				if(this.shifumi() == true) {
-					resultats = fight.startFight(nbAttack, nbDefense);
-					territory.setPawn(territory.getPawn() - resultats.get(0).get(0));
-					this.pawn = this.pawn - resultats.get(0).get(1);
-				}
-			}
-			else {
-				resultats = fight.startFight(nbAttack, nbDefense);
-				territory.setPawn(territory.getPawn() - resultats.get(0).get(0));
-				this.pawn = this.pawn - resultats.get(0).get(1);
-				System.out.println(territory.getId()+" -> NB PIONS -> " + territory.getPawn());
-			}
+			resultats = fight.startFight(nbAttack, nbDefense);
+			territory.setPawn(territory.getPawn() - resultats.get(0).get(0));
+			this.pawn = this.pawn - resultats.get(0).get(1);
+			System.out.println(territory.getId()+" -> NB PIONS -> " + territory.getPawn());
 			if(territory.getPawn() <= 0) {
 				this.conquerTerritory(territory, resultats.get(0).get(0));
 			}
@@ -244,54 +235,54 @@ public class Territory {
 		return this.checkBeforeMoveFortify(this.player, targetTerritory, chemins);
 	}
 	
-	public boolean shifumi() {
-		int min=1;
-		int max=3;
-		int attacker = min + (int)(Math.random() * ((max - min) + 1));
-		int defender = min + (int)(Math.random() * ((max - min) + 1));
-		
-		if( attacker == 1) { 	System.out.println("pierre");}
-		if( attacker == 2) { 	System.out.println("feuille");}
-		if( attacker == 3) { 	System.out.println("ciseaux");}
-		if( defender == 1) { 	System.out.println("pierre");}
-		if( defender == 2) { 	System.out.println("feuille");}
-		if( defender == 3) { 	System.out.println("ciseaux");}
-		
-		if( attacker==1 &&defender==1) {System.out.println("Recommencer");
-			return this.shifumi();
-		}
-		
-		if( attacker==1 &&defender==2) {System.out.println("la feuille gagne");
-			return false;
-		}
-		
-		if( attacker==1 &&defender==3) {System.out.println("la pierre gagne");
-			return true;
-		}
-		
-		if( attacker==2 &&defender==1) {System.out.println("la feuille gagne");
-			return true;
-		}
-		
-		if( attacker==2 &&defender==2) {System.out.println("Recommencer");
-			return this.shifumi();
-		}
-		
-		if( attacker==2 &&defender==3) {System.out.println("le ciseaux gagne");
-			return false;
-		}
-		if( attacker==3 &&defender==1) {System.out.println("la pierre gagne");
-			return false;
-		}
-		if(attacker==3 &&defender==2) {System.out.println("le ciseaux gagne");
-			return true;
-		}
-		if( attacker==3 &&defender==3) {System.out.println("Recommencer");
-			return this.shifumi();
-		}
-		
-			return false;
-		}
+//	public boolean shifumi() {
+//		int min=1;
+//		int max=3;
+//		int attacker = min + (int)(Math.random() * ((max - min) + 1));
+//		int defender = min + (int)(Math.random() * ((max - min) + 1));
+//		
+//		if( attacker == 1) { 	System.out.println("pierre");}
+//		if( attacker == 2) { 	System.out.println("feuille");}
+//		if( attacker == 3) { 	System.out.println("ciseaux");}
+//		if( defender == 1) { 	System.out.println("pierre");}
+//		if( defender == 2) { 	System.out.println("feuille");}
+//		if( defender == 3) { 	System.out.println("ciseaux");}
+//		
+//		if( attacker==1 &&defender==1) {System.out.println("Recommencer");
+//			return this.shifumi();
+//		}
+//		
+//		if( attacker==1 &&defender==2) {System.out.println("la feuille gagne");
+//			return false;
+//		}
+//		
+//		if( attacker==1 &&defender==3) {System.out.println("la pierre gagne");
+//			return true;
+//		}
+//		
+//		if( attacker==2 &&defender==1) {System.out.println("la feuille gagne");
+//			return true;
+//		}
+//		
+//		if( attacker==2 &&defender==2) {System.out.println("Recommencer");
+//			return this.shifumi();
+//		}
+//		
+//		if( attacker==2 &&defender==3) {System.out.println("le ciseaux gagne");
+//			return false;
+//		}
+//		if( attacker==3 &&defender==1) {System.out.println("la pierre gagne");
+//			return false;
+//		}
+//		if(attacker==3 &&defender==2) {System.out.println("le ciseaux gagne");
+//			return true;
+//		}
+//		if( attacker==3 &&defender==3) {System.out.println("Recommencer");
+//			return this.shifumi();
+//		}
+//		
+//			return false;
+//		}
 
 
 
