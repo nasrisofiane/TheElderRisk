@@ -9,19 +9,14 @@ code {
     monospace;
 }
 
-#phase-interface{
-  bottom:50px;
-  left:0px;
-  min-width: 300px;
-  width: 100%;
-}
-
 .infos-phase-popup{
   background:rgba(0, 0, 0, 0.596);
   position: absolute;
   width: 100%;
   height: 100%;
   display:flex;
+  top:0px;
+  left:0px;
   justify-content: center;
   align-items: center;
 }
@@ -30,12 +25,6 @@ code {
   display: none;
 }
 
-
-.container-addpawns-phase{
-  position: absolute;
-  bottom: 50px;
-  width: 100%;
-}
 
 .form-phase{
   background: white;

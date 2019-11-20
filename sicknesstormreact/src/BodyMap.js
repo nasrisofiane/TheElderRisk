@@ -4,19 +4,15 @@ import MoveFortify from './MoveFortify';
 import PlayerTurn from './PlayerTurn';
 import PlacePawnInterface from './PlacePawnInterface';
 import SvgBody from './SvgBody';
+import './body_map.css';
 
 
 export default class BodyMap extends React.Component{
     
     constructor(){
             super();
-            this.state = {diceOne : 1, isLoaded : true,  prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false, tooltip: null, styles: { top: 0, left: 0}};
+            this.state = {diceOne : 1, isLoaded : true,  prevTerritorySelectedAttacker:null, prevTerritorySelectedDefender:null, territoryAttackerSelected:null, territoryDefenderSelected:null, switchSelect:false, tooltip: null};
             this.handleEvent = this.handleEvent.bind(this);
-    }
-        
-    async componentDidMount(){
-        this.props.sendMessage();
-        this.props.retrieveMySessionId(this.props.userName);
     }
 
     cleanBodyFromSelectedTerritories = async () =>{
@@ -24,7 +20,8 @@ export default class BodyMap extends React.Component{
         this.state.territoryDefenderSelected[1].classList.remove("defender");
     }
 
-    eventOnMouseMove = (e) => {
+    displayTerritoryInfos = (territorySelected) => {
+        this.setState({tooltip:territorySelected})
     }
 
     territorySelected = async (territory) =>{
@@ -35,6 +32,7 @@ export default class BodyMap extends React.Component{
                 found = true;
                 
                 territory = this.props.territories[i];
+                this.displayTerritoryInfos(territory);
                 break;
             }
         }
@@ -81,7 +79,7 @@ export default class BodyMap extends React.Component{
     
     render(){
         return(
-            <div id="game-window" onMouseMove={  this.eventOnMouseMove}>
+            <div id="game-window">
                 {this.props.game.getAttacked != null && this.props.game.getAttacked == this.props.userName ? 
                 <div id="answer-attack">
                     <h2>Answer to the attack</h2>
@@ -90,16 +88,17 @@ export default class BodyMap extends React.Component{
                 <button onClick={() => this.answerToAttack()}>Defend with {this.state.diceOne} pawns</button>GET ATTACKED
                     </div> : ""}
                 {this.props.userName != null ? this.props.game.userName : "ERROR"}
-                
-                    {this.state.tooltip != null ? this.state.tooltip : ""}
                     {this.state.isLoaded ? <SvgBody  updateTerritories={this.props.territories} territorySelected={this.territorySelected}  ></SvgBody> : "Loading..."}
-                    {this.props.game.phase != "INITIALIZE" ? <PlayerTurn playerturn={this.props.game.playerTurn.name} players={this.props.players}/> : ""}
-                    {this.props.userName == this.props.game.playerTurn.name ? 
-                    <div id="phase-interface">
-                        {this.props.game.phase != "INITIALIZE" && this.props.game.phase == "PLACEPAWN" ? <PlacePawnInterface sendMessageToAddPawns={this.props.sendMessageToAddPawns} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
-                        {this.props.game.phase != "INITIALIZE" && this.props.game.phase == "ATTACK" ? <AttackPhase userName={this.props.userName} game={this.props.game} sendMessageToCloseFightStep={this.props.sendMessageToCloseFightStep} getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
-                        {this.props.game.phase != "INITIALIZE" && this.props.game.phase == "MOVEFORTIFY" ? <MoveFortify sendMessageToMovePawns={this.props.sendMessageToMovePawns} sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
-                    </div> : "" }
+                    <section id="user-ui">
+                        {this.props.game.phase != "INITIALIZE" ? <PlayerTurn playerturn={this.props.game.playerTurn.name} players={this.props.players}/> : ""}
+                        {this.state.tooltip != null ? <div id="territory-infos"><p><i>Territory selected infos</i></p><h4><strong>{this.state.tooltip[1]}</strong></h4> <p>Number of pawns : {this.state.tooltip[2]}</p> <p>Owner : {this.state.tooltip[3]}</p></div> : ""}
+                        {this.props.userName == this.props.game.playerTurn.name ? 
+                        <div id="phase-interface">
+                            {this.props.game.phase != "INITIALIZE" && this.props.game.phase == "PLACEPAWN" ? <PlacePawnInterface sendMessageToAddPawns={this.props.sendMessageToAddPawns} updatephase={this.handleEvent} territoryAttackerSelected={this.state.territoryAttackerSelected}  /> : ""}
+                            {this.props.game.phase != "INITIALIZE" && this.props.game.phase == "ATTACK" ? <AttackPhase userName={this.props.userName} game={this.props.game} sendMessageToCloseFightStep={this.props.sendMessageToCloseFightStep} getAttacked={this.props.game.getAttacked} sendMessageToFight={this.props.sendMessageToFight} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                            {this.props.game.phase != "INITIALIZE" && this.props.game.phase == "MOVEFORTIFY" ? <MoveFortify sendMessageToMovePawns={this.props.sendMessageToMovePawns} sendMessageCloseMoveFortifyPhase={this.props.sendMessageCloseMoveFortifyPhase} cleanSelected={this.cleanBodyFromSelectedTerritories} territoryAttackerSelected={this.state.territoryAttackerSelected}  territoryDefenderSelected={this.state.territoryDefenderSelected}/> : ""}
+                        </div> : "" }
+                    </section>
             </div>
               
         );

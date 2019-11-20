@@ -39,7 +39,7 @@ class PlacePawnInterface extends React.Component{
 
     render (){
         return(
-            <div>
+            <div  className={"container-addpawns-phase " }>
                 <div className={"infos-phase-popup "+ this.state.changeClass}>
                     <div className="form-phase">
                         <div className="selected-territory-popup">How many pawns do you wants to add on <strong >{this.props.territoryAttackerSelected != null ? this.props.territoryAttackerSelected[0][1] : "Select a territory"}</strong></div>
@@ -51,7 +51,7 @@ class PlacePawnInterface extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div className={"container-addpawns-phase " } style={this.state.styles}>
+                <div style={this.state.styles}>
                 <p className="">{this.state.messageError != null ? this.state.messageError : ""}</p>
                 <h2>Add Pawns phase</h2>
                 <button id="add-pawns-button-popup" onClick={() => this.displayPhasePopUp()}>Add your pawns</button>

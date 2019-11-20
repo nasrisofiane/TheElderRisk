@@ -1,8 +1,5 @@
 
 svg{
-    position: absolute;
-    top:50px;
-    left: 0px;
     width: 100%;
 }
 
@@ -107,14 +104,40 @@ svg path, svg g{
     color:red;
 }
 
-.tooltip{
-    background:rgba(0, 0, 0, 0.733);
-    color:white;
-    position: absolute;
-    padding:4px 9px 4px 9px;
-    z-index: 1;
-    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
-    width: auto;
+#territory-infos{
+    border:solid black 1px;
+    flex:1;
+    order: 1;
+}
+
+#phase-interface{
+  flex:1;
+  order: 2;
+  display: flex;
+  justify-content:center;
+}
+  
+
+.player-turn{
+    flex:1;
+    border:solid black 1px;
+    order: 3;
+    height:100%;
+}
+  
+
+#user-ui{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+   
+}
+
+#game-window{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
