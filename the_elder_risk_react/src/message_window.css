@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'Planewalker';
+    src: url('./fonts/Planewalker.otf'); /* IE9 Compat Modes */
+    src: local('Planewalker'), local('Planewalker'),
+         url('./fonts/Planewalker.otf'),
+}
+
+.message-window{
+    background: radial-gradient(black, transparent);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window-message-close-button{
+    font-family: 'Planewalker';
+    background-color: black;
+    color: #c5c29e;
+    border: solid #b2ab92 1px;
+    margin: 5px 0px 10px 0px;
+}
+
+.message-window div{
+    font-family: 'Planewalker';
+    font-weight: lighter;
+    background-color: rgba(0, 0, 0, 0.76);
+    color: #c5c29e;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

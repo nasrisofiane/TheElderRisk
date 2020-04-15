@@ -1,0 +1,137 @@
+@media (max-width: 1050px) {
+
+    .message-window div{
+        width: 90%;
+    }
+
+    .player-turn{
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.767);
+        font-size: 0.8em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .player-turn h1{
+        margin: 0px;
+    }
+
+    .player-informations{
+        width: 100vw;
+        height: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background: url('./images/map-bg.jpg');
+        background-size: cover;
+    }
+
+    .player-informations div{
+        padding: 0px 2px 0px 2px;
+    }
+
+    #territory-infos{
+        display: none;
+    }
+
+    #phase-interface button{
+        font-size: 0.52em;
+    }
+
+    
+    .show-fight-button{
+        position: absolute;
+        right: 10px;
+        bottom: 0px;
+        font-size: 0.4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-phase > p{
+        font-size: 0.5em;
+    }
+
+    #answer-attack-infos-container{
+        width: 100%;
+    }
+
+    .form-phase{
+        width: 90%;
+    }
+    
+  }
+
+  @media (min-width: 1050px) {
+
+    .message-window div{
+        width: 50%;
+    }
+
+    .player-turn{
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.767);
+        font-size: 0.8em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .player-turn h1{
+        margin: 0px;
+    }
+
+    .player-informations{
+        width: 100vw;
+        height: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background: url('./images/map-bg.jpg');
+        background-size: cover;
+    }
+
+    .player-informations div{
+        padding: 0px 2px 0px 2px;
+    }
+
+    #territory-infos{
+        display: none;
+    }
+    
+    #map-container::-webkit-scrollbar {
+        background-color: black;
+    }
+
+    #map-container::-webkit-scrollbar-track {
+        background: black;
+    }
+
+    #map-container::-webkit-scrollbar-thumb {
+        background: #cac9bb;
+    }
+
+    #map-container::-webkit-scrollbar-thumb:hover {
+        background: #94948f;
+    }
+
+    .show-fight-button{
+        position: absolute;
+        right: 10px;
+        bottom: 0px;
+    }
+
+    .form-phase{
+        width: 45%;
+    }
+  }

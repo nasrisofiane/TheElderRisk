@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Planewalker';
+    src: url('./fonts/Planewalker.otf'); /* IE9 Compat Modes */
+    src: local('Planewalker'), local('Planewalker'),
+         url('./fonts/Planewalker.otf'),
+}
+
+
+.player-informations{
+    font-family: 'Planewalker';
+    color: black;
+    position: absolute;
+    z-index: 1;
+    font-size: 0.7em;
+    
+}
+

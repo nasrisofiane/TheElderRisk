@@ -1,0 +1,266 @@
+@font-face {
+    font-family: 'Planewalker';
+    src: url('./fonts/Planewalker.otf'); /* IE9 Compat Modes */
+    src: local('Planewalker'), local('Planewalker'),
+         url('./fonts/Planewalker.otf'),
+}
+
+.player_1{
+    fill:red;
+    background:url('./images/Aldmeri_Dominion.png');
+    background-size: contain;
+}
+
+.player_2{
+    fill:blueviolet;
+    background: url('./images/Daggerfall_Covenant.png');
+    background-size: contain;
+}
+
+.player_3{
+    fill:burlywood;
+    background:url('./images/The_Ebonheart_Pact.png');
+    background-size: contain;
+}
+
+.dice_1{
+    background: url('./images/dices/dice1.png');
+}
+
+.dice_2{
+    background: url('./images/dices/dice2.png');
+}
+
+.dice_3{
+    background: url('./images/dices/dice3.png');
+}
+
+.dice_4{
+    background: url('./images/dices/dice4.png');
+}
+
+.dice_5{
+    background: url('./images/dices/dice5.png');
+}
+
+.dice_6{
+    background: url('./images/dices/dice6.png');
+}
+
+.dices{
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-position: center;
+}
+
+.results-flag{
+    width: 100px;
+    height: 100px;
+}
+
+.fight-infos-window{
+    font-family: 'Planewalker';
+    background-color: rgba(0, 0, 0, 0.918);
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fight-informations{
+    width: 60%;
+    min-width: 400px;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.round-timer-container{
+    position: absolute;
+    left: 4px;
+    bottom: -54px;
+    background: rgba(0, 0, 0, 0.863);
+    padding: 5px;
+}
+
+.round-timer-container div{
+    padding: 5px;
+    font-weight: bold;
+    color : red;
+    font-size: 1.4em;
+}
+
+.fight-informations table th{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fight-informations table td{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fight-informations table tbody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fight-infos-window h2{
+    margin:40px 0px 0px 0px;
+    padding:0px;
+}
+
+.game-ui{
+    height: 100%;
+    overflow: hidden;
+    position: relative ;
+    
+}
+
+.table-results{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.fight-results{
+    background: url('./images/fight-results-ui.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60%;
+    max-width: 670px;
+    min-width: 400px;
+    height: 80%;
+    min-height: 380px;
+    display: flex;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes appearAndDisappearAttacker {
+    0% {
+        stroke-opacity: 1;
+        stroke:green;
+        stroke-width: 3;
+    }
+    50%{
+        stroke-opacity: 1;
+        stroke:rgba(0, 128, 0, 0.514);
+        stroke-width: 5;
+    }
+    100% {
+        stroke-opacity: 1;
+        stroke:green;
+        stroke-width: 3;
+    }
+  }
+
+
+.attacker {
+    animation: appearAndDisappearAttacker 3s  linear infinite;
+}
+
+@keyframes appearAndDisappearDefender {
+    0% {
+        stroke-opacity: 1;
+        stroke:rgb(189, 0, 0);
+        stroke-width: 3;
+    }
+    50%{
+        stroke-opacity: 1;
+        stroke:rgba(189, 0, 0, 0.438);
+        stroke-width: 5;
+    }
+    100% {
+        stroke-opacity: 1;
+        stroke:rgb(189, 0, 0);
+        stroke-width: 3;
+    }
+  }
+
+.defender {
+    animation: appearAndDisappearDefender 3s  linear infinite;
+}
+
+.territory-infos-results-defender{
+    color:green;
+}
+
+.territory-infos-results-attacker, .attack-dice-infos{
+    color: red;
+}
+
+#preview_fight{
+    font-weight: bold;
+}
+
+#attacker-choice{
+    color:darkgreen;
+}
+
+#defender-choice{
+    color:red;
+}
+
+#territory-infos{
+    flex:1;
+    order: 1;
+}
+
+#phase-interface{
+  flex:1;
+  order: 2;
+  display: flex;
+  justify-content:center;
+}
+  
+
+.player-turn{
+    flex:1;
+    order: 3;
+}
+
+.close-fight-result-button{
+    width: 100px;
+    background: none;
+    border:none;
+    font-family: 'Planewalker';
+    background-color: black;
+    color: #c5c29e;
+    border: solid #b2ab92 1px;
+    margin: auto;
+}
+
+.close-fight-result-button:active{
+    background-size:90%;
+}
+
+#user-ui{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#game-window{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
