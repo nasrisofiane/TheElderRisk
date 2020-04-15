@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Planewalker';
+    src: url('./fonts/Planewalker.otf'); /* IE9 Compat Modes */
+    src: local('Planewalker'), local('Planewalker'),
+         url('./fonts/Planewalker.otf'),
+}
+
+@font-face {
+    font-family: 'oblivion-font';
+    src: url('./fonts/oblivion-font.ttf'); /* IE9 Compat Modes */
+    src: local('oblivion-font'), local('oblivion-font'),
+         url('./fonts/oblivion-font.ttf') format('truetype'),
+}
+
+.game-list-container{
+    font-family: 'Planewalker';   
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background: url('./images/Bg-teso.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #c5c29e;
+    align-items: center;
+}
+
+.games-list button{
+    font-family: 'Planewalker';
+    background-color: black;
+    color: #c5c29e;
+    border: solid #b2ab92 1px;
+    border-left: none;
+    border-right: none;
+}
+
+
+.games-list{
+    width: 300px;
+    height: 40vh;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: solid #c5c29e 1px;
+    background-color: rgba(0, 0, 0, 0.918);
+}

@@ -1,0 +1,52 @@
+.addpawns-phase{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.number-addpawns-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.number-addpawns-container h3{
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.number-addpawns-container input{
+    height: 20px;
+    width: 50px;
+    text-align: center;
+}
+
+#territories-add-pawns{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48%;
+}
+#add-pawns-button{
+    width:30% ;
+}
+
+
+.selected-territory-popup strong{
+    color :red;
+}
+
+.error-message{
+    color:red;
+    font-weight: bold;
+}
+
+.pawns-number{
+    color:red;
+}

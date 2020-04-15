@@ -12,7 +12,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-/target
 
 ### IntelliJ IDEA ###
 .idea
@@ -30,3 +29,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### JAVA ###
+*.class
+*.jar
+*.war
+
+### MAVEN ###
+
+target/
+pom.xml
+application.properties
+

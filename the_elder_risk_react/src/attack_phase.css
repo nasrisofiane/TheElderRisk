@@ -1,0 +1,62 @@
+@font-face {
+    font-family: 'Planewalker';
+    src: url('./fonts/Planewalker.otf'); /* IE9 Compat Modes */
+    src: local('Planewalker'), local('Planewalker'),
+         url('./fonts/Planewalker.otf'),
+}
+
+#phase-interface{
+    height: 100%;
+}
+
+#phase-interface h2{
+    margin: 6px 0px 10px 0px;
+}
+
+.attack-phase{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.dices-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.dices-container h3{
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.dices-container input{
+    height: 20px;
+    width: 50px;
+    text-align: center;
+}
+
+#list-attackers, #list-defenders{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48%;
+}
+#fight-button{
+    width:30% ;
+}
+
+
+.attack-interface-beforepopup{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

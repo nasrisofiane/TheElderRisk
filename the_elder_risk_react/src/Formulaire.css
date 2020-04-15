@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'Planewalker';
+    src: url('./fonts/Planewalker.otf'); /* IE9 Compat Modes */
+    src: local('Planewalker'), local('Planewalker'),
+         url('./fonts/Planewalker.otf'),
+}
+
+@font-face {
+    font-family: 'oblivion-font';
+    src: url('./fonts/oblivion-font.ttf'); /* IE9 Compat Modes */
+    src: local('oblivion-font'), local('oblivion-font'),
+         url('./fonts/oblivion-font.ttf') format('truetype'),
+}
+
+.formulaire-container{
+    font-family: 'Planewalker';   
+    border:solid;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    background: url('./images/Bg-teso.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.formulaire-container .champs{
+    font-family: 'Planewalker';
+    width: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#c5c29e;
+}
+
+.players h3{
+    font-family: 'Planewalker';
+    font-weight: lighter;
+}
+
+.border{
+    /* box-shadow: 1px 1px 1px black; */
+  width: 300px;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:solid #c5c29e 1px;
+  background-color: rgba(0, 0, 0, 0.918);  
+}
+
+.border button{
+    font-family: 'Planewalker';
+    background-color: black;
+    color:#c5c29e;
+    border:solid #b2ab92 1px;
+    border-left: none;
+    border-right: none;
+    width: 60%;
+}
+
+.border button:active{
+    width: 70%;
+    height: 20px;
+    font-size: 0.7em;
+}
+
+.border input{
+    font-family: 'Planewalker';
+    background-color: #534f44;
+    border:solid white 1px;
+    color: #c4c2b3;
+    font-weight: bold;
+    text-shadow: 1px 1px 7px black;
+    padding: 0px 0px 0px 5px;
+}
+
+.initialize{
+    color: #c4c2b3;
+}
+
+.player-joined{
+    color: #c4c2b3;
+}
+
+.border input:focus{
+    border:solid white 3px;
+}
+
+button.start-game{
+    width: 100%;
+}

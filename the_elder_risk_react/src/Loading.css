@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'GourHand';
+    src: url('./fonts/GourHand.ttf'); /* IE9 Compat Modes */
+    src: local('GourHand'), local('GourHand'),
+         url('./fonts/GourHand.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'oblivion-font';
+    src: url('./fonts/oblivion-font.ttf'); /* IE9 Compat Modes */
+    src: local('oblivion-font'), local('oblivion-font'),
+         url('./fonts/oblivion-font.ttf') format('truetype'),
+}
+
+.loading-container{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotateZ(0);
+	}
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+
+.loading-container img{
+    width: 50vw;
+    max-width: 400px;
+    animation: spin 12s linear infinite;
+}
+
+.loading-container div{
+    position: absolute;
+    bottom: 50px;
+    right: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-container p{
+    font-family: 'GourHand';
+    font-size: 2em;
+    font-weight: lighter;
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    color: #8f865e;
+}

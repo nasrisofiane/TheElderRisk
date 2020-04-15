@@ -1,0 +1,42 @@
+html, body, #root, .App{
+  height: 100%;
+  margin:0px;
+  padding:0px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.infos-phase-popup{
+  background:rgba(0, 0, 0, 0.596);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display:flex;
+  top:0px;
+  left:0px;
+  justify-content: center;
+  align-items: center;
+}
+
+.hide-phase-popup{
+  display: none;
+}
+
+
+.form-phase{
+  background: white;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+  padding:10px;
+}
+
+
+
+
+ 
+ 
+

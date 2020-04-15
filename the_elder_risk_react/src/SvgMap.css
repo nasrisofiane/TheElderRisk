@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'GourHand';
+    src: url('./fonts/GourHand.ttf'); /* IE9 Compat Modes */
+    src: local('GourHand'), local('GourHand'),
+         url('./fonts/GourHand.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'oblivion-font';
+    src: url('./fonts/oblivion-font.ttf'); /* IE9 Compat Modes */
+    src: local('oblivion-font'), local('oblivion-font'),
+         url('./fonts/oblivion-font.ttf') format('truetype'),
+}
+
+svg{
+    background: url('./images/map-bg.jpg');
+    background-size: cover;
+    margin-bottom: -15px;
+    position: relative;
+}
+
+.PawnIconContainerDiv{
+    background-image: url('./images/pawn-icon.png');
+    background-size: cover;
+}
+
+text{
+    pointer-events: none;
+}
+
+#map_informations text tspan{
+    font-family: 'oblivion-font';
+    font-weight: bolder;
+}
+
+#map-container{
+    width: 100vw;
+    height: 100%;
+    overflow: scroll;
+    position: relative;
+}
+
+path.Territories{
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
+
+path.Territories:hover{
+    fill-opacity: 1;
+    fill: rgba(0, 0, 0, 0.473);
+}
