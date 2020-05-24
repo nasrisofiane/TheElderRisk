@@ -36,9 +36,7 @@ class App extends Component {
     let data = await response.json()
     if(response.ok){
       this.setState({canConnect : true});
-      console.log("CAN CONNECT ? "+this.state.canConnect);
     }
-    console.log("try");
     return data;
   }
 
