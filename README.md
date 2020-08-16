@@ -18,5 +18,5 @@ The project Goal was to improve my algorithms and technologies skills with **Rea
 - And for ReactJS ressources used mainly an open source component that handle Websockets [@lahsivjar](https://github.com/lahsivjar/spring-websocket-template)
 - 
 # Test the project !
-If you want to try it, it can be try on the link [https://theelderrisk.cfapps.io/](https://theelderrisk.cfapps.io/)
+If you want to try it, it can be try on the link [https://theelderrisk.herokuapp.com/](https://theelderrisk.herokuapp.com/)
 *If you're alone to try it, you have to open two tabs and connects as two players.*
