@@ -28,6 +28,7 @@ class App extends Component {
   }
 
   componentDidMount(){
+    console.log('Game version : 1.0');
     this.connectToGames();
   }
 
