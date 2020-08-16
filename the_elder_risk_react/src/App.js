@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   connectToGames = async () =>{
-    let response = await fetch(`http://localhost:8080/getAllGames`);
+    let response = await fetch(`https://theelderrisk.herokuapp.com/getAllGames`);
     let data = await response.json()
     if(response.ok){
       this.setState({canConnect : true});
@@ -121,7 +121,7 @@ class App extends Component {
     return (
       
       <div className="App">
-        {this.state.canConnect ? <SockJsClient url='http://localhost:8080/theelderrisk' topics={['/topic/message', '/user/queue/message', '/user/queue/territories']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client }}/> : ""}
+        {this.state.canConnect ? <SockJsClient url='https://theelderrisk.herokuapp.com/theelderrisk' topics={['/topic/message', '/user/queue/message', '/user/queue/territories']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client }}/> : ""}
         {this.state.games != null  && this.state.game == null ? <GamesList connectToGame={this.sendMessageConnectToGame} games={this.state.games}/> : ""}
         {(this.state.roundPhase === null && this.state.games === null) ? <Loading/> : ""}
         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase != null ? <MessageWindow userName={this.state.userInfos} game={this.state.game}/> : ""}
