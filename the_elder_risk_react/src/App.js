@@ -122,7 +122,7 @@ class App extends Component {
     return (
       
       <div className="App">
-        {this.state.canConnect ? <SockJsClient url='https://theelderrisk.herokuapp.com/theelderrisk' topics={['/topic/message', '/user/queue/message', '/user/queue/territories']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client }}/> : ""}
+        {this.state.canConnect ? <SockJsClient url='https://theelderrisk.herokuapp.com/theelderrisk' topics={['/topic/message', '/user/queue/message', '/user/queue/territories']} onMessage={this.messageReceived}  ref={ (client) => { this.clientRef = client }}/> : <Loading/>}
         {this.state.games != null  && this.state.game == null ? <GamesList connectToGame={this.sendMessageConnectToGame} games={this.state.games}/> : ""}
         {(this.state.roundPhase === null && this.state.games === null) ? <Loading/> : ""}
         {this.state.roundPhase != "INITIALIZE" && this.state.roundPhase != null ? <MessageWindow userName={this.state.userInfos} game={this.state.game}/> : ""}

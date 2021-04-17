@@ -35,7 +35,7 @@
 
 .loading-container img{
     width: 50vw;
-    max-width: 400px;
+    max-width: 200px;
     animation: spin 12s linear infinite;
 }
 
